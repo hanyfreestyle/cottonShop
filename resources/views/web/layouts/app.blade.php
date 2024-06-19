@@ -35,7 +35,7 @@
 </head>
 
 <body class="{{htmlBodyStyle($pageView)}}">
-<x-temp.header-offers/>
+{{--<x-temp.header-offers/>--}}
 
 <div id="nt_wrapper">
   <header id="ntheader" class="ntheader header_3 h_icon_la">

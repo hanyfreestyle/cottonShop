@@ -1,5 +1,5 @@
 <?php
-namespace App\AppPlugin\SiteMap;
+namespace App\AppPlugin\Config\SiteMap;
 
 use Illuminate\Database\Eloquent\Model;
 

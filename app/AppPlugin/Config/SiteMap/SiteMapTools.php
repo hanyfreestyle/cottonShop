@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\SiteMap;
+namespace App\AppPlugin\Config\SiteMap;
 use App\Http\Controllers\admin\PageAdminController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 

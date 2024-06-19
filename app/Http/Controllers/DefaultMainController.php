@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AppCore\DefPhoto\DefPhoto;
 use App\AppCore\WebSettings\Models\Setting;
+use App\AppPlugin\Config\Meta\MetaTag;
 use App\AppPlugin\Data\City\Models\City;
 use App\AppPlugin\Data\Country\Country;
 use Illuminate\Support\Facades\Cache;

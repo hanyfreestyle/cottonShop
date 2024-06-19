@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\SiteMap;
+namespace App\AppPlugin\Config\SiteMap;
 
 use App\Http\Controllers\AdminMainController;
 use App\Models\admin\Category;
