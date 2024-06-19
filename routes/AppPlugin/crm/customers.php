@@ -1,0 +1,20 @@
+<?php
+
+use App\AppPlugin\Crm\Customers\CrmCustomersController;
+
+use Illuminate\Support\Facades\Route;
+
+
+Route::get('/crm/customers/',[CrmCustomersController::class,'index'])->name('CrmCustomer.index');
+Route::post('/crm/customers/', [CrmCustomersController::class, 'index'])->name('CrmCustomer.filter');
+Route::get('/crm/customers/create',[CrmCustomersController::class,'create'])->name('CrmCustomer.create');
+Route::get('/crm/customers/edit/{id}',[CrmCustomersController::class,'edit'])->name('CrmCustomer.edit');
+Route::get('/crm/customers/emptyPhoto/{id}', [CrmCustomersController::class,'emptyPhoto'])->name('CrmCustomer.emptyPhoto');
+Route::post('/crm/customers/update/{id}',[CrmCustomersController::class,'storeUpdate'])->name('CrmCustomer.update');
+Route::get('/crm/customers/destroy/{id}',[CrmCustomersController::class,'ForceDeleteException'])->name('CrmCustomer.destroy');
+Route::get('/crm/customers/config', [CrmCustomersController::class,'config'])->name('CrmCustomer.config');
+
+Route::get('/crm/customers/repeat/{num}',[CrmCustomersController::class,'repeat'])->name('CrmCustomer.repeat');
+
+
+
