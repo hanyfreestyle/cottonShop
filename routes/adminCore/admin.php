@@ -1,6 +1,4 @@
 <?php
-
-
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\HooverDataController;
 use Illuminate\Support\Facades\Route;

@@ -19,7 +19,18 @@ if (!function_exists('TablePhoto')) {
 if (!function_exists('TablePhotoFlag')) {
     function TablePhotoFlag($row,$fildeName='photo_thum_1'){
         if($row->$fildeName){
-            $sendImg = '<img  class="tableImg img-rounded" src="'.flagAssets($row->$fildeName).'">';
+            $sendImg = '<img  class="tableImg img-rounded" src="'.flagAssets($row->$fildeName).'.webp">';
+        }else{
+            $sendImg = '<img  class="tableImg img-rounded elevation-1" src="'.defAdminAssets('img/default-150x150.png').'">';
+        }
+        return $sendImg ;
+    }
+}
+
+if (!function_exists('TablePhotoFlag_Code')) {
+    function TablePhotoFlag_Code($row,$fildeName='photo_thum_1'){
+        if($row->$fildeName){
+            $sendImg = '<img  class="tableImg cust_country img-rounded" src="'.flagAssets("120/".$row->$fildeName).'.webp">';
         }else{
             $sendImg = '<img  class="tableImg img-rounded elevation-1" src="'.defAdminAssets('img/default-150x150.png').'">';
         }

@@ -9,13 +9,14 @@ class AppPuzzleTreeCrm {
 #|||||||||||||||||||||||||||||||||||||| #  ProductTree
     static function CrmTree() {
         $modelTree = [
+            'ImportData' => self::treeImportData(),
             'CrmCustomers' => self::treeCrmCustomers(),
         ];
         return $modelTree;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   treeCustomers
+#|||||||||||||||||||||||||||||||||||||| #
     static function treeCrmCustomers() {
         return [
             'view' => true,
@@ -31,11 +32,27 @@ class AppPuzzleTreeCrm {
             'seeder' => ['crm_customers.sql', 'crm_customers_address.sql'],
             'adminLangFolder' => "admin/crm/",
             'adminLangFiles' => ['customers.php'],
-//            'ComponentFolderClass' => ['Site/Customer'],
-//            'ComponentFolderView' => ['site/customer'],
 
         ];
     }
-
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    static function treeImportData() {
+        return [
+            'view' => true,
+            'id' => "ImportData",
+            'CopyFolder' => "Crm_ImportData",
+            'appFolder' => 'Crm/ImportData',
+            'viewFolder' => 'DataImport',
+            'routeFolder' => "crm/",
+            'routeFile' => 'ImportData.php',
+            'migrations' => [
+                '2020_01_01_000001_create_import_data_table.php',
+            ],
+            'seeder' => ['config_data_import.sql'],
+            'adminLangFolder' => "admin/crm/",
+            'adminLangFiles' => ['ImportData.php'],
+        ];
+    }
 
 }
