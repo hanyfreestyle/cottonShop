@@ -25,20 +25,24 @@ class CrmUniqueMobileNum implements ValidationRule {
 
 
         if ($attribute == 'mobile') {
+
             $count = DB::table('crm_customers')
                 ->where('id', "!=", $this->id)
                 ->Where('mobile', $value)
                 ->orWhere('mobile_2', $value)
                 ->orWhere('phone', $value)
-                ->orWhere('whatsapp', $value)
+//                ->orWhere('whatsapp', $value)
                 ->count();
+
+//            dd($count);
+
         }elseif ($attribute == 'mobile_2'){
             $count = DB::table('crm_customers')
                 ->where('id', "!=", $this->id)
                 ->Where('mobile_2', $value)
                 ->orWhere('mobile', $value)
                 ->orWhere('phone', $value)
-                ->orWhere('whatsapp', $value)
+//                ->orWhere('whatsapp', $value)
                 ->count();
         }elseif ($attribute == 'phone'){
             $count = DB::table('crm_customers')
@@ -46,7 +50,7 @@ class CrmUniqueMobileNum implements ValidationRule {
                 ->Where('phone', $value)
                 ->orWhere('mobile', $value)
                 ->orWhere('mobile_2', $value)
-                ->orWhere('whatsapp', $value)
+//                ->orWhere('whatsapp', $value)
                 ->count();
         }
 

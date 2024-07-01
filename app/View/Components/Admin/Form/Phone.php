@@ -37,7 +37,7 @@ class Phone extends Component {
         $inputclass = null,
         $value = null,
         $placeholder = false,
-        $initialCountry = 'eg',
+        $initialCountry = 'om',
         $style = null,
         $holder = false,
         $noLabel = null,

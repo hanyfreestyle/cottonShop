@@ -77,10 +77,10 @@ class CountryController extends AdminMainController {
                 "$table.phone as phone",
                 "$table.symbol as symbol",
                 "$table.is_active as is_active",
-                "$table_trans.name",
-                "$table_trans.capital as capital_name",
+                "$table_trans.name as name",
+                "$table_trans.capital as capital",
                 "$table_trans.continent as continent_name",
-                "$table_trans.currency as currency_name",
+                "$table_trans.currency as currency",
 
             );
 

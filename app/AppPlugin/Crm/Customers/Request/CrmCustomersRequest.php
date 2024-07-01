@@ -24,8 +24,19 @@ class CrmCustomersRequest extends FormRequest {
             'name' => "required|min:4",
             'mobile' => ['required', "phone:mobile,$mobileCode", 'different:mobile_2', 'different:phone', new CrmUniqueMobileNum($id)],
             'mobile_2' => ['nullable', "phone:mobile,$mobile_2Code", 'different:mobile', 'different:phone', new CrmUniqueMobileNum($id)],
-            'phone' => ['nullable', "phone:mobile,$phoneCode", 'different:mobile', 'different:mobile_2', new CrmUniqueMobileNum($id)],
         ];
+
+        if ($request->input('phoneAreaCode')) {
+            $rules += [
+                'phone' => ['nullable',"phone:!mobile,$phoneCode",'different:mobile','different:mobile_2', new
+                CrmUniqueMobileNum($id)],
+            ];
+        } else {
+            $rules += [
+                'phone' => ['nullable','different:mobile','different:mobile_2', new CrmUniqueMobileNum($id)],
+            ];
+        }
+
         if ($id == '0') {
             $rules += [
                 'whatsapp' => ['nullable', "phone:mobile,$whatsappCode", "unique:crm_customers"],
@@ -34,7 +45,7 @@ class CrmCustomersRequest extends FormRequest {
         } else {
             $rules += [
                 'whatsapp' => ['nullable', "phone:mobile,$whatsappCode", "unique:crm_customers,whatsapp,$id"],
-                'email' => "required|email|unique:crm_customers,email,$id",
+                'email' => "nullable|email|unique:crm_customers,email,$id",
             ];
         }
         return $rules;

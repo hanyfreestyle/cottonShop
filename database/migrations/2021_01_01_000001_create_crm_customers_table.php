@@ -10,12 +10,21 @@ return new class extends Migration {
 
         Schema::create('crm_customers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('mobile')->unique();
+            $table->string('mobile_code')->nullable();
+
             $table->string('mobile_2')->nullable()->unique();
+            $table->string('mobile_2_code')->nullable();
+
             $table->string('phone')->nullable()->unique();
-            $table->string('email')->nullable()->unique();
+            $table->string('phone_code')->nullable();
+
             $table->string('whatsapp')->nullable();
+            $table->string('whatsapp_code')->nullable();
+
+            $table->string('email')->nullable()->unique();
+
             $table->text("notes")->nullable();
 
             $table->boolean("is_active")->default(true);

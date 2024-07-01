@@ -60,15 +60,15 @@
 
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-                    {data: 'Flag', name: 'Flag', orderable: false, searchable: false},
+                    {data: 'Flag', name: 'Flag', orderable: false, searchable: false,className: "text-center"},
                     {data: 'iso2', name: 'iso2', orderable: true, searchable: true},
                     {data: 'iso3', name: 'iso3', orderable: true, searchable: true},
                     {data: 'phone', name: 'phone', orderable: true, searchable: true},
                     {data: 'symbol', name: 'symbol', orderable: true, searchable: true},
-                    {data: 'name', name: 'data_country_translations.name', orderable: true},
-                    {data: 'capital_name', name: 'capital_name', orderable: true, searchable: true},
-                    {data: 'currency_name', name: 'currency_name', orderable: true, searchable: true},
-                    {data: 'continent_name', name: 'continent_name', orderable: true, searchable: true},
+                    {data: 'name', name: 'data_country_translations.name', orderable: true,searchable: true},
+                    {data: 'capital', name: 'data_country_translations.capital', orderable: true, searchable: true},
+                    {data: 'currency', name: 'data_country_translations.currency', orderable: true, searchable: true},
+                    {data: 'continent_name', name: 'continent_name', orderable: true, searchable: false},
 
 
                         @can($PrefixRole.'_edit')

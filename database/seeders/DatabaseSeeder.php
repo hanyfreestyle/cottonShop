@@ -18,6 +18,7 @@ use App\AppPlugin\Config\Privacy\SeederWebPrivacy;
 use App\AppPlugin\Config\Apps\Seeder\AppSettingSeeder;
 use App\AppPlugin\Config\Branche\SeederBranch;
 
+use App\AppPlugin\Crm\Customers\Seeder\CrmCustomersSeeder;
 use App\AppPlugin\Crm\ImportData\ImportDataSeeder;
 use App\AppPlugin\Data\ConfigData\Seeder\ConfigDataSeeder;
 use App\AppPlugin\Data\Country\SeederCountry;
@@ -57,6 +58,9 @@ class DatabaseSeeder extends Seeder {
 
         if (File::isFile(base_path('routes/AppPlugin/crm/ImportData.php'))) {
             $this->call(ImportDataSeeder::class);
+        }
+        if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
+            $this->call(CrmCustomersSeeder::class);
         }
 
 

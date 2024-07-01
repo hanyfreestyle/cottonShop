@@ -17,9 +17,9 @@ class CrmCustomersSeeder extends Seeder {
         $tablePath = public_path('db/crm_customers.sql');
         DB::unprepared(file_get_contents($tablePath));
 
-        CrmCustomersAddress::unguard();
-        $tablePath = public_path('db/crm_customers_addresses.sql');
-        DB::unprepared(file_get_contents($tablePath));
+//        CrmCustomersAddress::unguard();
+//        $tablePath = public_path('db/crm_customers_addresses.sql');
+//        DB::unprepared(file_get_contents($tablePath));
 
    }
 
