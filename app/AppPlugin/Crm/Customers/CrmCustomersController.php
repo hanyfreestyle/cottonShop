@@ -75,20 +75,12 @@ class CrmCustomersController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     index
     public function index(Request $request) {
-
-//        $CustNames = CrmCustomers::where('name',null)->get();
-//        foreach ($CustNames as $name){
-//            $name->name = "عميل رقم ".$name->id ;
-//            $name->save();
-//        }
-
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
         $pageData['SubView'] = false;
 
         $session = self::getSessionData($request);
-//        dd($session);
         $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
 
         return view('AppPlugin.CrmCustomer.index')->with([
@@ -130,9 +122,7 @@ class CrmCustomersController extends AdminMainController {
             ->editColumn('Flag', function ($row) {
                 return TablePhotoFlag_Code($row, 'Flag');
             })
-//            ->editColumn('is_active', function ($row) {
-//                return is_active($row->is_active);
-//            })
+
             ->editColumn('Edit', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
             })
@@ -149,7 +139,6 @@ class CrmCustomersController extends AdminMainController {
         if (isset($session['is_active']) and $session['is_active'] != null) {
             $query->where('is_active', $session['is_active']);
         }
-
 
         if (isset($session['country_id']) and $session['country_id'] != null) {
             $Country =  Country::where('id',$session['country_id'])->first();
@@ -271,7 +260,7 @@ class CrmCustomersController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "CrmCustomer.index";
+        $subMenu->sel_routs = setActiveRoute("CrmCustomer");;
         $subMenu->url = "admin.CrmCustomer.index";
         $subMenu->name = "admin/crm/customers.app_menu_list";
         $subMenu->roleView = "crm_customer_view";
@@ -280,8 +269,8 @@ class CrmCustomersController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "CrmCustomer.create";
-        $subMenu->url = "admin.CrmCustomer.create";
+        $subMenu->sel_routs = "CrmCustomer.addNew";
+        $subMenu->url = "admin.CrmCustomer.addNew";
         $subMenu->name = "admin/crm/customers.app_menu_add";
         $subMenu->roleView = "crm_customer_add";
         $subMenu->icon = "fas fa-plus";
@@ -289,64 +278,8 @@ class CrmCustomersController extends AdminMainController {
     }
 
 
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| # CustomerLogin
-//    public function CustomerLogin($cart = '') {
-//
-//        $meta = parent::getMeatByCatId('login');
-//        parent::printSeoMeta($meta, 'page_index');
-//
-//        $pageView = $this->pageView;
-//        $pageView['SelMenu'] = 'profile_page';
-//        $pageView['page'] = 'login_page';
-//
-//        return view('AppPlugin.Customer.auth.login')->with([
-//            'pageView' => $pageView,
-//            'cart' => $cart,
-//            'meta' => $meta,
-//        ]);
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #  CustomerLoginCheck
-//    public function CustomerLoginCheck(UsersCustomersRequest $request, $Cart = null) {
-//        $credentials = array_merge($request->only('phone', "password"), ['is_active' => 1]);
-//        if(Auth::guard('customer')->attempt($credentials)) {
-//            $user = UsersCustomers::find(Auth::guard('customer')->user()->id);
-//            $user->last_login = now();
-//            $user->password_temp =null;
-//            $user->save();
-//            return redirect()->back();
-//        } else {
-//            return redirect()->route('Customer_login')->with('Error',__('web/profileMass.login_err'));
-//        }
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| # CustomerLogout
-//    public function CustomerLogout() {
-//        Auth::guard('customer')->logout();
-//        return redirect()->route('page_index');
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| # CustomerSignUp
-//    public function CustomerSignUp() {
-//
-//        $meta = parent::getMeatByCatId('sign_up');
-//        parent::printSeoMeta($meta, 'page_index');
-//
-//        $pageView = $this->pageView;
-//        $pageView['SelMenu'] = 'profile_page';
-//        $pageView['page'] = 'login_page';
-//
-//        return view('AppPlugin.Customer.auth.register')->with([
-//            'pageView' => $pageView,
-//            'meta' => $meta,
-//        ]);
-//
-//    }
-//
+
+
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#|||||||||||||||||||||||||||||||||||||| #     CustomerCreate
 //    public function CustomerCreate(UsersCustomerSignUpRequest $request) {

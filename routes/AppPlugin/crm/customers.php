@@ -9,6 +9,7 @@ Route::get('/crm/customers/',[CrmCustomersController::class,'index'])->name('Crm
 Route::post('/crm/customers/', [CrmCustomersController::class, 'index'])->name('CrmCustomer.filter');
 Route::get('crm/customers/DataTable',[CrmCustomersController::class,'DataTable'])->name('CrmCustomer.DataTable');
 Route::get('/crm/customers/create',[CrmCustomersController::class,'create'])->name('CrmCustomer.create');
+Route::get('/crm/customers/addNew',[CrmCustomersController::class,'create'])->name('CrmCustomer.addNew');
 Route::get('/crm/customers/edit/{id}',[CrmCustomersController::class,'edit'])->name('CrmCustomer.edit');
 Route::get('/crm/customers/emptyPhoto/{id}', [CrmCustomersController::class,'emptyPhoto'])->name('CrmCustomer.emptyPhoto');
 Route::post('/crm/customers/update/{id}',[CrmCustomersController::class,'storeUpdate'])->name('CrmCustomer.update');

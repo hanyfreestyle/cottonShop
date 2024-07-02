@@ -21,6 +21,7 @@ class SelectArr extends Component {
     public $applang;
     public $changelang;
     public $sendid;
+    public $addFilde;
 
     public function __construct(
         $name = "",
@@ -37,6 +38,7 @@ class SelectArr extends Component {
         $applang = null,
         $changelang = null,
         $sendid = 'id',
+        $addFilde = null,
 
     ) {
         $this->name = $name;
@@ -59,6 +61,9 @@ class SelectArr extends Component {
         } else {
             $this->changelang = 'ar';
         }
+
+        $this->addFilde = $addFilde;
+
 
     }
 

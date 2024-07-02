@@ -9,8 +9,8 @@
 
                 @if($AppPluginConfig['add_country'] and File::isFile(base_path('routes/AppPlugin/data/country.php')))
                     <div class="row mb-2">
-                        <x-admin.form.select-arr name="country_id" sendvalue="{{old('country_id',$rowData->country_id)}}" :labelview="false"
-                                                 :send-arr="$CashCountryList" label="{{__('admin/dataCity.form_country')}}" col="3"/>
+                        <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($rowData,'country_id',$AppPluginConfig['def_country']))"
+                                                 :labelview="false" add-filde="phone" :send-arr="$CashCountryList" label="{{__('admin/dataCity.form_country')}}" col="3"/>
                     </div>
                 @else
                     <input type="hidden" name="country_id" value="{{$AppPluginConfig['def_country']}}">

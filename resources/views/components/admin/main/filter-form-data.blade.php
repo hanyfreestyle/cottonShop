@@ -16,14 +16,14 @@
                     @if($countryId)
                         @if(File::isFile(base_path('routes/AppPlugin/data/country.php')))
                             <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($getSessionData,'country_id'))"
-                                                     :send-arr="$CashCountryList" label="{{__('admin/def.form_country')}}" :required-span="false" col="3"/>
+                                                 add-filde="phone" :send-arr="$CashCountryList" label="{{__('admin/def.form_country')}}" :required-span="false" col="3"/>
                         @endif
                     @endif
 
                     @if($cityId)
                         @if(issetArr($getSessionData,'country_id') and count($cityList) > 0 )
                             <x-admin.form.select-arr name="city_id" :sendvalue="old('city_id',issetArr($getSessionData,'city_id'))"
-                                                     :send-arr="$cityList" label="{{__('admin/dataArea.form_city')}}" :required-span="false" col="3"/>
+                                                     :send-arr="$cityList" label="{{__('admin/dataCity.form_city')}}" :required-span="false" col="3"/>
                         @endif
                     @endif
                 </div>

@@ -15,7 +15,7 @@
 
             @if($selectType == 'normal')
                 @foreach ($sendArr as  $key => $value)
-                    <option value="{{ $value[$sendid] }}" @if ($value[$sendid] == $sendvalue) selected @endif>{{ $value[$printValName] }}</option>
+                    <option value="{{ $value[$sendid] }}" @if ($value[$sendid] == $sendvalue) selected @endif> @if($addFilde) {{$value[$addFilde]}} @endif {{ $value[$printValName] }}</option>
                 @endforeach
 
             @elseif($selectType == 'ajax')

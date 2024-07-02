@@ -2,25 +2,6 @@
 
 return [
 
-//    "Product" => [
-//        "old_id" => false,
-//        "tags" => true,
-//        "brand" => true,
-//        "attribute" => true,
-//        "table_lang" => false,
-//        "table_photos" => false,
-//    ],
-
-//    "BlogPost" => [
-//        "tags" => true,
-//        "table_all_lang" => false,
-//        "table_photos" => false,
-//        "brand" => true,
-//        "youtube" => false,
-//        "review" => false,
-//    ],
-
-
     "Meta" => [
         "name" => true,
     ],
@@ -33,7 +14,7 @@ return [
         "seo" => false,
         "add_photo" => false,
         "add_country" => true,
-        "def_country" => 66,
+        "def_country" => 169,
         "deleteData" => false
     ],
 
