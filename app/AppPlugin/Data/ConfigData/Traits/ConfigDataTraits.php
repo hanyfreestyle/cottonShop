@@ -439,7 +439,7 @@ trait ConfigDataTraits {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
     static function selRouteList($Route) {
-        return $Route . ".index|" . $Route . ".create|" . $Route . ".edit|" . $Route . ".archived|" . $Route . ".config";
+        return $Route . ".index|" . $Route . ".filter|" . $Route . ".create|" . $Route . ".edit|" . $Route . ".archived|" . $Route . ".config";
     }
 }
 

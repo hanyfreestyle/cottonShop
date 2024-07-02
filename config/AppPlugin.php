@@ -22,9 +22,9 @@ return [
         "seo" => false,
         "add_photo" => false,
         "add_country" => true,
-        "def_country" => 66,
+        "def_country" => 169,
         "add_city" => true,
-        "def_city" => 1,
+        "def_city" => null,
         "deleteData" => false
     ],
 

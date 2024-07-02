@@ -8,8 +8,10 @@
                 @csrf
                 <div class="row mb-2">
                     @if($AppPluginConfig['add_country']  and File::isFile(base_path('routes/AppPlugin/data/country.php')))
-                        <x-admin.form.select-arr name="country_id" sendvalue="{{old('country_id',$rowData->country_id)}}" :labelview="false"
-                                                 :send-arr="$CashCountryList" label="{{__('admin/dataCity.form_country')}}" col="3"/>
+
+                        <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($rowData,'country_id',$AppPluginConfig['def_country']))"
+                                                 :labelview="false" add-filde="phone" :send-arr="$CashCountryList" label="{{__('admin/dataCity.form_country')}}" col="3"/>
+
                         <x-admin.form.select-arr name="city_id" sendvalue="{{old('city_id',$rowData->city_id)}}" :labelview="false"
                                                  select-type="ajax" :send-arr="$citylist" label="{{__('admin/dataArea.form_sel_city')}}" col="3"/>
                     @else
