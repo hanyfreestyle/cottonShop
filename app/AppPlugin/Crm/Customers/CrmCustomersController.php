@@ -5,14 +5,20 @@ namespace App\AppPlugin\Crm\Customers;
 
 use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
+use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersRequest;
 
+use App\AppPlugin\Customers\Models\UsersCustomersAddress;
+use App\AppPlugin\Data\Area\Models\Area;
+use App\AppPlugin\Data\City\Models\City;
 use App\AppPlugin\Data\Country\Country;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 
@@ -28,7 +34,7 @@ class CrmCustomersController extends AdminMainController {
         $this->defLang = "admin/crm/customers.";
         View::share('defLang', $this->defLang);
 
-        $this->defCountry = "om";
+        $this->defCountry = "eg";
         View::share('defCountry', $this->defCountry);
 
         $this->phoneAreaCode = false;
@@ -38,11 +44,10 @@ class CrmCustomersController extends AdminMainController {
         View::share('CashCountryList', $CashCountryList);
 
         $this->Config = [
-            'addAddress'=> true,
+            'addAddress' => true,
         ];
 
         View::share('Config', $this->Config);
-
 
 
         $this->PageTitle = __($this->defLang . 'app_menu');
@@ -105,10 +110,12 @@ class CrmCustomersController extends AdminMainController {
 
 
         $rowData = CrmCustomers::findOrNew(0);
+        $rowDataAdress = CrmCustomersAddress::query()->where('customer_id', 0)->firstOrNew();
 
         return view('AppPlugin.CrmCustomer.form')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
+            'rowDataAdress' => $rowDataAdress,
         ]);
 
     }
@@ -119,10 +126,15 @@ class CrmCustomersController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
-        $rowData = CrmCustomers::where('id', $id)->firstOrFail();
+        $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
+
+        $rowDataAdress = CrmCustomersAddress::where('is_default',true)->where('customer_id', $rowData->id)->firstOrNew();
+
         return view('AppPlugin.CrmCustomer.form')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
+            'rowDataAdress' => $rowDataAdress,
+
         ]);
     }
 
@@ -188,14 +200,49 @@ class CrmCustomersController extends AdminMainController {
                 $saveData->save();
 
 
+                if ($this->Config['addAddress']) {
+                    $addressId = intval($request->input('address_id'));
+                    if ($addressId == 0) {
+                        $saveAddress = new CrmCustomersAddress();
+                        $saveAddress->is_default = true;
+                        $saveAddress = self::saveAddressFilde($saveAddress,$saveData,$request);
+                        if ( $saveAddress->country_id == null){
+                            $saveAddress->country_id = Country::where('iso2',$request->input('countryCode_mobile'))->first()->id ;
+                        }
+                        $saveAddress->save();
+                    } else {
+                        $saveAddress = CrmCustomersAddress::query()->where('id', $addressId)->firstOrFail();
+                        $saveAddress = self::saveAddressFilde($saveAddress,$saveData,$request);
+                        $saveAddress->save();
+                    }
+                }
             });
-
         } catch (\Exception $exception) {
-             return back()->with('data_not_save', "");
+            return back()->with('data_not_save', "");
         }
 
         return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function saveAddressFilde($saveAddress,$saveData,$request) {
+        $saveAddress->uuid = Str::uuid()->toString();
+        $saveAddress->customer_id = $saveData->id ;
+
+        $saveAddress->country_id = $request->input('country_id');
+        $saveAddress->city_id = $request->input('city_id');
+        $saveAddress->area_id  = $request->input('area_id');
+
+        $saveAddress->address = $request->input('address');
+        $saveAddress->floor = $request->input('floor');
+        $saveAddress->post_code = $request->input('post_code');
+        $saveAddress->unit_num = $request->input('unit_num');
+        $saveAddress->latitude = $request->input('latitude');
+        $saveAddress->longitude = $request->input('longitude');
+        return $saveAddress ;
+    }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #  DataTableAddColumns
     public function DataTableColumns($data, $arr = array()) {
@@ -204,7 +251,6 @@ class CrmCustomersController extends AdminMainController {
             ->editColumn('Flag', function ($row) {
                 return TablePhotoFlag_Code($row, 'Flag');
             })
-
             ->editColumn('Edit', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
             })
@@ -224,7 +270,7 @@ class CrmCustomersController extends AdminMainController {
         }
 
         if (isset($session['country_id']) and $session['country_id'] != null) {
-            $Country =  Country::where('id',$session['country_id'])->first();
+            $Country = Country::where('id', $session['country_id'])->first();
             $mobile_code = strtolower($Country->iso2);
             $query->where('mobile_code', $mobile_code);
         }

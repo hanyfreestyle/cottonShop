@@ -37,6 +37,17 @@ class CrmCustomersRequest extends FormRequest {
             ];
         }
 
+        if ($request->input('addAddress')) {
+            $rules += [
+                'address' => "nullable|min:4",
+                'floor'=> "nullable|min:1",
+                'unit_num'=> "nullable",
+                'post_code'=> 'nullable|regex:/^[0-9]{3,7}$/',
+                'latitude'=> "nullable|numeric|required_with:latitude",
+                'longitude'=> "nullable|numeric|required_with:longitude",
+            ];
+        }
+
         if ($id == '0') {
             $rules += [
                 'whatsapp' => ['nullable', "phone:mobile,$whatsappCode", "unique:crm_customers"],

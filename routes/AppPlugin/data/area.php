@@ -14,5 +14,5 @@ Route::post('/area/update/{id}',[AreaController::class,'storeUpdate'])->name('da
 Route::get('/area/destroy/{id}',[AreaController::class,'ForceDeleteException'])->name('data.DataArea.destroy');
 //Route::get('/area/config', [AreaController::class,'config'])->name('data.DataArea.config');
 Route::post('/api/fetch-city', [AreaController::class,'fetchCity'])->name('api.fetch-city');
-
+Route::post('/api/fetch-area', [AreaController::class,'fetchArea'])->name('api.fetch-area');
 

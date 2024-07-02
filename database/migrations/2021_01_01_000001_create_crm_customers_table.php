@@ -35,20 +35,19 @@ return new class extends Migration {
         Schema::create('crm_customers_address', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid()->unique();
+            $table->boolean("is_default")->default(false);
             $table->unsignedBigInteger('customer_id');
-
-            $table->string("name");
-
 
             $table->integer('country_id')->nullable();
             $table->integer('city_id')->nullable();
             $table->integer('area_id')->nullable();
 
-            $table->text("address");
-            $table->string("floor");
-            $table->string("unit_num");
-            $table->boolean("is_default")->default(false);
-
+            $table->text("address")->nullable();
+            $table->string("floor")->nullable();
+            $table->string("unit_num")->nullable();
+            $table->string("post_code")->nullable();
+            $table->string("latitude")->nullable();
+            $table->string("longitude")->nullable();
 
             $table->foreign('customer_id')->references('id')->on('crm_customers')->onDelete('cascade');
 

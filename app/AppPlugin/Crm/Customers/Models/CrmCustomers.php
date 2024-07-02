@@ -4,6 +4,7 @@ namespace App\AppPlugin\Crm\Customers\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 class CrmCustomers extends Model {
@@ -14,6 +15,10 @@ class CrmCustomers extends Model {
 
     public function scopeDef(Builder $query): Builder {
         return $query->where('id','!=',0);
+    }
+
+    public function address(): HasMany {
+        return $this->hasMany(CrmCustomersAddress::class,'customer_id','id');
     }
 
 }
