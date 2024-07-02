@@ -43,12 +43,12 @@ return new class extends Migration {
             $table->integer('country_id')->nullable();
             $table->integer('city_id')->nullable();
             $table->integer('area_id')->nullable();
-            $table->text("address");
 
+            $table->text("address");
             $table->string("floor");
             $table->string("unit_num");
-
             $table->boolean("is_default")->default(false);
+
 
             $table->foreign('customer_id')->references('id')->on('crm_customers')->onDelete('cascade');
 

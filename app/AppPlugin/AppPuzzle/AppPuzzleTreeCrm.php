@@ -32,6 +32,8 @@ class AppPuzzleTreeCrm {
             'seeder' => ['crm_customers.sql', 'crm_customers_address.sql'],
             'adminLangFolder' => "admin/crm/",
             'adminLangFiles' => ['customers.php'],
+            'ComponentFolderClass' => ['AppPlugin/Crm/Customers'],
+            'ComponentFolderView' => ['app-plugin/crm/customers'],
 
         ];
     }

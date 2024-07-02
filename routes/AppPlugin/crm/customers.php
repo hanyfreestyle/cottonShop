@@ -15,8 +15,9 @@ Route::get('/crm/customers/emptyPhoto/{id}', [CrmCustomersController::class,'emp
 Route::post('/crm/customers/update/{id}',[CrmCustomersController::class,'storeUpdate'])->name('CrmCustomer.update');
 Route::get('/crm/customers/destroy/{id}',[CrmCustomersController::class,'ForceDeleteException'])->name('CrmCustomer.destroy');
 Route::get('/crm/customers/config', [CrmCustomersController::class,'config'])->name('CrmCustomer.config');
-
 Route::get('/crm/customers/repeat/{num}',[CrmCustomersController::class,'repeat'])->name('CrmCustomer.repeat');
+
+
 
 
 

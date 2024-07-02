@@ -19,7 +19,6 @@ use Yajra\DataTables\Facades\DataTables;
 class CrmCustomersController extends AdminMainController {
     use CrudTraits;
 
-
     function __construct() {
         parent::__construct();
         $this->controllerName = "CrmCustomer";
@@ -31,11 +30,19 @@ class CrmCustomersController extends AdminMainController {
 
         $this->defCountry = "om";
         View::share('defCountry', $this->defCountry);
+
         $this->phoneAreaCode = false;
         View::share('phoneAreaCode', $this->phoneAreaCode);
 
         $CashCountryList = self::CashCountryList();
         View::share('CashCountryList', $CashCountryList);
+
+        $this->Config = [
+            'addAddress'=> true,
+        ];
+
+        View::share('Config', $this->Config);
+
 
 
         $this->PageTitle = __($this->defLang . 'app_menu');
@@ -90,6 +97,36 @@ class CrmCustomersController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #     create
+    public function create() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Add";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_add');
+
+
+        $rowData = CrmCustomers::findOrNew(0);
+
+        return view('AppPlugin.CrmCustomer.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
+
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #     edit
+    public function edit($id) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
+        $rowData = CrmCustomers::where('id', $id)->firstOrFail();
+        return view('AppPlugin.CrmCustomer.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     indexQuery
     public function indexQuery() {
         $table = "crm_customers";
@@ -114,6 +151,51 @@ class CrmCustomersController extends AdminMainController {
         }
     }
 
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+    public function storeUpdate(CrmCustomersRequest $request, $id = 0) {
+
+        $saveData = CrmCustomers::findOrNew($id);
+
+        try {
+            DB::transaction(function () use ($request, $saveData) {
+
+                $saveData->is_active = intval((bool)$request->input('is_active'));
+
+                $saveData->name = $request->input('name');
+                $saveData->mobile = $request->input('mobile');
+                $saveData->mobile_code = $request->input('countryCode_mobile');
+
+                $saveData->mobile_2 = $request->input('mobile_2');
+                if ($request->input('mobile_2')) {
+                    $saveData->mobile_2_code = $request->input('countryCode_mobile_2');
+                }
+
+                $saveData->phone = $request->input('phone');
+                if ($request->input('phone')) {
+                    $saveData->phone_code = $request->input('countryCode_phone');
+                }
+
+                $saveData->whatsapp = $request->input('whatsapp');
+                if ($request->input('whatsapp')) {
+                    $saveData->whatsapp_code = $request->input('countryCode_whatsapp');
+                }
+
+                $saveData->email = $request->input('email');
+                $saveData->notes = $request->input('notes');
+                $saveData->save();
+
+
+            });
+
+        } catch (\Exception $exception) {
+             return back()->with('data_not_save', "");
+        }
+
+        return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
+    }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #  DataTableAddColumns
     public function DataTableColumns($data, $arr = array()) {
@@ -131,6 +213,7 @@ class CrmCustomersController extends AdminMainController {
             })
             ->rawColumns(['Edit', "Delete", 'is_active', 'Flag']);
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
     static function CustomerDataFilterQ($query, $session, $order = null) {
@@ -173,80 +256,6 @@ class CrmCustomersController extends AdminMainController {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     create
-    public function create() {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "Add";
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_add');
-
-
-        $rowData = CrmCustomers::findOrNew(0);
-
-        return view('AppPlugin.CrmCustomer.form')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-        ]);
-
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     edit
-    public function edit($id) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "Edit";
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
-        $rowData = CrmCustomers::where('id', $id)->firstOrFail();
-        return view('AppPlugin.CrmCustomer.form')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-        ]);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
-    public function storeUpdate(CrmCustomersRequest $request, $id = 0) {
-
-        $saveData = CrmCustomers::findOrNew($id);
-
-        try {
-            DB::transaction(function () use ($request, $saveData) {
-
-                $saveData->is_active = intval((bool)$request->input('is_active'));
-
-                $saveData->name = $request->input('name');
-                $saveData->mobile = $request->input('mobile');
-                $saveData->mobile_code = $request->input('countryCode_mobile');
-
-                $saveData->mobile_2 = $request->input('mobile_2');
-                if ($request->input('mobile_2')) {
-                    $saveData->mobile_2_code = $request->input('countryCode_mobile_2');
-                }
-
-                $saveData->phone = $request->input('phone');
-                if ($request->input('phone')) {
-                    $saveData->phone_code = $request->input('countryCode_phone');
-                }
-
-                $saveData->whatsapp = $request->input('whatsapp');
-                if ($request->input('whatsapp')) {
-                    $saveData->whatsapp_code = $request->input('countryCode_whatsapp');
-                }
-
-                $saveData->email = $request->input('email');
-                $saveData->notes = $request->input('notes');
-                $saveData->save();
-
-
-            });
-
-        } catch (\Exception $exception) {
-//            return back()->with('data_not_save', "");
-        }
-
-        return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #   AdminMenu
     static function AdminMenu() {
 
@@ -276,34 +285,5 @@ class CrmCustomersController extends AdminMainController {
         $subMenu->icon = "fas fa-plus";
         $subMenu->save();
     }
-
-
-
-
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #     CustomerCreate
-//    public function CustomerCreate(UsersCustomerSignUpRequest $request) {
-//
-//        $user = new UsersCustomers();
-//
-//        $user->name = $request->input('name');
-//        $user->email = $request->input('email');
-//        $user->phone = $request->input('phone');
-//        $user->password = \Hash::make($request->password);
-//        $user->last_login = now();
-//        $user->save();
-//
-//        try {
-//            $user->save();
-//            Auth::guard('customer')->login($user);
-//
-//        } catch (\Exception $e) {
-//            $err = $e->getMessage();
-//            return redirect()->back()->with('err', "dddddd");
-//
-//        }
-//        return redirect()->route('Customer_Profile');
-//    }
-
 
 }

@@ -2,46 +2,25 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
-    <x-admin.form.form-section :row-data="$rowData" :page-data="$pageData">
-        <input type="hidden" name="phoneAreaCode" value="{{$phoneAreaCode}}" dir="ltr">
 
-        <div class="row">
-            <x-admin.form.input name="name" :row="$rowData" :label="__($defLang.'form_name')" col="6" tdir="ar"/>
-            <x-admin.form.select-data name="evaluation_id" :row="$rowData" cat-id="EvaluationCust" :label="__($defLang.'form_evaluation')" :req="false"/>
-        </div>
+    <x-admin.form.form-def :form-route="route($PrefixRoute.'.update',intval($rowData->id))" :row-data="$rowData" :page-data="$pageData">
 
-        <div class="row">
-            <x-admin.form.phone name="mobile" :row="$rowData" :label="__($defLang.'form_mobile')" :initial-country="issetArr($rowData,'mobile_code',$defCountry)" col="3"/>
-            <x-admin.form.phone name="mobile_2" :row="$rowData" :label="__($defLang.'form_mobile_2')" :initial-country="issetArr($rowData,'mobile_2_code',$defCountry)" col="3"
-                                :req="false"/>
-            <x-admin.form.phone name="phone" :row="$rowData" :label="__($defLang.'form_phone')" :initial-country="issetArr($rowData,'phone_code',$defCountry)" col="3"
-                                :req="false"/>
-            <x-admin.form.phone name="whatsapp" :row="$rowData" :label="__($defLang.'form_whatsapp')" :initial-country="issetArr($rowData,'whatsapp_code',$defCountry)" col="3"
-                                :req="false"/>
-        </div>
+{{--        <x-app-plugin.crm.customers.form-def :row-data="$rowData" :title="__('admin/crm/customers.box_def')"/>--}}
+
+        <x-app-plugin.crm.customers.form-address :row-data="$rowData" :title="__('admin/crm/customers.box_address')"/>
 
 
-        <div class="row">
-            <x-admin.form.input name="email" :row="$rowData" :label="__($defLang.'form_email')" col="3" tdir="en" :req="false"/>
-        </div>
 
-        <x-admin.form.textarea name="notes" :row="$rowData" :label="__($defLang.'form_notes')" col="12" tdir="en" :required-span="false"/>
-        <hr>
-
-        @if($pageData['ViewType'] == 'Add')
-
-        @endif
+{{--        <div class="box_form">--}}
+{{--            <span class="box_title">fsdfsdf</span>--}}
+{{--            <div class="row">--}}
+{{--                <x-admin.form.textarea name="notes" :row="$rowData" :label="__($defLang.'form_notes')" col="6" tdir="en" :req="false"/>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
 
-        <div class="row">
-            <x-admin.form.check-active :row="$rowData" name="is_active" page-view="{{$pageData['ViewType']}}"/>
-        </div>
-        <hr>
         <x-admin.form.submit-role-back :page-data="$pageData"/>
-
-    </x-admin.form.form-section>
-
-
+    </x-admin.form.form-def>
 
 @endsection
 
