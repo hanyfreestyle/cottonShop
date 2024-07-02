@@ -16,16 +16,26 @@
                     @if($countryId)
                         @if(File::isFile(base_path('routes/AppPlugin/data/country.php')))
                             <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($getSessionData,'country_id'))"
-                                                 add-filde="phone" :send-arr="$CashCountryList" label="{{__('admin/def.form_country')}}" :required-span="false" col="3"/>
+                                                     add-filde="phone" :send-arr="$CashCountryList" label="{{__('admin/def.form_country')}}" :required-span="false"
+                                                     col="3"/>
                         @endif
                     @endif
 
                     @if($cityId)
                         @if(issetArr($getSessionData,'country_id') and count($cityList) > 0 )
                             <x-admin.form.select-arr name="city_id" :sendvalue="old('city_id',issetArr($getSessionData,'city_id'))"
-                                                     :send-arr="$cityList" label="{{__('admin/dataCity.form_city')}}" :required-span="false" col="3"/>
+                                                     :send-arr="$cityList" label="{{__('admin/dataArea.form_sel_city')}}" :required-span="false" col="3"/>
                         @endif
                     @endif
+
+                    @if($areaId)
+                        @if(issetArr($getSessionData,'city_id') and count($areaList) > 0 )
+                            <x-admin.form.select-arr name="area_id" :sendvalue="old('area_id',issetArr($getSessionData,'area_id'))"
+                                                     :send-arr="$areaList" label="{{__('admin/dataArea.form_sel_area')}}" :required-span="false" col="3"/>
+                        @endif
+                    @endif
+
+
                 </div>
                 <div class="row formFilterBut">
                     <button type="submit" name="Forget" class="btn btn-dark btn-sm"><i class="fas fa-filter"></i> {{__('admin/formFilter.but_filter')}}</button>

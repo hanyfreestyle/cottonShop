@@ -115,9 +115,47 @@ class AdminMainController extends DefaultMainController {
                 'from_date' => 'nullable|date|date_format:Y-m-d',
                 'to_date' => 'nullable|date|after_or_equal:from_date',
             ]);
+
+            $session = Session::get($this->formName);
+            if($session){
+                if($request->input('country_id')){
+                    if(issetArr($session,'country_id',null) != $request->input('country_id')){
+                        $request['city_id'] = null;
+                        $request['area_id'] = null;
+                    }
+                }
+                if($request->input('city_id')){
+                    if(issetArr($session,'city_id',null) != $request->input('city_id')){
+                        $request['area_id'] = null;
+                    }
+                }
+            }
+
+
+//            if($request->input('country_id')){
+//                $session = Session::get($this->formName);
+//                if($session){
+//                    if($session['country_id'] != $request->input('country_id')){
+//                        $request['city_id'] = null;
+//                        $request['area_id'] = null;
+//                    }
+//                }
+//            }
+//
+//            if($request->input('city_id')){
+//                $session = Session::get($this->formName);
+//                if($session){
+//                    if($session['city_id'] != $request->input('city_id')){
+//                        $request['area_id'] = null;
+//                    }
+//                }
+//            }
+
             Session::put($this->formName, $request->all());
             Session::save();
+
         }
+
         $session = Session::get($this->formName);
         return $session;
     }

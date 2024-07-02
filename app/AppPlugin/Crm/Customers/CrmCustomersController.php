@@ -62,7 +62,7 @@ class CrmCustomersController extends AdminMainController {
             'yajraTable' => true,
             'AddLang' => false,
             'restore' => 0,
-            'formName' => "AreaFilter",
+            'formName' => "CrmCustomersFilter",
         ];
 
         self::loadConstructData($sendArr);
@@ -93,7 +93,11 @@ class CrmCustomersController extends AdminMainController {
         $pageData['SubView'] = false;
 
         $session = self::getSessionData($request);
+//        dd($session);
         $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
+
+
+//        dd($rowData->get());
 
         return view('AppPlugin.CrmCustomer.index')->with([
             'pageData' => $pageData,
@@ -141,14 +145,23 @@ class CrmCustomersController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     indexQuery
     public function indexQuery() {
-        $table = "crm_customers";
-        $data = DB::table($table)
-            ->select("$table.id as id",
-                "$table.name as name",
-                "$table.mobile  as mobile",
-                "$table.whatsapp as whatsapp",
-                "$table.mobile_code as Flag",
-            );
+//        $table = "crm_customers";
+//        $table_address = "crm_customers_address";
+//        $data = DB::table($table)
+//            ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
+//            ->select("$table.id as id",
+//                "$table.name as name",
+//                "$table.mobile  as mobile",
+//                "$table.whatsapp as whatsapp",
+//                "$table.mobile_code as Flag",
+//                "$table_address.country_id as country_id",
+//                "$table_address.city_id as city_id",
+//                "$table_address.area_id as area_id",
+//            );
+//
+//        return $data;
+
+        $data = CrmCustomers::where('id','!=',0)->with('address');
 
         return $data;
     }
@@ -246,7 +259,7 @@ class CrmCustomersController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #  DataTableAddColumns
     public function DataTableColumns($data, $arr = array()) {
-        return DataTables::query($data)
+        return DataTables::eloquent($data)
             ->addIndexColumn()
             ->editColumn('Flag', function ($row) {
                 return TablePhotoFlag_Code($row, 'Flag');
@@ -270,10 +283,26 @@ class CrmCustomersController extends AdminMainController {
         }
 
         if (isset($session['country_id']) and $session['country_id'] != null) {
-            $Country = Country::where('id', $session['country_id'])->first();
-            $mobile_code = strtolower($Country->iso2);
-            $query->where('mobile_code', $mobile_code);
+            $country_id = $session['country_id'] ;
+            $query->whereHas('address', function ($query) use ($country_id) {
+                $query->where('country_id', $country_id);
+            });
         }
+
+        if (isset($session['city_id']) and $session['city_id'] != null) {
+            $city_id = $session['city_id'] ;
+            $query->whereHas('address', function ($query) use ($city_id) {
+                $query->where('city_id', $city_id);
+            });
+        }
+
+        if (isset($session['area_id']) and $session['area_id'] != null) {
+            $area_id = $session['area_id'] ;
+            $query->whereHas('address', function ($query) use ($area_id) {
+                $query->where('area_id', $area_id);
+            });
+        }
+
 
 //        if (isset($session['country_id']) and $session['country_id'] != null) {
 //            if ($formName == "CityFilter") {

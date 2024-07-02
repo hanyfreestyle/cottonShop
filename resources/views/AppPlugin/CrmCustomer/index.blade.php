@@ -7,7 +7,7 @@
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
-        <x-admin.main.filter-form-data form-name="{{$formName}}" :row="$rowData" :country-id="true" :city-id="true"/>
+        <x-admin.main.filter-form-data form-name="{{$formName}}" :row="$rowData" :country-id="true" :city-id="true" :area-id="true"/>
 
         <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
             <table {!!Table_Style(true,true) !!} >
