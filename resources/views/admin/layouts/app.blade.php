@@ -31,6 +31,7 @@
         <link rel="stylesheet" href="{{ defAdminAssets('rtl/css/adminlte-rtl.css') }}">
         <link rel="stylesheet" href="{{ defAdminAssets('rtl/css/custom.css') }}">
         <link rel="stylesheet" href="{{ defAdminAssets('css/custom_ar.css') }}">
+        <link rel="stylesheet" href="{{ defAdminAssets('css/chart.css') }}">
     @elseif( thisCurrentLocale() == 'en')
         <link rel="stylesheet" href="{{ defAdminAssets('css/custom_en.css') }}">
     @endif

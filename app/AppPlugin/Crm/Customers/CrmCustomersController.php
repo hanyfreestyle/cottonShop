@@ -8,6 +8,7 @@ use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersRequest;
 
+use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\AppPlugin\Data\Country\Country;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
@@ -72,8 +73,36 @@ class CrmCustomersController extends AdminMainController {
         $pageData['ViewType'] = "List";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_repeat');
 
+        $AllData = CrmCustomers::all();
+        $evaluationData =  ConfigData::query()->where('cat_id','EvaluationCust')
+            ->withCount('Evaluation')
+            ->with('translation')
+            ->orderBy('evaluation_count','desc')
+            ->get();
+
+
+
+
+//        dd($evaluationData);
+//
+//
+////        dd($evaluationData->groupBy('id')->toArray());
+//        $evaluationData = $AllData->groupBy('evaluation_id')->toArray();
+//        dd($evaluationData);
+//        foreach ($evaluationData as $evaluation){
+//            echobr($evaluation->name);
+//        }
+
+
+
+
+
+
+
         return view('AppPlugin.CrmCustomer.report')->with([
             'pageData' => $pageData,
+            'AllData' => $AllData,
+            'evaluationData' => $evaluationData,
 
         ]);
 

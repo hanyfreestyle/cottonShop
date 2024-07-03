@@ -3,6 +3,7 @@
 namespace App\AppPlugin\Data\ConfigData\Models;
 
 
+use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Builder;
@@ -37,6 +38,11 @@ class ConfigData extends Model implements TranslatableContract {
 
             ;
 //        ->select('id','data_id','name','locale')
+    }
+
+
+    public function Evaluation(): HasMany {
+        return $this->hasMany(CrmCustomers::class,'evaluation_id','id');
     }
 
 }

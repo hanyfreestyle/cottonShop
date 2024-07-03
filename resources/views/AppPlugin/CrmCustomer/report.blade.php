@@ -1,94 +1,144 @@
 @extends('admin.layouts.app')
 
 @section('StyleFile')
+<style>
+    /*
+    .My_Chart_Legend{
+        direction:rtl;
+        text-align:right;
+        margin-top:5px;
+        font-size:17px!important;
+        margin-left:10px;
+        margin-right:10px;
+    }
+    .My_Chart_Legend{
+        padding-right:5px!important;
+        padding-left:5px!important;
+        padding-top:8px!important;
+    }
+    .My_Chart_Legend{
+        padding-top:8px!important;
+        font-size:12px;
+    }
 
+    .My_Chart_Container{
+        width: 100%;
+        height: 300px;
+        padding-bottom:10px;
+        margin-bottom:5px;
+        border-bottom:1px solid #CCCCCC;
+    }
+    .My_Chart_Container .placeholder{
+        width: 100%;
+        height: 100%;
+        background-color: red;
+    }
+    /*
+
+
+
+
+
+    .ChartTitle{
+        padding-bottom:5px;
+        margin-bottom:5px;
+        border-bottom:1px solid #CCCCCC;
+        font-size:14px;
+    }
+    .legend{
+        direction:rtl!important
+    }
+    .legend table {
+        direction:rtl!important;
+        text-align:right;
+        font-size:14px!important;
+    }
+    .adoptionLegendContainer2{
+        direction:rtl!important;
+        text-align:right;
+        font-size:140px!important;
+    }
+
+    .thumbUploadPhto{
+        margin:15px;
+        max-width:250px;
+        background-color:#FFFFFF;
+        border:1px solid #CCCCCC;
+        padding:4px;
+    }
+    */
+
+</style>
 @endsection
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
 
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card card-danger">
-                        <div class="card-header">
-                            <h3 class="card-title">Donut Chart</h3>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="hany" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                        </div>
-                    </div>
+    <x-admin.hmtl.section>
+
+        <div class="row">
+            <x-admin.card.normal col="col-lg-3">
+                <div class="My_Chart_Container">
+                    <div id="demo1" class="placeholder"></div>
                 </div>
+                <div class="My_Chart_Legend demo1"></div>
+            </x-admin.card.normal>
 
-                <div class="col-md-6">
-                    <div class="card card-danger">
-                        <div class="card-header">
-                            <h3 class="card-title">Pie Chart</h3>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
 
         </div>
-    </section>
-    {{--    <x-admin.hmtl.section>--}}
-    {{--        <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">--}}
+    </x-admin.hmtl.section>
 
-    {{--        </x-admin.card.def>--}}
-    {{--    </x-admin.hmtl.section>--}}
+
 @endsection
 
 @section('AddScript')
-    <script src="{{ defAdminAssets('plugins/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ defAdminAssets('flot/jquery.flot.min.js') }}"></script>
+    <script src="{{ defAdminAssets('flot/jquery.flot.pie.min.js') }}"></script>
 @endsection
+
 @push('JsCode')
-    <script>
+
+    <script type="text/javascript">
+
         $(function () {
-            //-------------
-            //- DONUT CHART -
-            //-------------
-            // Get context with jQuery - using jQuery's .get() method.
-            var donutChartCanvas = $('#hany').get(0).getContext('2d')
-            var donutData = {
-                labels: [
-                    'hany',
-                    'IE',
-                    'FireFox',
-                    'Safari',
-                    'Opera',
-                    'Navigator',
-                ],
-                datasets: [
-                    {
-                        data: [700, 500, 400, 600, 300, 100],
-                        backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+            var data = [
+            	{ label: "Series1",  data: 50},
+            	{ label: "Series2",  data: 30},
+            	{ label: "Series3",  data: 10},
+
+            	{ label: "Series4",  data: 10,color:"#000"},
+            ];
+
+            $.plot('#demo1', data, {
+                colors: ["#b2d766", "#ff8154", "#878bb8",  "#ffe989", "#4ac9b4"],
+                series: {
+                    pie: {
+                        show: true,
+                        radius: 1,
+                        innerRadius: 0.5,
+                        label: {
+                            show: true,
+                            radius: 3/4,
+                            formatter: labelFormatter,
+                            background: {
+                                opacity: 0.8,
+                                color: '#000'
+                            }
+                        }
                     }
-                ]
+                },
+                legend: {
+                    show: true,
+                    container: ".demo1",
+                }
+            });
+
+            function labelFormatter(label, series) {
+                return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + Math.round(series.percent) + "%</div>";
             }
-            var donutOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-            }
-            //Create pie or douhnut chart
-            // You can switch between pie and doughnut using the method below.
-            var donutChart = new Chart(donutChartCanvas, {
-                type: 'doughnut',
-                data: donutData,
-                options: donutOptions
-            })
+    });
 
 
-
-
-
-
-        })
     </script>
 @endpush
 
