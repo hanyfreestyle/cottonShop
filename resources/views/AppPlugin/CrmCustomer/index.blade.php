@@ -20,7 +20,7 @@
 @endsection
 
 @push('JsCode')
-    <x-admin.table.sweet-delete-js/>
+    <x-admin.data-table.sweet-dalete/>
     <x-admin.data-table.plugins :jscode="true" :is-active="true"/>
     <script type="text/javascript">
         $(function () {

@@ -16,6 +16,7 @@ Route::get('/AppPuzzle/Import/{model}', [AppPuzzleController::class, 'ImportMode
 Route::get('/AppPuzzle/Remove/{model}', [AppPuzzleController::class, 'RemoveModel'])->name('AppPuzzle.Remove');
 Route::get('/AppPuzzle/CoreFiles', [AppPuzzleTreeAppCore::class, 'ExportCoreFiles'])->name('AppPuzzle.CoreFiles');
 Route::get('/AppPuzzle/AssetsFiles', [AppPuzzleTreeAppCore::class, 'ExportAssetsFiles'])->name('AppPuzzle.AssetsFiles');
+Route::get('/AppPuzzle/AssetsCssFiles', [AppPuzzleTreeAppCore::class, 'ExportAssetsCssFiles'])->name('AppPuzzle.AssetsCssFiles');
 //Route::get('/AppPuzzle/Info/{model}',[AppPuzzleController::class,'InfoModel'])->name('AppPuzzle.InfoModel');
 
 

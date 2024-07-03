@@ -9,6 +9,8 @@ use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersRequest;
 
 use App\AppPlugin\Data\Country\Country;
+use App\AppPlugin\Product\Models\Product;
+use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
 use Illuminate\Http\Request;
@@ -288,6 +290,38 @@ class CrmCustomersController extends AdminMainController {
         return $query;
     }
 
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #     ForceDeleteException
+    public function ForceDeleteException($id) {
+
+        $deleteRow = CrmCustomers::query()->where('id', $id)
+            ->firstOrFail();
+        $deleteRow->delete();
+
+
+//        if ($deleteRow->orders_count == 0) {
+//            try {
+//                DB::transaction(function () use ($deleteRow, $id) {
+//                    if (count($deleteRow->more_photos) > 0) {
+//                        foreach ($deleteRow->more_photos as $del_photo) {
+//                            AdminHelper::DeleteAllPhotos($del_photo);
+//                        }
+//                    }
+//                    $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
+//                    AdminHelper::DeleteDir($this->UploadDirIs, $id);
+//                    $deleteRow->forceDelete();
+//                });
+//            } catch (\Exception $exception) {
+//                return back()->with(['confirmException' => '', 'fromModel' => 'Product', 'deleteRow' => $deleteRow]);
+//            }
+//        } else {
+//            return back()->with(['confirmException' => '', 'fromModel' => 'Product', 'deleteRow' => $deleteRow]);
+//        }
+
+        self::ClearCash();
+        return back()->with('confirmDelete', "");
+    }
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

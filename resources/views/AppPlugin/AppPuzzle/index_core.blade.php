@@ -62,6 +62,15 @@
                             <td class="td_action"></td>
                             <td class="td_action"></td>
                         </tr>
+                        <tr>
+                            <td>Assets Css Files</td>
+                            <td class="td_action">
+                                <x-admin.form.action-button url="{{route('admin.AppPuzzle.AssetsCssFiles')}}" print-lable="Export Files "
+                                                            :tip="false" bg="dark" icon="fas fa-upload"/>
+                            </td>
+                            <td class="td_action"></td>
+                            <td class="td_action"></td>
+                        </tr>
 
                         <tr>
                             <td>Assets Files</td>
@@ -72,8 +81,6 @@
                             <td class="td_action"></td>
                             <td class="td_action"></td>
                         </tr>
-
-
                         </tbody>
                     </table>
                 </div>

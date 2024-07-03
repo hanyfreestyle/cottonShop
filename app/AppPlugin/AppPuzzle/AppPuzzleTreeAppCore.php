@@ -32,6 +32,26 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
+    public function ExportAssetsCssFiles() {
+        $copy = new AppPuzzleFunCopy();
+        $CopyFolder = self::creatCopyFolder("_CoreAssets");
+
+        $folderNames = [
+            "public/assets/admin/css",
+        ];
+
+        foreach ($folderNames as $folderName) {
+            $thisDir = base_path($folderName);
+            if (File::isDirectory($thisDir)) {
+                $destinationFolder = $CopyFolder . $folderName;
+                self::recursive_files_copy($thisDir, $destinationFolder);
+            }
+        }
+        return redirect()->back();
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
     public function ExportAssetsFiles() {
         $copy = new AppPuzzleFunCopy();
         $CopyFolder = self::creatCopyFolder("_CoreAssets");
