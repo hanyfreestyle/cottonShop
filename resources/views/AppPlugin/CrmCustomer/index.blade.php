@@ -7,21 +7,10 @@
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
-        <x-admin.main.filter-form-data form-name="{{$formName}}" :row="$rowData" :country-id="true" :city-id="true" :area-id="true"/>
-
+        <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :country-id="true" :city-id="true" :area-id="true"/>
         <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
             <table {!!Table_Style(true,true) !!} >
-                <thead>
-                <tr>
-                    <th class="TD_20">#</th>
-                    <th class="TD_20"></th>
-                    <th class="TD_200">{{__('admin/crm/customers.form_name')}}</th>
-                    <th class="TD_100">{{__('admin/crm/customers.form_mobile')}}</th>
-                    <th class="TD_100">{{__('admin/crm/customers.form_whatsapp')}}</th>
-                    <x-admin.table.action-but po="top" type="edit"/>
-                    <x-admin.table.action-but po="top" type="delete"/>
-                </tr>
-                </thead>
+                @include('AppPlugin.CrmCustomer.index_header')
                 <tbody></tbody>
             </table>
         </x-admin.card.def>
@@ -44,20 +33,20 @@
                 ajax: "{{ route( $PrefixRoute.".DataTable") }}",
                 columns: [
                     {data: 'id', name: 'id', orderable: false, searchable: false},
-                    {data: 'Flag', name: 'Flag', orderable: false, searchable: false ,className: "text-center"},
+                    {data: 'Flag', name: 'Flag', orderable: false, searchable: false, className: "text-center"},
                     {data: 'name', name: 'name', orderable: true, searchable: true},
-                    {data: 'mobile', name: 'mobile', orderable: true, searchable: true,className: "dir_left"},
-                    {data: 'whatsapp', name: 'whatsapp', orderable: true, searchable: true,className: "dir_left"},
+                    {data: 'mobile', name: 'mobile', orderable: true, searchable: true, className: "dir_left"},
+                    {data: 'whatsapp', name: 'whatsapp', orderable: true, searchable: true, className: "dir_left"},
                         @can($PrefixRole.'_edit')
                     {
-                        data: 'Edit', name: 'Edit', orderable: false, searchable: false,className: "text-center"
+                        data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center"
                     },
                         @endcan
 
                         @can($PrefixRole.'_delete')
 
                     {
-                        data: 'Delete', name: 'Delete', orderable: false, searchable: false,className: "text-center"
+                        data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center"
                     },
 
                     @endcan

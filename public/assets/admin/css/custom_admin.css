@@ -350,12 +350,18 @@ tbody > tr > td:last-of-type {
     margin-bottom: 20px!important;
 }
 
+.mainForm_NewBox .alert {
+    margin-bottom: 20px!important;
+}
+
 
 .mainForm_NewBox .box_form{
     clear: both!important;
     padding: 10px 15px;
+    padding-bottom: 30px;
+    padding-top: 0px;
     border: 1px solid rgba(0,0,0,.1);
-    margin-bottom: 25px;
+    margin-bottom: 40px;
 }
 
 
@@ -363,12 +369,15 @@ tbody > tr > td:last-of-type {
     position:relative;
     display: inline-block;
     font-weight: normal;
-    top:-22px!important;
-    padding:2px 25px;
-    background-color: #fff;
+    top:-15px!important;
+    padding:4px 25px;
+    border-radius:4px;
+
     margin-bottom: 0!important;
-    border: 1px solid rgba(0,0,0,.1);
+    border: 1px solid #007bff;
     min-width: 200px!important;
+    background-color: #007bff;
+    color: #fff;
 }
 
 

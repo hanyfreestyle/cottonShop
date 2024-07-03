@@ -8,15 +8,11 @@ use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersRequest;
 
-use App\AppPlugin\Customers\Models\UsersCustomersAddress;
-use App\AppPlugin\Data\Area\Models\Area;
-use App\AppPlugin\Data\City\Models\City;
 use App\AppPlugin\Data\Country\Country;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
@@ -93,11 +89,7 @@ class CrmCustomersController extends AdminMainController {
         $pageData['SubView'] = false;
 
         $session = self::getSessionData($request);
-//        dd($session);
         $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
-
-
-//        dd($rowData->get());
 
         return view('AppPlugin.CrmCustomer.index')->with([
             'pageData' => $pageData,
@@ -132,7 +124,7 @@ class CrmCustomersController extends AdminMainController {
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
         $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
 
-        $rowDataAdress = CrmCustomersAddress::where('is_default',true)->where('customer_id', $rowData->id)->firstOrNew();
+        $rowDataAdress = CrmCustomersAddress::where('is_default', true)->where('customer_id', $rowData->id)->firstOrNew();
 
         return view('AppPlugin.CrmCustomer.form')->with([
             'pageData' => $pageData,
@@ -142,29 +134,7 @@ class CrmCustomersController extends AdminMainController {
         ]);
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     indexQuery
-    public function indexQuery() {
-//        $table = "crm_customers";
-//        $table_address = "crm_customers_address";
-//        $data = DB::table($table)
-//            ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
-//            ->select("$table.id as id",
-//                "$table.name as name",
-//                "$table.mobile  as mobile",
-//                "$table.whatsapp as whatsapp",
-//                "$table.mobile_code as Flag",
-//                "$table_address.country_id as country_id",
-//                "$table_address.city_id as city_id",
-//                "$table_address.area_id as area_id",
-//            );
-//
-//        return $data;
 
-        $data = CrmCustomers::where('id','!=',0)->with('address');
-
-        return $data;
-    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #   DataTable
@@ -187,48 +157,26 @@ class CrmCustomersController extends AdminMainController {
         try {
             DB::transaction(function () use ($request, $saveData) {
 
-                $saveData->is_active = intval((bool)$request->input('is_active'));
-
-                $saveData->name = $request->input('name');
-                $saveData->mobile = $request->input('mobile');
-                $saveData->mobile_code = $request->input('countryCode_mobile');
-
-                $saveData->mobile_2 = $request->input('mobile_2');
-                if ($request->input('mobile_2')) {
-                    $saveData->mobile_2_code = $request->input('countryCode_mobile_2');
-                }
-
-                $saveData->phone = $request->input('phone');
-                if ($request->input('phone')) {
-                    $saveData->phone_code = $request->input('countryCode_phone');
-                }
-
-                $saveData->whatsapp = $request->input('whatsapp');
-                if ($request->input('whatsapp')) {
-                    $saveData->whatsapp_code = $request->input('countryCode_whatsapp');
-                }
-
-                $saveData->email = $request->input('email');
-                $saveData->notes = $request->input('notes');
+                $saveData = self::saveDefField($saveData, $request);
                 $saveData->save();
-
 
                 if ($this->Config['addAddress']) {
                     $addressId = intval($request->input('address_id'));
                     if ($addressId == 0) {
                         $saveAddress = new CrmCustomersAddress();
                         $saveAddress->is_default = true;
-                        $saveAddress = self::saveAddressFilde($saveAddress,$saveData,$request);
-                        if ( $saveAddress->country_id == null){
-                            $saveAddress->country_id = Country::where('iso2',$request->input('countryCode_mobile'))->first()->id ;
+                        $saveAddress = self::saveAddressField($saveAddress, $saveData, $request);
+                        if ($saveAddress->country_id == null) {
+                            $saveAddress->country_id = Country::where('iso2', $request->input('countryCode_mobile'))->first()->id;
                         }
                         $saveAddress->save();
                     } else {
                         $saveAddress = CrmCustomersAddress::query()->where('id', $addressId)->firstOrFail();
-                        $saveAddress = self::saveAddressFilde($saveAddress,$saveData,$request);
+                        $saveAddress = self::saveAddressField($saveAddress, $saveData, $request);
                         $saveAddress->save();
                     }
                 }
+
             });
         } catch (\Exception $exception) {
             return back()->with('data_not_save', "");
@@ -239,13 +187,41 @@ class CrmCustomersController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function saveAddressFilde($saveAddress,$saveData,$request) {
+    public function saveDefField($saveData, $request) {
+        $saveData->name = $request->input('name');
+        $saveData->mobile = $request->input('mobile');
+        $saveData->mobile_code = $request->input('countryCode_mobile');
+
+        $saveData->mobile_2 = $request->input('mobile_2');
+        if ($request->input('mobile_2')) {
+            $saveData->mobile_2_code = $request->input('countryCode_mobile_2');
+        }
+
+        $saveData->phone = $request->input('phone');
+        if ($request->input('phone')) {
+            $saveData->phone_code = $request->input('countryCode_phone');
+        }
+
+        $saveData->whatsapp = $request->input('whatsapp');
+        if ($request->input('whatsapp')) {
+            $saveData->whatsapp_code = $request->input('countryCode_whatsapp');
+        }
+
+        $saveData->email = $request->input('email');
+        $saveData->notes = $request->input('notes');
+
+        return $saveData;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function saveAddressField($saveAddress, $saveData, $request) {
         $saveAddress->uuid = Str::uuid()->toString();
-        $saveAddress->customer_id = $saveData->id ;
+        $saveAddress->customer_id = $saveData->id;
 
         $saveAddress->country_id = $request->input('country_id');
         $saveAddress->city_id = $request->input('city_id');
-        $saveAddress->area_id  = $request->input('area_id');
+        $saveAddress->area_id = $request->input('area_id');
 
         $saveAddress->address = $request->input('address');
         $saveAddress->floor = $request->input('floor');
@@ -253,7 +229,8 @@ class CrmCustomersController extends AdminMainController {
         $saveAddress->unit_num = $request->input('unit_num');
         $saveAddress->latitude = $request->input('latitude');
         $saveAddress->longitude = $request->input('longitude');
-        return $saveAddress ;
+
+        return $saveAddress;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -262,7 +239,7 @@ class CrmCustomersController extends AdminMainController {
         return DataTables::eloquent($data)
             ->addIndexColumn()
             ->editColumn('Flag', function ($row) {
-                return TablePhotoFlag_Code($row, 'Flag');
+                return TablePhotoFlag_Code($row, 'mobile_code');
             })
             ->editColumn('Edit', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
@@ -283,42 +260,25 @@ class CrmCustomersController extends AdminMainController {
         }
 
         if (isset($session['country_id']) and $session['country_id'] != null) {
-            $country_id = $session['country_id'] ;
+            $country_id = $session['country_id'];
             $query->whereHas('address', function ($query) use ($country_id) {
                 $query->where('country_id', $country_id);
             });
         }
 
         if (isset($session['city_id']) and $session['city_id'] != null) {
-            $city_id = $session['city_id'] ;
+            $city_id = $session['city_id'];
             $query->whereHas('address', function ($query) use ($city_id) {
                 $query->where('city_id', $city_id);
             });
         }
 
         if (isset($session['area_id']) and $session['area_id'] != null) {
-            $area_id = $session['area_id'] ;
+            $area_id = $session['area_id'];
             $query->whereHas('address', function ($query) use ($area_id) {
                 $query->where('area_id', $area_id);
             });
         }
-
-
-//        if (isset($session['country_id']) and $session['country_id'] != null) {
-//            if ($formName == "CityFilter") {
-//                $query->where('data_city.country_id', $session['country_id']);
-//            }
-//            if ($formName == "AreaFilter") {
-//                $query->where('data_area.country_id', $session['country_id']);
-//            }
-//        }
-//
-//        if (isset($session['city_id']) and $session['city_id'] != null) {
-//            if ($formName == "AreaFilter") {
-//                $query->where('data_area.city_id', $session['city_id']);
-//            }
-//        }
-
 
         if ($order != null) {
             $orderBy = explode("|", $order);
@@ -360,5 +320,41 @@ class CrmCustomersController extends AdminMainController {
         $subMenu->icon = "fas fa-plus";
         $subMenu->save();
     }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #     indexQuery
+    public function indexQuery() {
+//        $table = "crm_customers";
+//        $table_address = "crm_customers_address";
+//        $data = DB::table($table)
+//            ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
+//            ->select("$table.id as id",
+//                "$table.name as name",
+//                "$table.mobile  as mobile",
+//                "$table.whatsapp as whatsapp",
+//                "$table.mobile_code as Flag",
+//                "$table_address.country_id as country_id",
+//                "$table_address.city_id as city_id",
+//                "$table_address.area_id as area_id",
+//            );
+//
+//        return $data;
+
+        $data = CrmCustomers::where('id', '!=', 0)->with('address');
+
+        return $data;
+    }
+
+
+//$saveDataS = CrmCustomers::query()->where('notes',null)->take(1000)->get();
+//foreach ($saveDataS as $saveData){
+//$saveAddress = new CrmCustomersAddress();
+//$saveAddress->is_default = true;
+//$saveAddress = self::saveAddressField($saveAddress, $saveData, $request);
+//
+//$saveAddress->country_id = Country::where('iso2', $saveData->mobile_code)->first()->id;
+//$saveAddress->save();
+//$saveData->notes = 'Done';
+//$saveData->save();
+//}
 
 }

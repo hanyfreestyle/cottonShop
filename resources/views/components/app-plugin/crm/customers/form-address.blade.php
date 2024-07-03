@@ -10,10 +10,10 @@
                                  add-filde="phone" :send-arr="$CashCountryList" label="{{__('admin/dataCity.form_country')}}" col="3"/>
 
         <x-admin.form.select-arr name="city_id" sendvalue="{{old('city_id',$rowData->city_id)}}"
-                                 select-type="ajax" :send-arr="$Citylist" label="{{__('admin/dataArea.form_sel_city')}}" col="3"/>
+                                 select-type="ajax" :required-span="false" :send-arr="$Citylist" label="{{__('admin/dataArea.form_sel_city')}}" col="3"/>
 
         <x-admin.form.select-arr name="area_id" sendvalue="{{old('area_id',$rowData->area_id)}}"
-                                 select-type="ajax" :send-arr="$Arealist" label="{{__('admin/dataArea.form_sel_area')}}" col="3"/>
+                                 select-type="ajax" :required-span="false" :send-arr="$Arealist" label="{{__('admin/dataArea.form_sel_area')}}" col="3"/>
     </div>
 
     <div class="row">
@@ -23,7 +23,7 @@
         <x-admin.form.input name="post_code" :row="$rowData" :label="__($defLang.'form_ad_post_code')" col="2" tdir="en" :req="false"/>
     </div>
 
-    <div class="row " style="margin-bottom: 100px">
+    <div class="row" >
         <x-admin.form.input name="latitude" :row="$rowData" label="latitude" col="3" tdir="en" :req="false"/>
         <x-admin.form.input name="longitude" :row="$rowData" label="longitude" col="3" tdir="en" :req="false"/>
     </div>
