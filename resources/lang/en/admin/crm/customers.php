@@ -12,6 +12,9 @@ return
 	'err_repeat_num' => 'The number is already in use.',
 	'err_repeat_search' => 'View',
 	'form_ad_address' => '',
+	'form_ad_area' => 'Area',
+	'form_ad_city' => 'City',
+	'form_ad_country' => 'Country',
 	'form_ad_floor' => '',
 	'form_ad_post_code' => '',
 	'form_ad_unit_num' => '',
@@ -23,7 +26,5 @@ return
 	'form_notes' => 'Notes',
 	'form_phone' => 'Phone Number',
 	'form_whatsapp' => 'Whatsapp',
-	'form_ad_country' => 'Country',
-	'form_ad_city' => 'City',
-	'form_ad_area' => 'Area',
+	'app_menu_report' => '',
 ];

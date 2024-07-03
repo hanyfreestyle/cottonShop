@@ -22,6 +22,7 @@ class SelectData extends Component {
     public $sendvalue;
     public $printName;
     public $catId;
+    public $filterForm;
 
 
     public function __construct(
@@ -36,6 +37,7 @@ class SelectData extends Component {
         $sendvalue = "",
         $printName = 'name',
         $catId = null,
+        $filterForm = false,
 
     ) {
         $this->row = $row;
@@ -56,13 +58,17 @@ class SelectData extends Component {
 
         $this->printName = $printName;
 
-        if ($sendvalue != null) {
-            $this->sendvalue = $sendvalue;
-        } else {
-            $rowName = $this->name;
-            $this->sendvalue = old($printName, $row->$rowName);
-        }
 
+        if($filterForm){
+            $this->sendvalue = $sendvalue;
+        }else{
+            if ($sendvalue != null) {
+                $this->sendvalue = $sendvalue;
+            } else {
+                $rowName = $this->name;
+                $this->sendvalue = old($printName, $row->$rowName);
+            }
+        }
 
     }
 

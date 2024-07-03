@@ -5,7 +5,10 @@
     <input type="hidden" name="phoneAreaCode" value="{{$phoneAreaCode}}" dir="ltr">
     <div class="row">
         <x-admin.form.input name="name" :row="$rowData" :label="__($defLang.'form_name')" col="6" tdir="ar"/>
-        <x-admin.form.select-data name="evaluation_id" :row="$rowData" cat-id="EvaluationCust" :label="__($defLang.'form_evaluation')" :req="false"/>
+        @if($Config['evaluation'])
+            <x-admin.form.select-data name="evaluation_id" :row="$rowData" cat-id="EvaluationCust" :label="__($defLang.'form_evaluation')" :req="false"/>
+        @endif
+
     </div>
 
     <div class="row">

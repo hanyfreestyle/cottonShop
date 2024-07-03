@@ -12,6 +12,9 @@ return
 	'err_repeat_num' => 'مستخدم من قبل',
 	'err_repeat_search' => 'عرض',
 	'form_ad_address' => 'العنوان',
+	'form_ad_area' => 'المنطقة',
+	'form_ad_city' => 'المحافظة',
+	'form_ad_country' => 'الدولة',
 	'form_ad_floor' => 'الطابق',
 	'form_ad_post_code' => 'الرمز البريدي',
 	'form_ad_unit_num' => 'رقم الوحدة',
@@ -23,7 +26,5 @@ return
 	'form_notes' => 'ملاحظات',
 	'form_phone' => 'رقم الهاتف',
 	'form_whatsapp' => 'رقم الواتس اب',
-	'form_ad_country' => 'الدولة',
-	'form_ad_city' => 'المحافظة',
-	'form_ad_area' => 'المنطقة',
+	'app_menu_report' => 'تقارير العملاء',
 ];

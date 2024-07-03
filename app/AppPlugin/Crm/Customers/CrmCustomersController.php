@@ -9,8 +9,6 @@ use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersRequest;
 
 use App\AppPlugin\Data\Country\Country;
-use App\AppPlugin\Product\Models\Product;
-use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
 use Illuminate\Http\Request;
@@ -43,6 +41,7 @@ class CrmCustomersController extends AdminMainController {
 
         $this->Config = [
             'addAddress' => true,
+            'evaluation' => true,
         ];
 
         View::share('Config', $this->Config);
@@ -64,6 +63,20 @@ class CrmCustomersController extends AdminMainController {
         ];
 
         self::loadConstructData($sendArr);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function report() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_repeat');
+
+        return view('AppPlugin.CrmCustomer.report')->with([
+            'pageData' => $pageData,
+
+        ]);
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -190,6 +203,8 @@ class CrmCustomersController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
     public function saveDefField($saveData, $request) {
+        $saveData->evaluation_id = $request->input('evaluation_id');
+
         $saveData->name = $request->input('name');
         $saveData->mobile = $request->input('mobile');
         $saveData->mobile_code = $request->input('countryCode_mobile');
@@ -260,6 +275,10 @@ class CrmCustomersController extends AdminMainController {
         if (isset($session['is_active']) and $session['is_active'] != null) {
             $query->where('is_active', $session['is_active']);
         }
+        if (isset($session['evaluation_id']) and $session['evaluation_id'] != null) {
+            $query->where('evaluation_id', $session['evaluation_id']);
+        }
+
 
         if (isset($session['country_id']) and $session['country_id'] != null) {
             $country_id = $session['country_id'];
@@ -353,6 +372,16 @@ class CrmCustomersController extends AdminMainController {
         $subMenu->roleView = "crm_customer_add";
         $subMenu->icon = "fas fa-plus";
         $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "CrmCustomer.report";
+        $subMenu->url = "admin.CrmCustomer.report";
+        $subMenu->name = "admin/crm/customers.app_menu_report";
+        $subMenu->roleView = "crm_customer_view";
+        $subMenu->icon = "fas fa-chart-pie";
+        $subMenu->save();
+
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     indexQuery
@@ -379,16 +408,5 @@ class CrmCustomersController extends AdminMainController {
     }
 
 
-//$saveDataS = CrmCustomers::query()->where('notes',null)->take(1000)->get();
-//foreach ($saveDataS as $saveData){
-//$saveAddress = new CrmCustomersAddress();
-//$saveAddress->is_default = true;
-//$saveAddress = self::saveAddressField($saveAddress, $saveData, $request);
-//
-//$saveAddress->country_id = Country::where('iso2', $saveData->mobile_code)->first()->id;
-//$saveAddress->save();
-//$saveData->notes = 'Done';
-//$saveData->save();
-//}
 
 }

@@ -5,9 +5,12 @@
                 @csrf
                 <input type="hidden" name="formName" value="{{$formName}}">
                 <div class="row">
-                    @if($isActive)
-                        <x-admin.form.select-arr name="is_active" sendvalue="{{old('is_active',issetArr($getSessionData,'is_active'))}}"
-                                                 select-type="selActive" label="{{__('admin/formFilter.fr_satus')}}" :required-span="false" col="3"/>
+
+
+                    @if($Config['evaluation'])
+                        <x-admin.form.select-data name="evaluation_id" sendvalue="{{old('evaluation_id',issetArr($getSessionData,'evaluation_id'))}}"
+                                                  cat-id="EvaluationCust" :label="__($defLang.'form_evaluation')" :filter-form="true" :req="false"/>
+
                     @endif
 
                     @if($Config['addAddress'])
