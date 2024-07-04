@@ -2,6 +2,7 @@
 
 namespace App\AppPlugin\Crm\Customers;
 
+use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\AppPlugin\Data\City\Models\City;
 use App\AppPlugin\Data\Country\Country;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\View;
 
 class CrmCustomersReportController extends AdminMainController {
     use ReportFunTraits;
+    use CrmCustomersConfigTraits;
 
     function __construct() {
         parent::__construct();
@@ -27,11 +29,7 @@ class CrmCustomersReportController extends AdminMainController {
         $CashCountryList = self::CashCountryList();
         View::share('CashCountryList', $CashCountryList);
 
-        $this->Config = [
-            'addAddress' => true,
-            'evaluation' => true,
-        ];
-
+        $this->Config = self::defConfig();
         View::share('Config', $this->Config);
 
         $this->PageTitle = __($this->defLang . 'app_menu');
@@ -70,9 +68,13 @@ class CrmCustomersReportController extends AdminMainController {
 
         $AllData = $rowData->count();
         $chartData['Evaluation'] = self::ChartDataFromDataConfig($AllData, 'EvaluationCust', $evaluationId);
-        $chartData['Country'] = self::ChartDataFromModel($AllData, Country::class, $CountryId);
-        $chartData['City'] = self::ChartDataFromModel($AllData, City::class, $CityId);
-        $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $AreaId);
+
+        if ($this->Config['addCountry']) {
+            $chartData['Country'] = self::ChartDataFromModel($AllData, Country::class, $CountryId);
+            $chartData['City'] = self::ChartDataFromModel($AllData, City::class, $CityId);
+            $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $AreaId);
+        }
+
 
         return view('AppPlugin.CrmCustomer.report')->with([
             'pageData' => $pageData,

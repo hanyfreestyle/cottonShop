@@ -1,9 +1,10 @@
 <div class="box_form">
     <input type="hidden" value="{{intval($rowData->id)}}" name="address_id">
-    <input type="hidden" value="{{$Config['addAddress']}}" name="addAddress">
+    <input type="hidden" value="{{$Config['addCountry']}}" name="addAddress">
     @if($title)
         <span class="box_title">{{$title}}</span>
     @endif
+
 
     <div class="row">
         <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($rowData,'country_id'))"
@@ -16,17 +17,22 @@
                                  select-type="ajax" :required-span="false" :send-arr="$Arealist" label="{{__('admin/dataArea.form_sel_area')}}" col="3"/>
     </div>
 
-    <div class="row">
-        <x-admin.form.input name="address" :row="$rowData" :label="__($defLang.'form_ad_address')" col="6" tdir="ar" :req="false"/>
-        <x-admin.form.input name="unit_num" :row="$rowData" :label="__($defLang.'form_ad_unit_num')" col="2" tdir="en" :req="false"/>
-        <x-admin.form.input name="floor" :row="$rowData" :label="__($defLang.'form_ad_floor')" col="2" tdir="en" :req="false"/>
-        <x-admin.form.input name="post_code" :row="$rowData" :label="__($defLang.'form_ad_post_code')" col="2" tdir="en" :req="false"/>
-    </div>
 
-    <div class="row" >
-        <x-admin.form.input name="latitude" :row="$rowData" label="latitude" col="3" tdir="en" :req="false"/>
-        <x-admin.form.input name="longitude" :row="$rowData" label="longitude" col="3" tdir="en" :req="false"/>
-    </div>
+    @if($Config['fullAddress'])
+        <div class="row">
+            <x-admin.form.input name="address" :row="$rowData" :label="__($defLang.'form_ad_address')" col="6" tdir="ar" :req="false"/>
+            <x-admin.form.input name="unit_num" :row="$rowData" :label="__($defLang.'form_ad_unit_num')" col="2" tdir="en" :req="false"/>
+            <x-admin.form.input name="floor" :row="$rowData" :label="__($defLang.'form_ad_floor')" col="2" tdir="en" :req="false"/>
+            <x-admin.form.input name="post_code" :row="$rowData" :label="__($defLang.'form_ad_post_code')" col="2" tdir="en" :req="false"/>
+        </div>
+
+        <div class="row">
+            <x-admin.form.input name="latitude" :row="$rowData" label="latitude" col="3" tdir="en" :req="false"/>
+            <x-admin.form.input name="longitude" :row="$rowData" label="longitude" col="3" tdir="en" :req="false"/>
+        </div>
+    @endif
+
+
 </div>
 
 

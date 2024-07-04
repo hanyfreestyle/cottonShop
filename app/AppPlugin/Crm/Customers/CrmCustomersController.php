@@ -7,6 +7,7 @@ use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersRequest;
 
+use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
 use App\AppPlugin\Data\Country\Country;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
@@ -19,6 +20,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CrmCustomersController extends AdminMainController {
     use CrudTraits;
+    use CrmCustomersConfigTraits;
 
     function __construct() {
         parent::__construct();
@@ -38,12 +40,9 @@ class CrmCustomersController extends AdminMainController {
         $CashCountryList = self::CashCountryList();
         View::share('CashCountryList', $CashCountryList);
 
-        $this->Config = [
-            'addAddress' => true,
-            'evaluation' => true,
-        ];
-
+        $this->Config = self::defConfig();
         View::share('Config', $this->Config);
+
 
 
         $this->PageTitle = __($this->defLang . 'app_menu');

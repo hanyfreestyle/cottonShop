@@ -13,7 +13,7 @@
 
                     @endif
 
-                    @if($Config['addAddress'])
+                    @if($Config['addCountry'])
                         @if($countryId)
                             @if(File::isFile(base_path('routes/AppPlugin/data/country.php')))
                                 <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($getSessionData,'country_id'))"

@@ -7,7 +7,7 @@
 
         <x-app-plugin.crm.customers.form-def :row-data="$rowData" :title="__('admin/crm/customers.box_def')"/>
 
-        @if($Config['addAddress'])
+        @if($Config['addCountry'])
             <x-app-plugin.crm.customers.form-address :row-data="$rowDataAdress" :title="__('admin/crm/customers.box_address')"/>
         @endif
 
