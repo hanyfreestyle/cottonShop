@@ -26,8 +26,4 @@ class Country extends Model implements TranslatableContract {
     return $this->hasMany(CountryTranslation::class)->select('id', 'country_id', 'name');
   }
 
-  public function country_chart(): HasMany {
-      return $this->hasMany(CrmCustomersAddress::class,'country_id','id');
-  }
-
 }

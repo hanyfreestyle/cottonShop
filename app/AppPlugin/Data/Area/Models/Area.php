@@ -39,9 +39,4 @@ class Area extends Model implements TranslatableContract {
         return $this->belongsTo(City::class,'city_id');
     }
 
-
-    public function area_chart(): HasMany {
-        return $this->hasMany(CrmCustomersAddress::class,'area_id','id');
-    }
-
 }

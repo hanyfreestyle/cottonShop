@@ -32,8 +32,4 @@ class City extends Model implements TranslatableContract {
         return $this->belongsTo(Country::class,'country_id');
     }
 
-    public function city_chart(): HasMany {
-        return $this->hasMany(CrmCustomersAddress::class,'city_id','id');
-    }
-
 }

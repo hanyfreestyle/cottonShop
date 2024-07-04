@@ -34,15 +34,7 @@ class ConfigData extends Model implements TranslatableContract {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     tablename
     public function tablename(): HasMany{
-        return $this->hasMany(ConfigDataTranslation::class,'data_id','id')
-
-            ;
-//        ->select('id','data_id','name','locale')
-    }
-
-
-    public function evaluation_chart(): HasMany {
-        return $this->hasMany(CrmCustomers::class,'evaluation_id','id');
+        return $this->hasMany(ConfigDataTranslation::class,'data_id','id');
     }
 
 }

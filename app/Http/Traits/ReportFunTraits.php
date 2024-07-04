@@ -9,64 +9,71 @@ trait ReportFunTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function ChartDataFromModel($AllData, $Model, $relation, $limit = 10) {
+    public function ChartDataFromModel($AllData, $Model, $selectDataId, $limit = 15) {
 
-        $relationName = $relation;
-        $relationCount = $relation . '_count';
+        $selectDataIdKey = array_keys($selectDataId);
 
         $getSoursData = $Model::query()->where('is_active', true)
-            ->withCount($relationName)
             ->with('translation')
-            ->orderBy($relationCount, 'desc')
+            ->whereIn('id', $selectDataIdKey)
             ->get();
 
-        $sendArr = self::LoopForGetData($AllData, $getSoursData, $relationCount, $limit);
+        $sendArr = self::LoopForGetData($AllData, $getSoursData, $selectDataId, $limit);
         return $sendArr;
     }
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function ChartDataFromDataConfig($AllData, $CatId, $relation, $limit = 10) {
+    public function ChartDataFromDataConfig($AllData, $CatId, $selectDataId, $limit = 15) {
+        $selectDataIdKey = array_keys($selectDataId);
 
-        $relationName = $relation;
-        $relationCount = $relation . '_count';
-
-        $getSoursData = ConfigData::query()->where('cat_id', $CatId)
-            ->withCount($relationName)
+        $getSoursData = ConfigData::query()
+            ->where('cat_id', $CatId)
+            ->whereIn('id', $selectDataIdKey)
             ->with('translation')
-            ->orderBy($relationCount, 'desc')
             ->get();
 
-        $sendArr = self::LoopForGetData($AllData, $getSoursData, $relationCount, $limit);
+        $sendArr = self::LoopForGetData($AllData, $getSoursData, $selectDataId, $limit);
         return $sendArr;
     }
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function LoopForGetData($AllData, $getSoursData, $relationCount, $limit) {
+    public function LoopForGetData($AllData, $getSoursData, $selectDataId, $limit) {
         $countAllData = $AllData;
         $sendArr = [];
         $countData = 0;
         $other_count = 0;
         $start = 0;
-        foreach ($getSoursData as $SoursData) {
-            if ($start < $limit) {
-                if ($SoursData->$relationCount > 0) {
 
-                    $persent = round(($SoursData->$relationCount / $countAllData) * 100) . "%";
-                    $arr = [
-                        'name' => "(" . $SoursData->$relationCount . ") " . $SoursData->name . " " . $persent,
-                        'count' => $SoursData->$relationCount
-                    ];
-                    array_push($sendArr, $arr);
+        unset($selectDataId['']);
+
+        foreach ($selectDataId as $key => $value) {
+
+            $name = $getSoursData->where('id', $key)->first()->name;
+
+            $persent = round((count($value) / $countAllData) * 100) . "%";
+            $arr = [
+                'name' => "(" . count($value) . ") " . $name . " " . $persent,
+                'count' => count($value)
+            ];
+
+            $countData = $countData + count($value);
+            array_push($sendArr, $arr);
+        }
+
+        $sendArr =  array_sort($sendArr,'count',SORT_DESC);
+
+        if(count($sendArr) > $limit){
+            foreach ($sendArr as  $key => $value ){
+                if($start >= $limit ){
+                    unset($sendArr[$key]);
+                    $other_count = $other_count + $value['count'] ;
                 }
-            } else {
-                $other_count = $other_count + $SoursData->$relationCount;
+                $start = $start + 1 ;
             }
-            $countData = $countData + $SoursData->$relationCount;
-            $start = $start + 1;
         }
 
         if ($other_count > 0) {
@@ -79,16 +86,21 @@ trait ReportFunTraits {
             array_push($sendArr, $arr);
         }
 
+
         if ($countData < $AllData) {
 
             $persent = round((($AllData - $countData) / $countAllData) * 100) . "%";
             $arr = [
                 'name' => "(" . $AllData - $countData . ") " . __('admin/def.report_undefined') . " " . $persent,
-                'count' => $AllData  - $countData,
+                'count' => $AllData - $countData,
                 'setColor' => "#FF0000"
             ];
             array_push($sendArr, $arr);
         }
+
+
+
+
 
         return $sendArr;
     }
