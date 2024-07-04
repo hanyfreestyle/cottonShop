@@ -2,6 +2,7 @@
 
 namespace App\AppPlugin\Data\City\Models;
 
+use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Data\Country\Country;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
@@ -29,6 +30,10 @@ class City extends Model implements TranslatableContract {
 
     public function country(): BelongsTo {
         return $this->belongsTo(Country::class,'country_id');
+    }
+
+    public function city_chart(): HasMany {
+        return $this->hasMany(CrmCustomersAddress::class,'city_id','id');
     }
 
 }

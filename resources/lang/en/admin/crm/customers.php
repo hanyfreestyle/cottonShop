@@ -7,6 +7,7 @@ return
 	'app_menu_edit' => 'Edit Customer',
 	'app_menu_list' => 'List Customers',
 	'app_menu_repeat' => 'View repeat customer data',
+	'app_menu_report' => '',
 	'box_address' => 'تفاصيل العنوان',
 	'box_def' => 'البيانات الاساسية',
 	'err_repeat_num' => 'The number is already in use.',
@@ -26,5 +27,8 @@ return
 	'form_notes' => 'Notes',
 	'form_phone' => 'Phone Number',
 	'form_whatsapp' => 'Whatsapp',
-	'app_menu_report' => '',
+	'report_evaluation' => 'Evaluation',
+	'report_country' => 'Country',
+	'report_city' => 'City',
+	'report_area' => 'Area',
 ];

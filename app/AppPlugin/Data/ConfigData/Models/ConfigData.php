@@ -41,7 +41,7 @@ class ConfigData extends Model implements TranslatableContract {
     }
 
 
-    public function Evaluation(): HasMany {
+    public function evaluation_chart(): HasMany {
         return $this->hasMany(CrmCustomers::class,'evaluation_id','id');
     }
 

@@ -2,11 +2,13 @@
 
 namespace App\AppPlugin\Data\Country;
 
+use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use function Laravel\Prompts\select;
 
 class Country extends Model implements TranslatableContract {
 
@@ -22,6 +24,10 @@ class Country extends Model implements TranslatableContract {
 
   public function tablename(): HasMany {
     return $this->hasMany(CountryTranslation::class)->select('id', 'country_id', 'name');
+  }
+
+  public function country_chart(): HasMany {
+      return $this->hasMany(CrmCustomersAddress::class,'country_id','id');
   }
 
 }

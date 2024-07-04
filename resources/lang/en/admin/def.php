@@ -11,6 +11,7 @@ return
 	'form_button_add' => 'Add New',
 	'form_button_edit' => 'Edit',
 	'form_button_submit' => 'Submit',
+	'form_country' => 'Country',
 	'form_current_photo' => 'Current Photo',
 	'form_photo_upload' => 'Upload Photo',
 	'icon' => 'Icon',
@@ -24,5 +25,6 @@ return
 	'status_active' => 'Active',
 	'status_unactive' => 'UnActive',
 	'status_unactive_but' => 'Archived Data',
-	'form_country' => 'Country',
+	'report_undefined' => 'Undefined',
+	'report_other' => 'Other',
 ];

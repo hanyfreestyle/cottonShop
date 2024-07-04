@@ -3,6 +3,7 @@
 namespace App\AppPlugin\Data\Area\Models;
 
 
+use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Data\City\Models\City;
 use App\AppPlugin\Data\Country\Country;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
@@ -39,6 +40,8 @@ class Area extends Model implements TranslatableContract {
     }
 
 
-
+    public function area_chart(): HasMany {
+        return $this->hasMany(CrmCustomersAddress::class,'area_id','id');
+    }
 
 }

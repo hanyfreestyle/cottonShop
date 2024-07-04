@@ -8,10 +8,13 @@ use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersRequest;
 
+use App\AppPlugin\Data\Area\Models\Area;
+use App\AppPlugin\Data\City\Models\City;
 use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\AppPlugin\Data\Country\Country;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
+use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -21,6 +24,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CrmCustomersController extends AdminMainController {
     use CrudTraits;
+    use ReportFunTraits ;
 
     function __construct() {
         parent::__construct();
@@ -73,37 +77,52 @@ class CrmCustomersController extends AdminMainController {
         $pageData['ViewType'] = "List";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_repeat');
 
-        $AllData = CrmCustomers::all();
-        $evaluationData =  ConfigData::query()->where('cat_id','EvaluationCust')
-            ->withCount('Evaluation')
-            ->with('translation')
-            ->orderBy('evaluation_count','desc')
-            ->get();
+        $AllData = CrmCustomers::count();
 
+//        $CrmCustomers =  CrmCustomersAddress::query()->where('country_id',169)
+//            ->where('city_id',null)->take(1000)->get();
+//        foreach ($CrmCustomers as $Customer){
+//            $ran = City::query()->where('country_id',169)->pluck('id')->toArray();
+//            $randomElement = $ran[array_rand($ran, 1)];
+//            $Customer->city_id = $randomElement ;
+//             $Customer->save();
+//        }
 
-
-
-//        dd($evaluationData);
-//
-//
-////        dd($evaluationData->groupBy('id')->toArray());
-//        $evaluationData = $AllData->groupBy('evaluation_id')->toArray();
-//        dd($evaluationData);
-//        foreach ($evaluationData as $evaluation){
-//            echobr($evaluation->name);
+//        $CrmCustomers = CrmCustomersAddress::query()->where('country_id', 169)
+//            ->where('city_id', 28)->take(250)->get();
+//        foreach ($CrmCustomers as $Customer) {
+//            $Customer->city_id = 37;
+//            $Customer->save();
 //        }
 
 
+//        $CrmCustomers = CrmCustomersAddress::query()->where('country_id', 169)
+//            ->where('area_id', null)->take(500)->get();
+//        foreach ($CrmCustomers as $Customer) {
+//            $ran = Area::query()->where('city_id', $Customer->city_id)->pluck('id')->toArray();
+//            $randomElement = $ran[array_rand($ran, 1)];
+//            $Customer->area_id = $randomElement;
+//            $Customer->save();
+//        }
+
+//        $CrmCustomers = CrmCustomersAddress::query()->where('country_id', 169)
+//            ->where('area_id', 164)->take(50)->get();
+//        foreach ($CrmCustomers as $Customer) {
+//            $Customer->area_id = 159;
+//            $Customer->save();
+//        }
 
 
-
+        $chartData['Evaluation'] = self::ChartDataFromDataConfig($AllData, 'EvaluationCust', 'evaluation_chart');
+        $chartData['Country'] = self::ChartDataFromModel($AllData, Country::class, 'country_chart');
+        $chartData['City'] = self::ChartDataFromModel($AllData, City::class, 'city_chart');
+        $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, 'area_chart');
 
 
         return view('AppPlugin.CrmCustomer.report')->with([
             'pageData' => $pageData,
             'AllData' => $AllData,
-            'evaluationData' => $evaluationData,
-
+            'chartData' => $chartData,
         ]);
 
     }
@@ -131,6 +150,16 @@ class CrmCustomersController extends AdminMainController {
         $pageData['ViewType'] = "List";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
         $pageData['SubView'] = false;
+
+//        $CrmCustomers =  CrmCustomers::query()->where('notes',null)->take(1000)->get();
+//        foreach ($CrmCustomers as $Customer){
+//            $ran = array('117','118','119',null);
+//            $randomElement = $ran[array_rand($ran, 1)];
+//            $Customer->evaluation_id = $randomElement ;
+//            $Customer->notes = 'Done' ;
+//            $Customer->save();
+//        }
+
 
         $session = self::getSessionData($request);
         $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
@@ -435,7 +464,6 @@ class CrmCustomersController extends AdminMainController {
 
         return $data;
     }
-
 
 
 }

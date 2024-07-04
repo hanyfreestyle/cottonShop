@@ -7,6 +7,7 @@ return
 	'app_menu_edit' => 'تعديل بيانات عميل',
 	'app_menu_list' => 'عرض بيانات العملاء',
 	'app_menu_repeat' => 'عرض بيانات العملاء المتكررين',
+	'app_menu_report' => 'تقارير العملاء',
 	'box_address' => 'تفاصيل العنوان',
 	'box_def' => 'البيانات الاساسية',
 	'err_repeat_num' => 'مستخدم من قبل',
@@ -26,5 +27,8 @@ return
 	'form_notes' => 'ملاحظات',
 	'form_phone' => 'رقم الهاتف',
 	'form_whatsapp' => 'رقم الواتس اب',
-	'app_menu_report' => 'تقارير العملاء',
+	'report_evaluation' => 'تقييم العميل',
+	'report_country' => 'الدول',
+	'report_city' => 'المدن',
+	'report_area' => 'المناطق',
 ];

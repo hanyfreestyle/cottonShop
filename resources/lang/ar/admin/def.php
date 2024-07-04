@@ -11,6 +11,7 @@ return
 	'form_button_add' => 'اضافة جديدة',
 	'form_button_edit' => 'تعديل',
 	'form_button_submit' => 'اضافة',
+	'form_country' => 'الدولة',
 	'form_current_photo' => 'الصورة الحالية',
 	'form_photo_upload' => 'تحميل صورة',
 	'icon' => 'Icon',
@@ -24,5 +25,6 @@ return
 	'status_active' => 'فعال',
 	'status_unactive' => 'غير فعال',
 	'status_unactive_but' => 'المحتوى المؤرشف',
-	'form_country' => 'الدولة',
+	'report_undefined' => 'غير محدد',
+	'report_other' => 'اخرى',
 ];
