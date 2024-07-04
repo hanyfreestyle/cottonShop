@@ -2,6 +2,7 @@
 
 use App\AppPlugin\Crm\Customers\CrmCustomersController;
 
+use App\AppPlugin\Crm\Customers\CrmCustomersReportController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -16,8 +17,9 @@ Route::post('/crm/customers/update/{id}',[CrmCustomersController::class,'storeUp
 Route::get('/crm/customers/destroy/{id}',[CrmCustomersController::class,'ForceDeleteException'])->name('CrmCustomer.destroy');
 Route::get('/crm/customers/config', [CrmCustomersController::class,'config'])->name('CrmCustomer.config');
 Route::get('/crm/customers/repeat/{num}',[CrmCustomersController::class,'repeat'])->name('CrmCustomer.repeat');
-Route::get('/crm/customers/report',[CrmCustomersController::class,'report'])->name('CrmCustomer.report');
 
+Route::get('/crm/customers/report/',[CrmCustomersReportController::class,'report'])->name('CrmCustomer.Report.index');
+Route::post('/crm/customers/report/', [CrmCustomersReportController::class, 'report'])->name('CrmCustomer.Report.filter');
 
 
 
