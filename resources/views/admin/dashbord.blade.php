@@ -4,7 +4,7 @@
   <div class="content-header">
     <div class="container-fluid">
       <div class="row">
-
+<h1>Cotton</h1>
       </div>
     </div>
   </div>
