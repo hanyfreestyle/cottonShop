@@ -397,5 +397,15 @@ class OrderController extends AdminMainController {
         $subMenu->icon = "fas fa-times-circle";
         $subMenu->save();
 
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = setActiveRoute("ShopOrders.Shipping") ;
+
+        $subMenu->url = "admin.ShopOrders.Shipping.index";
+        $subMenu->name = "admin/orders.app_menu_shipping";
+        $subMenu->roleView = "orders_view";
+        $subMenu->icon = "fas fa-cogs";
+        $subMenu->save();
+
     }
 }

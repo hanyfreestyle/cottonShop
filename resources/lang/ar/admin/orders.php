@@ -3,6 +3,7 @@
 return
 [
 	'app_menu' => 'ادارة الطلبات',
+	'app_menu_shipping' => 'اعدادات مصاريف الشحن',
 	'app_menu_status_1' => 'الطلبات الجديدة',
 	'app_menu_status_2' => 'طلبات تحت التجهيز',
 	'app_menu_status_3' => 'طلبات تم تسليمها',
@@ -35,6 +36,13 @@ return
 	'log_span_date' => 'تاريخ الاجراء :',
 	'log_span_notes' => 'ملاحظات',
 	'log_span_user' => 'اسم المستخدم :',
+	'shipping_box' => 'قائمة المجموعات',
+	'shipping_city' => 'قائمة المحافظات',
+	'shipping_name' => 'اسم المجموعة',
+	'shipping_price_form' => 'اجمالى الطلب من',
+	'shipping_price_rate' => 'تكلفة الشحن',
+	'shipping_price_to' => 'اجمالى الطلب الى',
+	'shipping_state' => 'امكانية الشحن',
 	'title_city' => 'المحافظة',
 	'title_customer' => 'اسم العميل',
 	'title_date' => 'تاريخ الطلب',
@@ -50,4 +58,6 @@ return
 	'title_total' => 'الاجمالى',
 	'title_total_invoice' => 'اجمالى الفاتورة',
 	'title_view' => 'التفاصيل',
+	'shipping_reate_add' => 'اضافة اسعار الشحن',
+	'shipping_reate_edit' => 'تعديل اسعار الشحن',
 ];

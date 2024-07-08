@@ -3,6 +3,7 @@
 return
 [
 	'app_menu' => 'Manage Orders',
+	'app_menu_shipping' => 'اعدادات مصاريف الشحن',
 	'app_menu_status_1' => 'New Orders',
 	'app_menu_status_2' => 'Preparation Orders',
 	'app_menu_status_3' => 'Delivered Orders',
@@ -35,6 +36,13 @@ return
 	'log_span_date' => 'Date of action :',
 	'log_span_notes' => 'Notes',
 	'log_span_user' => 'User Name :',
+	'shipping_box' => 'قائمة المجموعات',
+	'shipping_city' => '',
+	'shipping_name' => '',
+	'shipping_price_form' => '',
+	'shipping_price_rate' => '',
+	'shipping_price_to' => '',
+	'shipping_state' => '',
 	'title_city' => 'City',
 	'title_customer' => 'Customers Name',
 	'title_date' => 'Order Date',
@@ -50,4 +58,6 @@ return
 	'title_total' => 'Total',
 	'title_total_invoice' => 'Total Invoice',
 	'title_view' => 'Details',
+	'shipping_reate_add' => '',
+	'shipping_reate_edit' => '',
 ];

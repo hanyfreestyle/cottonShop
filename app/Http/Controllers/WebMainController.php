@@ -202,9 +202,8 @@ class WebMainController extends DefaultMainController {
                 break;
 
             default:
-                $setTitle = ($row->g_title ?? $row->name);
+                $setTitle = ($row->g_title ?? $row->name );
                 $setDescription = ($row->g_des ?? $row->name);
-
 
         }
 
