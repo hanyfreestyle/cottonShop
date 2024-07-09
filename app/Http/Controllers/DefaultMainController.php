@@ -52,10 +52,10 @@ class DefaultMainController extends Controller {
 #|||||||||||||||||||||||||||||||||||||| #     CashCityList
     static function CashCityList($stopCash = 0) {
         if ($stopCash) {
-            $CashCityList = City::with('translation')->orderby('postion')->get();
+            $CashCityList = City::with('translation')->where('country_id',66)->get();
         } else {
             $CashCityList = Cache::remember('CashCityList', cashDay(7), function () {
-                return City::with('translation')->orderby('postion')->get();
+                return City::with('translation')->where('country_id',66)->get();
             });
         }
         return $CashCityList;

@@ -1,7 +1,7 @@
 <x-site.html.confirm-massage/>
 <form  id="formSaveOrder" action="{{route('Shop_NoneUserOrderSave')}}" method="post" class="myForm mb__10">
     @csrf
-    <input type="hidden" id="shipping" name="shipping" value="" >
+    <input type="text" id="shipping" name="shipping" value="" >
     <input type="hidden" id="customer_id" name="customer_id" value="{{Auth::guard('customer')->user()->id ?? ''}}" >
 
     <div class="form-row">

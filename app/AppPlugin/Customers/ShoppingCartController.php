@@ -10,6 +10,7 @@ use App\AppPlugin\Customers\Models\UsersCustomersAddress;
 use App\AppPlugin\Customers\Request\ShoppingOrderSaveNoneUserRequest;
 use App\AppPlugin\Customers\Request\ShoppingOrderSaveRequest;
 use App\AppPlugin\Data\City\Models\City;
+use App\AppPlugin\Orders\Models\ShippingCity;
 use App\AppPlugin\Product\Models\Product;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\WebMainController;
@@ -65,7 +66,7 @@ class ShoppingCartController extends WebMainController {
 
         $CartList = Cart::content();
 
-        if($CartList->count() > 0) {
+        if ($CartList->count() > 0) {
             return redirect()->route('Shop_CartView');
         } else {
             return view('web.cart.cart_completed')->with([
@@ -89,7 +90,7 @@ class ShoppingCartController extends WebMainController {
         $pageView['SelMenu'] = 'Offers';
         $pageView['page'] = 'cart_page';
 
-        if(Auth::guard('customer')->user()) {
+        if (Auth::guard('customer')->user()) {
             $UserProfile = Auth::guard('customer')->user();
             $addresses = UsersCustomersAddress::where('customer_id', $UserProfile->id)->get();
             $UserProfile = UsersCustomersAddress::where('customer_id', 0)->get();
@@ -103,7 +104,7 @@ class ShoppingCartController extends WebMainController {
 
         $PageErr = self::CheckCartProduct();
 
-        if($cartList->count() > 0 and $PageErr == 0) {
+        if ($cartList->count() > 0 and $PageErr == 0) {
 
             return view('web.cart.cart_confirm')->with([
                 'meta' => $meta,
@@ -124,35 +125,72 @@ class ShoppingCartController extends WebMainController {
     public function ShippingConfirm(Request $request) {
         $subTotal = Cart::subtotal();
 
-        if($request->city_id){
-            $city_id = $request->city_id;
+        if ($request->city_id) {
+            $city_id = [$request->city_id];
+            $getRates = ShippingCity::query()->whereJsonContains('city_id', $city_id)->with('rates')->first();
 
-            $cityData = $this->cashCityList->where('id', $city_id)->first();
-            $cityRate = $cityData->rate;
-            $cityDiscount = $cityData->discount;
+            if (!$getRates->is_active) {
+                $sendData = [
+                    'cityRate' => null,
+                    'cityDiscount' => null,
+                    'cityName' => null,
+                    'shipping' => 'Error',
+                    'shippingText' => '<span class="free_shipping">' . __('web/cart.table_shipping_mass_4') . '</span>',
+                    'shippingSpan' => null,
+                    'invoiceTotal' => "0"
+                ];
 
-            if($subTotal >= $cityDiscount) {
-                $shipping = '0';
-                $shippingText = '<span class="free_shipping">'.__('web/cart.table_shipping_mass_3').'</span>';
             } else {
-                $shipping = $cityRate;
-                $shippingText = number_format($cityRate)." ".__('web/product.label_currency_s') ;
+
+                $cityData = $this->cashCityList->where('id', $request->city_id)->first();
+
+                $getRates = ShippingCity::query()->whereJsonContains('city_id', $city_id)->with('rates')->first();
+
+                if (count($getRates->rates) == 0) {
+                    $shipping = 0;
+                    $invoiceTotal = intval($subTotal);
+                    $shippingText = '<span class="free_shipping">' . __('web/cart.table_shipping_mass_5') . '</span>';
+                    $shippingSpan = '<span class="free_shippingX">' . __('web/cart.table_shipping_mass') . '</span>';
+
+                } else {
+                    $rates = $getRates->rates
+                        ->where('price_from', '<=', $subTotal)
+                        ->where('price_to', '>=', $subTotal)->first();
+
+                    $shipping = intval($rates->rate);
+                    $goodRates = $getRates->rates->toarray();
+                    $goodRates = array_sort($goodRates, 'rate', $order = SORT_ASC);
+
+                    if ($shipping == 0) {
+                        $shippingText = '<span class="free_shipping">' . __('web/cart.table_shipping_mass_3') . '</span>';
+                    } else {
+                        $shippingText = intval($shipping);
+                    }
+                    $invoiceTotal = intval($shipping + $subTotal);
+
+                    if (intval($goodRates['0']['rate']) == 0) {
+                        $goodRates['0']['rate'] = __('web/cart.mass_free_1');
+                    }
+
+                    $rep = ['[CityName]', '[CityRate]', '[CityDiscount]'];
+                    $rep_2 = [$cityData->name, $goodRates['0']['rate'], $goodRates['0']['price_from']];
+                    $shippingSpan = str_replace($rep, $rep_2, __('web/cart.table_shipping_mass_2'));
+
+                }
+
+                $sendData = [
+                    'cityRate' => "",
+                    'cityDiscount' => 'cityDiscount',
+                    'cityName' => $cityData,
+                    'shipping' => $shipping,
+                    'shippingText' => $shippingText,
+                    'shippingSpan' => $shippingSpan,
+                    'invoiceTotal' => number_format($invoiceTotal) . " " . __('web/product.label_currency_s')
+                ];
+
             }
 
-            $rep = ['[CityName]','[CityRate]'];
-            $rep_2 = [$cityData->name,$cityDiscount];
-            $shippingSpan  = str_replace($rep,$rep_2,__('web/cart.table_shipping_mass_2'));
-
-            $sendData = [
-                'cityRate' => $cityRate,
-                'cityDiscount' => $cityDiscount,
-                'cityName' => $cityData->name,
-                'shipping' => $shipping,
-                'shippingText' => $shippingText,
-                'shippingSpan' => $shippingSpan,
-                'invoiceTotal' => number_format($subTotal+$shipping)." ".__('web/product.label_currency_s')
-            ];
-        }else{
+        } else {
             $sendData = [
                 'cityRate' => null,
                 'cityDiscount' => null,
@@ -164,17 +202,62 @@ class ShoppingCartController extends WebMainController {
             ];
         }
 
-        return response()->json(['data'=>$sendData]);
+        return response()->json(['data' => $sendData]);
     }
 
+    public function ShippingConfirm_BackUp(Request $request) {
+        $subTotal = Cart::subtotal();
+
+        if ($request->city_id) {
+            $city_id = $request->city_id;
+
+            $cityData = $this->cashCityList->where('id', $city_id)->first();
+            $cityRate = $cityData->rate;
+            $cityDiscount = $cityData->discount;
+
+            if ($subTotal >= $cityDiscount) {
+                $shipping = '0';
+                $shippingText = '<span class="free_shipping">' . __('web/cart.table_shipping_mass_3') . '</span>';
+            } else {
+                $shipping = $cityRate;
+                $shippingText = number_format($cityRate) . " " . __('web/product.label_currency_s');
+            }
+
+            $rep = ['[CityName]', '[CityRate]'];
+            $rep_2 = [$cityData->name, $cityDiscount];
+            $shippingSpan = str_replace($rep, $rep_2, __('web/cart.table_shipping_mass_2'));
+
+            $sendData = [
+                'cityRate' => $cityRate,
+                'cityDiscount' => $cityDiscount,
+                'cityName' => $cityData->name,
+                'shipping' => $shipping,
+                'shippingText' => $shippingText,
+                'shippingSpan' => $shippingSpan,
+                'invoiceTotal' => number_format($subTotal + $shipping) . " " . __('web/product.label_currency_s')
+            ];
+        } else {
+            $sendData = [
+                'cityRate' => null,
+                'cityDiscount' => null,
+                'cityName' => null,
+                'shipping' => null,
+                'shippingText' => null,
+                'shippingSpan' => null,
+                'invoiceTotal' => null
+            ];
+        }
+
+        return response()->json(['data' => $sendData]);
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
     public function ShippingAddressUpdate(Request $request) {
-        if($request->address_id) {
+        if ($request->address_id) {
             $address_id = $request->address_id;
             $address = UsersCustomersAddress::where('uuid', $address_id)->first();
-            return response()->json(['data'=>$address]);
+            return response()->json(['data' => $address]);
         }
     }
 
@@ -185,13 +268,13 @@ class ShoppingCartController extends WebMainController {
 
         $PageErr = self::CheckCartProduct();
 
-        if($PageErr > 0) {
+        if ($PageErr > 0) {
             return redirect()->route('Shop_CartView');
         }
 
         $CartList = Cart::content();
 
-        if($CartList->count() > 0) {
+        if ($CartList->count() > 0) {
             try {
 
                 $getData = DB::transaction(function () use ($request) {
@@ -209,13 +292,13 @@ class ShoppingCartController extends WebMainController {
                     $newAddress->phone = $request->input('phone');;
                     $newAddress->phone_option = $request->input('phone_option');
                     $newAddress->notes = $request->input('notes');
-                    if($saveData == true) {
+                    if ($saveData == true) {
                         $newAddress->save();
                     }
 
-                    $newOrder = self::saveOrderData($request,$saveData, $newAddress);
+                    $newOrder = self::saveOrderData($request, $saveData, $newAddress);
 
-                    if($saveData == true) {
+                    if ($saveData == true) {
                         Cart::destroy();
                     }
 
@@ -232,7 +315,7 @@ class ShoppingCartController extends WebMainController {
                 return redirect()->back()->with('Error', __('web/order.err_order_not_saved'));
             }
 
-            if($this->WebConfig->telegram_send) {
+            if ($this->WebConfig->telegram_send) {
                 self::sendTelegramConfirm($getData);
             }
 
@@ -257,16 +340,16 @@ class ShoppingCartController extends WebMainController {
         $Mass .= "عدد الاصناف " . $getData['order_units'] . $Brek;
         $Mass .= "" . $getData['order_date'] . $Brek;
 
-        if($this->WebConfig->telegram_key != null) {
+        if ($this->WebConfig->telegram_key != null) {
             $KEY = $this->WebConfig->telegram_key;
             $PhoneID = $this->WebConfig->telegram_phone;
             $GroupID = $this->WebConfig->telegram_group;
 
-            if($this->WebConfig->telegram_phone != null) {
+            if ($this->WebConfig->telegram_phone != null) {
                 $url = "https://api.telegram.org/bot$KEY/sendMessage?chat_id=$PhoneID&text=" . $Mass;
                 $sendrequest = Http::post($url);
             }
-            if($this->WebConfig->telegram_group != null) {
+            if ($this->WebConfig->telegram_group != null) {
                 $url = "https://api.telegram.org/bot$KEY/sendMessage?chat_id=$GroupID&text=" . $Mass;
                 $sendrequest = Http::post($url);
             }
@@ -276,7 +359,7 @@ class ShoppingCartController extends WebMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #   saveOrderData
-    public function saveOrderData($request,$saveData, $newAddress) {
+    public function saveOrderData($request, $saveData, $newAddress) {
 
         $CartList = Cart::content();
         $subtotal = Cart::subtotal();
@@ -291,10 +374,10 @@ class ShoppingCartController extends WebMainController {
         $newOrder->status = 1;
         $newOrder->total = $subtotal;
         $newOrder->shipping = $request->input('shipping');
-        $newOrder->total_invoice = $subtotal+$request->input('shipping');
+        $newOrder->total_invoice = $subtotal + $request->input('shipping');
         $newOrder->units = $CartList->count();
 
-        if($saveData == true) {
+        if ($saveData == true) {
             $newOrder->save();
         }
 
@@ -304,7 +387,7 @@ class ShoppingCartController extends WebMainController {
             $addProduct = new ShoppingOrderProduct();
             $addProduct->order_id = $newOrder->id;
 
-            if($product->model->parent_id == null) {
+            if ($product->model->parent_id == null) {
                 $addProduct->name = $product->model->name;
                 $addProduct->product_id = $product->model->id;
                 $addProduct->variant_id = null;
@@ -320,7 +403,7 @@ class ShoppingCartController extends WebMainController {
             $addProduct->regular_price = $product->model->regular_price;
             $addProduct->qty = $product->qty;
 
-            if($saveData == true) {
+            if ($saveData == true) {
                 $addProduct->save();
                 Product::find($product->model->id)->increment('sales_count', $product->qty);
             }
@@ -336,13 +419,13 @@ class ShoppingCartController extends WebMainController {
     public function CartOrderSave(ShoppingOrderSaveRequest $request) {
 
         $PageErr = self::CheckCartProduct();
-        if($PageErr > 0) {
+        if ($PageErr > 0) {
             return redirect()->route('Shop_CartView');
         }
 
         $CartList = Cart::content();
 
-        if($CartList->count() > 0) {
+        if ($CartList->count() > 0) {
             try {
 
                 $getData = DB::transaction(function () use ($request) {
@@ -368,7 +451,7 @@ class ShoppingCartController extends WebMainController {
                     $newAddress->phone_option = $address->phone_option;
                     $newAddress->notes = $request->input('notes');
 
-                    if($saveOrderData == true) {
+                    if ($saveOrderData == true) {
                         $newAddress->save();
                     }
 
@@ -382,7 +465,7 @@ class ShoppingCartController extends WebMainController {
                     $newOrder->total = $subtotal;
                     $newOrder->units = $CartList->count();
 
-                    if($saveOrderData == true) {
+                    if ($saveOrderData == true) {
                         $newOrder->save();
                     }
 
@@ -397,14 +480,14 @@ class ShoppingCartController extends WebMainController {
                         $addProduct->sale_price = $product->model->sale_price;
                         $addProduct->qty = $product->qty;
 
-                        if($saveOrderData == true) {
+                        if ($saveOrderData == true) {
                             $addProduct->save();
                             Product::find($product->model->id)->decrement('qty_left', $product->qty);
                         }
 
                     }
 
-                    if($saveOrderData == true) {
+                    if ($saveOrderData == true) {
                         Cart::destroy();
                     }
 
@@ -435,17 +518,17 @@ class ShoppingCartController extends WebMainController {
             $Mass .= "" . $getData['order_date'] . $Brek;
 
 
-            if($this->WebConfig->telegram_key != null) {
+            if ($this->WebConfig->telegram_key != null) {
 
                 $KEY = $this->WebConfig->telegram_key;
                 $PhoneID = $this->WebConfig->telegram_phone;
                 $GroupID = $this->WebConfig->telegram_group;
 
-                if($this->WebConfig->telegram_phone != null) {
+                if ($this->WebConfig->telegram_phone != null) {
                     $url = "https://api.telegram.org/bot$KEY/sendMessage?chat_id=$PhoneID&text=" . $Mass;
                     $sendrequest = Http::post($url);
                 }
-                if($this->WebConfig->telegram_group != null) {
+                if ($this->WebConfig->telegram_group != null) {
                     $url = "https://api.telegram.org/bot$KEY/sendMessage?chat_id=$GroupID&text=" . $Mass;
                     $sendrequest = Http::post($url);
                 }
@@ -496,11 +579,11 @@ class ShoppingCartController extends WebMainController {
             $price_err = 0;
             $qty_err = 0;
 
-            if($products[$ProductCart->id]->price != $options_price or $products[$ProductCart->id]->sale_price != $options_sale_price) {
+            if ($products[$ProductCart->id]->price != $options_price or $products[$ProductCart->id]->sale_price != $options_sale_price) {
                 $price_err = 1;
                 $PageErr = $PageErr + 1;
             }
-            if($qty > $products[$ProductCart->id]->qty_left) {
+            if ($qty > $products[$ProductCart->id]->qty_left) {
                 $qty_err = 1;
                 $PageErr = $PageErr + 1;
             }

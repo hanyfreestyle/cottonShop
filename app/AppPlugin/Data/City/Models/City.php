@@ -2,7 +2,6 @@
 
 namespace App\AppPlugin\Data\City\Models;
 
-use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Data\Country\Country;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;

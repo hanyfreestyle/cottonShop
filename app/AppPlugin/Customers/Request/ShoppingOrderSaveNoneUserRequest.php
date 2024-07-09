@@ -16,6 +16,7 @@ class ShoppingOrderSaveNoneUserRequest extends FormRequest {
         $countryCode = strtoupper($request->input('countryCode_phone'));
 
         return [
+            'shipping' => "required|numeric",
             'name' => "required|min:4|max:50",
             'city_id' => "required",
             'phone' => "numeric|phone:mobile,$countryCode",

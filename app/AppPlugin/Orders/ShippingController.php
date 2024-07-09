@@ -53,6 +53,7 @@ class ShippingController extends AdminMainController {
         $rowData = ShippingCity::all();
         $cashCityList = self::CashCityList();
 
+
         return view('AppPlugin.Orders.shipping.index')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
@@ -136,6 +137,7 @@ class ShippingController extends AdminMainController {
         $pageData['ViewType'] = "Add";
         $rowData = ShippingCity::query()->where('id', $id)->with('rates')->firstOrFail();
         $CityList = City::query()->where('country_id', 66)->get();
+
 
 
         return view('AppPlugin.Orders.shipping.rates')->with([
