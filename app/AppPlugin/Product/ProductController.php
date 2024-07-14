@@ -69,6 +69,7 @@ class ProductController extends AdminMainController {
         $Config = [
             'TableCategory' => true,
             'TableAddLang' => true,
+            'ProductBrand' => true,
         ];
         View::share('Config', $Config);
 
