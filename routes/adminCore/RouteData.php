@@ -34,4 +34,12 @@ if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
     if (File::isFile(base_path('routes/AppPlugin/data/data_EvaluationCust.php'))) {
         Route::middleware('web')->group(base_path('routes/AppPlugin/data/data_EvaluationCust.php'));
     }
+    if (File::isFile(base_path('routes/AppPlugin/data/data_BookRelease.php'))) {
+        Route::middleware('web')->group(base_path('routes/AppPlugin/data/data_BookRelease.php'));
+    }
+
+    if (File::isFile(base_path('routes/AppPlugin/data/data_BookLang.php'))) {
+        Route::middleware('web')->group(base_path('routes/AppPlugin/data/data_BookLang.php'));
+    }
+
 }
