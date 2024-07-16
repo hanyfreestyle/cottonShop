@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2024 at 07:05 AM
+-- Generation Time: Jul 16, 2024 at 01:43 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `a_cart_new`
+-- Database: `cottton_shop`
 --
 
 --
@@ -31,7 +31,8 @@ INSERT INTO `shopping_order_logs` (`id`, `log_ref`, `order_id`, `user_id`, `add_
 (3, 1, 2, 1, '2024-05-01 01:09:01', 'منتظر استلام البضاعة'),
 (4, 3, 2, 1, '2024-05-01 01:09:37', 'العميل اتصل وقام بالغاء الطلب'),
 (5, 1, 3, 1, '2024-05-01 02:38:47', '213132'),
-(6, 2, 3, 1, '2024-05-01 02:39:06', NULL);
+(6, 2, 3, 1, '2024-05-01 02:39:06', NULL),
+(7, 1, 5, 1, '2024-07-16 11:41:53', NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
