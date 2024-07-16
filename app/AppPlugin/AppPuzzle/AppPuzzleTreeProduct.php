@@ -61,6 +61,8 @@ class AppPuzzleTreeProduct {
             'assetsFolder' => null,
             'livewireClass' => null,
             'livewireView' => null,
+            'ComponentFolderClass' => ['AppPlugin/Product'],
+            'ComponentFolderView' => ['app-plugin/product'],
         ];
     }
 

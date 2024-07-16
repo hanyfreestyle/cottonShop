@@ -18,6 +18,8 @@ return
 	'cat_del_related_pro' => 'منتجات مرتبط بالمحتوى',
 	'cat_main_category' => 'المجموعات الرئيسية',
 	'cat_text_name' => 'اسم المجموعة',
+	'dash_chart_month' => 'اجمالى الطلبات لاخر 12 شهر',
+	'dash_chart_week' => 'اجمالى الطلبات لاخر 7 ايام',
 	'pro_del_related_orders' => 'طلب للمنتج تم تحريرهم يمكنك ارشفة المنتج بدل من الحذف',
 	'pro_featured' => 'منتج مميز',
 	'pro_filter_price_from' => 'الحد الادنى للسعر',
@@ -67,4 +69,6 @@ return
 	'web_shipping_tab' => 'عرض طرق الشحن',
 	'web_social_share' => 'عرض أيقونة المشاركة',
 	'web_warranty_tab' => 'عرض سياسة الاسترجاع',
+	'dash_order_count' => 'اجمالى عدد الطلبات',
+	'dash_order_sum' => 'اجمالى الطلبات',
 ];

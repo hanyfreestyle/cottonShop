@@ -18,6 +18,8 @@ return
 	'cat_del_related_pro' => 'Product Related to the content',
 	'cat_main_category' => 'Main Category',
 	'cat_text_name' => 'Category Name',
+	'dash_chart_month' => '',
+	'dash_chart_week' => '',
 	'pro_del_related_orders' => 'orders has been added. You can archive the product instead of deleting it.',
 	'pro_featured' => 'Featured product',
 	'pro_filter_price_from' => 'Minimum price',
@@ -67,4 +69,6 @@ return
 	'web_shipping_tab' => 'Show shipping methods',
 	'web_social_share' => 'Show sharing icon',
 	'web_warranty_tab' => 'View Return Policy',
+	'dash_order_count' => '',
+	'dash_order_sum' => '',
 ];

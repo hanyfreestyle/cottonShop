@@ -6,8 +6,11 @@ use App\AppPlugin\Product\ManageAttributeController;
 use App\AppPlugin\Product\ProductBrandController;
 use App\AppPlugin\Product\ProductCategoryController;
 use App\AppPlugin\Product\ProductController;
+use App\AppPlugin\Product\ProductDashboardController;
 use App\AppPlugin\Product\ProductTagsController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/', [ProductDashboardController::class, 'Dashboard'])->name('Dashboard');
 
 
 Route::get('/category/', [ProductCategoryController::class, 'CategoryIndex'])->name('Shop.Category.index');
