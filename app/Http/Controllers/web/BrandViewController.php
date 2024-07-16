@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class BrandViewController extends WebMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     BrandList
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function BrandList() {
 
         $meta = parent::getMeatByCatId('brand');
@@ -29,7 +29,7 @@ class BrandViewController extends WebMainController {
             ->paginate(20);
 
 
-        if($brands->isEmpty() and isset($_GET['page'])) {
+        if ($brands->isEmpty() and isset($_GET['page'])) {
             self::abortError404('Empty');
         }
 
@@ -42,7 +42,7 @@ class BrandViewController extends WebMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     BrandView
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function BrandView($slug, Request $request) {
 
         try {
@@ -61,7 +61,7 @@ class BrandViewController extends WebMainController {
         $pageView['SelMenu'] = 'Brand';
         $pageView['page'] = 'BrandView';
 
-        if(count($brand->translations) == 1) {
+        if (count($brand->translations) == 1) {
             $pageView['go_home'] = route('page_index');
         } else {
             $pageView['slug'] = "brands/" . $brand->translate(webChangeLocale())->slug;
@@ -73,7 +73,7 @@ class BrandViewController extends WebMainController {
 
         $products = $productsQuery->where('brand_id', $brand->id)->paginate(12)->appends(request()->query());
 
-        if($products->isEmpty() and isset($_GET['page'])) {
+        if ($products->isEmpty() and isset($_GET['page'])) {
             self::abortError404('Empty');
         }
 

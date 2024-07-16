@@ -106,23 +106,23 @@ class ContactUsFormController extends AdminMainController {
         $mainMenu->roleView = "leads_view";
         $mainMenu->save();
 
-        $subMenu = new AdminMenu();
-        $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Request.index";
-        $subMenu->url = "admin.LeadsFrom.Request.index";
-        $subMenu->name = "admin/leadsContactUs.app_menu_requst";
-        $subMenu->roleView = "leads_view";
-        $subMenu->icon = "fas fa-phone-square";
-        $subMenu->save();
-
-        $subMenu = new AdminMenu();
-        $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Meeting.index";
-        $subMenu->url = "admin.LeadsFrom.Meeting.index";
-        $subMenu->name = "admin/leadsContactUs.app_menu_meeting";
-        $subMenu->roleView = "leads_view";
-        $subMenu->icon = "fas fa-handshake";
-        $subMenu->save();
+//        $subMenu = new AdminMenu();
+//        $subMenu->parent_id = $mainMenu->id;
+//        $subMenu->sel_routs = "Request.index";
+//        $subMenu->url = "admin.LeadsFrom.Request.index";
+//        $subMenu->name = "admin/leadsContactUs.app_menu_requst";
+//        $subMenu->roleView = "leads_view";
+//        $subMenu->icon = "fas fa-phone-square";
+//        $subMenu->save();
+//
+//        $subMenu = new AdminMenu();
+//        $subMenu->parent_id = $mainMenu->id;
+//        $subMenu->sel_routs = "Meeting.index";
+//        $subMenu->url = "admin.LeadsFrom.Meeting.index";
+//        $subMenu->name = "admin/leadsContactUs.app_menu_meeting";
+//        $subMenu->roleView = "leads_view";
+//        $subMenu->icon = "fas fa-handshake";
+//        $subMenu->save();
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;

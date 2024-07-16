@@ -29,9 +29,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 Route::group(['middleware' => ['UnderConstruction', 'MinifyHtml']], function () {
     Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
-
-//        Route::get('/updateData', [PagesViewController::class, 'updateData'])->name('page_updateData');
-
         Route::post('/filter', [FilterBuilder::class, 'UrlFilterBuilder'])->name('FilterBuilder');
         Route::get('/filter/clear', [FilterBuilder::class, 'FilterClear'])->name('FilterClear');
 

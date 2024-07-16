@@ -14,7 +14,7 @@ use App\Models\User;
 class BlogViewController extends WebMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     BlogList
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function BlogList() {
 
         $meta = parent::getMeatByCatId('blog');
@@ -30,7 +30,7 @@ class BlogViewController extends WebMainController {
         $posts = Blog::defhomequery()->whereNotIn('id', $topPostId)->paginate(12);
 
 
-        if($posts->isEmpty() and isset($_GET['page'])) {
+        if ($posts->isEmpty() and isset($_GET['page'])) {
             self::abortError404('Empty');
         }
 
@@ -39,11 +39,10 @@ class BlogViewController extends WebMainController {
             'postForBanner' => $postForBanner,
             'posts' => $posts,
         ]);
-
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   BlogCategoryView
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function BlogCategoryView($slug) {
 
         try {
@@ -81,7 +80,7 @@ class BlogViewController extends WebMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     BlogAuthorView
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function BlogAuthorView($slug) {
 
         try {
@@ -92,7 +91,7 @@ class BlogViewController extends WebMainController {
         }
 
         $meta = parent::getMeatByCatId('home');
-        parent::printSeoMeta($meta, null);
+        parent::printSeoMeta($meta, 'page_index');
 
         $pageView = $this->pageView;
         $pageView['SelMenu'] = 'BlogList';
@@ -113,7 +112,7 @@ class BlogViewController extends WebMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     BlogTagView
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function BlogTagView($slug) {
 
         try {
@@ -148,8 +147,9 @@ class BlogViewController extends WebMainController {
         ]);
 
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     BlogView
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function BlogView($slug) {
 
         try {

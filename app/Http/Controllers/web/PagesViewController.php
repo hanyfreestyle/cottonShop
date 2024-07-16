@@ -13,18 +13,8 @@ use Illuminate\Support\Facades\Auth;
 
 class PagesViewController extends WebMainController {
 
-    public function updateData() {
-
-        $tags = Blog::where('old_id', null)->get();
-        foreach ($tags as $tag) {
-            $tag->old_id = $tag->id;
-            $tag->save();
-
-        }
-    }
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
 
         $meta = parent::getMeatByCatId('home');
@@ -42,11 +32,10 @@ class PagesViewController extends WebMainController {
             'latestBlog' => $latestBlog,
             'homeCategory' => $homeCategory,
         ]);
-
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     AboutUs
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function AboutUs() {
         $meta = parent::getMeatByCatId('about');
         parent::printSeoMeta($meta, 'page_AboutUs');
@@ -55,7 +44,6 @@ class PagesViewController extends WebMainController {
 
         $pageView = $this->pageView;
         $pageView['SelMenu'] = 'AboutUs';
-        $pageView['page'] = 'page_AboutUs';
 
         return view('web.pages.about')->with([
             'pageView' => $pageView,
@@ -65,7 +53,7 @@ class PagesViewController extends WebMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     Trems
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function Trems() {
         $meta = parent::getMeatByCatId('trems');
         parent::printSeoMeta($meta, "page_Trems");
@@ -83,7 +71,7 @@ class PagesViewController extends WebMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     WishList
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function WishList() {
         $meta = parent::getMeatByCatId('wish_list');
         parent::printSeoMeta($meta, 'page_WishList');
@@ -100,7 +88,7 @@ class PagesViewController extends WebMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     Search
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function Search() {
         $meta = parent::getMeatByCatId('search');
         parent::printSeoMeta($meta, 'page_search');
@@ -117,9 +105,8 @@ class PagesViewController extends WebMainController {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ContactUs
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ContactUs() {
-
         $meta = parent::getMeatByCatId('contact');
         parent::printSeoMeta($meta, 'page_ContactUs');
 
@@ -134,13 +121,13 @@ class PagesViewController extends WebMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ContactSaveForm
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ContactSaveForm(ContactUsFormRequest $request) {
 
         $saveContactUs = new ContactUsForm();
         $saveContactUs->name = $request->input('name');
         $saveContactUs->phone = $request->input('phone');
-        if($request->input('countryCode_phone') == 'eg') {
+        if ($request->input('countryCode_phone') == 'eg') {
             $saveContactUs->full_number = "+2" . $request->input('phone');
         } else {
             $saveContactUs->full_number = "+" . $request->input('countryDialCode_phone') . $request->input('phone');
@@ -154,9 +141,8 @@ class PagesViewController extends WebMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ContactUsThanksPage
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ContactUsThanksPage() {
-
         $meta = parent::getMeatByCatId('contact');
         parent::printSeoMeta($meta, 'ContactUsThanksPage');
 
@@ -171,10 +157,10 @@ class PagesViewController extends WebMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   UnderConstruction
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UnderConstruction() {
         $config = WebMainController::getWebConfig(0);
-        if($config->web_status == 1 or Auth::check()) {
+        if ($config->web_status == 1 or Auth::check()) {
             return redirect()->route('page_index');
         }
         $meta = parent::getMeatByCatId('home');
