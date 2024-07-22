@@ -4,6 +4,7 @@ namespace App\Http\Controllers\web;
 
 use App\AppPlugin\Product\Helpers\FilterBuilder;
 use App\AppPlugin\Product\Models\Brand;
+use App\AppPlugin\Product\Models\Category;
 use App\AppPlugin\Product\Models\Product;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\WebMainController;
@@ -71,7 +72,14 @@ class BrandViewController extends WebMainController {
         $productsQuery = $filters->getProductQuery($request, Product::defWepAll());
         $filterData = $filters->setfilterBrand(false)->getFilterQuery($productsQuery);
 
-        $products = $productsQuery->where('brand_id', $brand->id)->paginate(12)->appends(request()->query());
+//        $products = $productsQuery->where('brand_id', $brand->id)->paginate(12)->appends(request()->query());
+        $products = $productsQuery->where('brand_id', $brand->id)
+            ->join('pro_categories', 'pro_categories.id','=','products.categories.id')
+//            ->with(['categories' => function ($q){
+//                $q->orderBy('category_id', 'DESC');
+//            }])
+            ->paginate(12)->appends(request()->query());
+
 
         if ($products->isEmpty() and isset($_GET['page'])) {
             self::abortError404('Empty');
