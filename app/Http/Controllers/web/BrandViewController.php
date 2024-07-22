@@ -4,7 +4,6 @@ namespace App\Http\Controllers\web;
 
 use App\AppPlugin\Product\Helpers\FilterBuilder;
 use App\AppPlugin\Product\Models\Brand;
-use App\AppPlugin\Product\Models\Category;
 use App\AppPlugin\Product\Models\Product;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\WebMainController;
