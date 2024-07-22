@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->string('variants_slug_id')->nullable();
 
             $table->integer('brand_id')->nullable()->default(null);
+            $table->integer('def_cat')->nullable()->default(null);
             $table->string('sku')->nullable()->default(null);
 
             $table->float('price')->nullable()->default(null);

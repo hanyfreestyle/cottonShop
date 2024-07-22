@@ -361,59 +361,86 @@ class ProductController extends AdminMainController {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function storeUpdate(ProductRequest $request, $id = 0) {
         $saveData = Product::findOrNew($id);
 
-        $categories = $request->input('categories');
-        $tags = $request->input('tag_id');
-
-        $saveData->is_active = $request->input('is_active');
-        $saveData->is_archived = $request->input('is_archived');
-        $saveData->on_stock = $request->input('on_stock');
-        $saveData->featured = $request->input('featured');
-        $saveData->brand_id = $request->input('brand_id');
-
-        $saveData->price = $request->input('price');
-        $saveData->regular_price = $request->input('regular_price');
-        $saveData->sales_count = $request->input('sales_count');
-        $saveData->save();
-
-        $saveData->categories()->sync($categories);
-        $saveData->tags()->sync($tags);
-        self::SaveAndUpdateDefPhoto($saveData, $request, $this->UploadDirIs, 'en.name');
-
-        $saveData->pro_id = $saveData->id;
-
-        if ($saveData->sku == null) {
-            $saveData->sku = $saveData->id . "-" . RandomNumber();
-        }
-        $saveData->save();
-
-        $addLang = json_decode($request->add_lang);
-        foreach ($addLang as $key => $lang) {
-            $dbName = $this->translationdb;
-            $saveTranslation = $this->translation->where($dbName, $saveData->id)->where('locale', $key)->firstOrNew();
-            $saveTranslation->$dbName = $saveData->id;
-            $saveTranslation->slug = AdminHelper::Url_Slug($request->input($key . '.slug'));
-            $saveTranslation->short_des = $request->input($key . '.short_des');
-            $saveTranslation = self::saveTranslationMain($saveTranslation, $key, $request);
-            $saveTranslation->save();
-        }
-
         try {
             DB::transaction(function () use ($request, $saveData) {
+                $categories = $request->input('categories');
+                $tags = $request->input('tag_id');
 
+                $saveData->is_active = $request->input('is_active');
+                $saveData->is_archived = $request->input('is_archived');
+                $saveData->on_stock = $request->input('on_stock');
+                $saveData->featured = $request->input('featured');
+                $saveData->brand_id = $request->input('brand_id');
+
+                $saveData->price = $request->input('price');
+                $saveData->regular_price = $request->input('regular_price');
+                $saveData->sales_count = $request->input('sales_count');
+                $saveData->save();
+
+                $saveData->categories()->sync($categories);
+                $saveData->tags()->sync($tags);
+                self::SaveAndUpdateDefPhoto($saveData, $request, $this->UploadDirIs, 'en.name');
+
+                $saveData->pro_id = $saveData->id;
+
+                if ($saveData->sku == null) {
+                    $saveData->sku = $saveData->id . "-" . RandomNumber();
+                }
+                $saveData->save();
+
+                $addLang = json_decode($request->add_lang);
+                foreach ($addLang as $key => $lang) {
+                    $dbName = $this->translationdb;
+                    $saveTranslation = $this->translation->where($dbName, $saveData->id)->where('locale', $key)->firstOrNew();
+                    $saveTranslation->$dbName = $saveData->id;
+                    $saveTranslation->slug = AdminHelper::Url_Slug($request->input($key . '.slug'));
+                    $saveTranslation->short_des = $request->input($key . '.short_des');
+                    $saveTranslation = self::saveTranslationMain($saveTranslation, $key, $request);
+                    $saveTranslation->save();
+                }
             });
 
         } catch (\Exception $exception) {
             return back()->with('data_not_save', "");
         }
         self::ClearCash();
+        self::UpdateDefCat();
         return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
 
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+    public function UpdateDefCat() {
+
+        $products = Product::query()->where('parent_id', null)
+            ->where('def_cat', null)
+            ->with('categories')
+            ->get();
+
+        foreach ($products as $product) {
+            $defCat = null ;
+            if(count($product->categories) > 1){
+                $defCat = $product->categories->where('parent_id', null)->first()->id ?? null;
+                if ($defCat == null){
+                    $defCat = $product->categories->first()->id ?? null;
+                }
+            }elseif (count($product->categories) == 1){
+                $defCat = $product->categories->first()->id ?? null;
+            }
+            if ($defCat) {
+                $product->def_cat = $defCat;
+                $product->timestamps = false;
+                $product->save();
+            }
+        }
+
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     ForceDeletes

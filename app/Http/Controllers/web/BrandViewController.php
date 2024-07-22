@@ -72,14 +72,10 @@ class BrandViewController extends WebMainController {
         $productsQuery = $filters->getProductQuery($request, Product::defWepAll());
         $filterData = $filters->setfilterBrand(false)->getFilterQuery($productsQuery);
 
-//        $products = $productsQuery->where('brand_id', $brand->id)->paginate(12)->appends(request()->query());
         $products = $productsQuery->where('brand_id', $brand->id)
-            ->join('pro_categories', 'pro_categories.id','=','products.categories.id')
-//            ->with(['categories' => function ($q){
-//                $q->orderBy('category_id', 'DESC');
-//            }])
+            ->orderby('def_cat')
             ->paginate(12)->appends(request()->query());
-
+//        dd($products);
 
         if ($products->isEmpty() and isset($_GET['page'])) {
             self::abortError404('Empty');
