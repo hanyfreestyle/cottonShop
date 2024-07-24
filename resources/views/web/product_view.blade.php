@@ -99,7 +99,7 @@
         "@type": "AggregateRating",
         "ratingValue": 4.4,
         "reviewCount": 89
-    },
+    }
 
     }
 
