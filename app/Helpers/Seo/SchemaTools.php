@@ -176,10 +176,12 @@ class SchemaTools {
         $line .= '"name": "'.$row->name.'",' . self::PHP_MY_EOL();
         $line .= '"description": "'.AdminHelper::seoDesClean($row->des).'",' . self::PHP_MY_EOL();
 
-        $line .= '"brand": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "Brand",' . self::PHP_MY_EOL();
-        $line .= '"name": "MyBrand"' . self::PHP_MY_EOL();
-        $line .= '},' . self::PHP_MY_EOL();
+        if ($row->brand->name ?? null){
+            $line .= '"brand": {' . self::PHP_MY_EOL();
+            $line .= '"@type": "Brand",' . self::PHP_MY_EOL();
+            $line .= '"name": "'.$row->brand->name.'"' . self::PHP_MY_EOL();
+            $line .= '},' . self::PHP_MY_EOL();
+        }
 
         $line .= '"offers": {' . self::PHP_MY_EOL();
         $line .= '"@type": "Offer",' . self::PHP_MY_EOL();
