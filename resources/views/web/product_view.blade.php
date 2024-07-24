@@ -48,7 +48,7 @@
         "priceSpecification": {
           "@type": "PriceSpecification",
           "price": 39.99,
-          "priceCurrency": "EG"
+          "priceCurrency": "EGP"
         },
         "hasMerchantReturnPolicy": {
           "@type": "MerchantReturnPolicy",
