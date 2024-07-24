@@ -27,7 +27,6 @@
       "@context": "https://schema.org/",
       "@type": "Product",
       "sku": "trinket-12345",
-      "gtin14": "12345678901234",
       "image": [
         "https://example.com/photos/16x9/trinket.jpg",
         "https://example.com/photos/4x3/trinket.jpg",
@@ -91,7 +90,16 @@
           "@type": "AggregateRating",
           "ratingValue": 4.4,
           "reviewCount": 89
+        },
+                "hasMerchantReturnPolicy": {
+          "@type": "MerchantReturnPolicy",
+          "applicableCountry": "CH",
+          "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+          "merchantReturnDays": 60,
+          "returnMethod": "https://schema.org/ReturnByMail",
+          "returnFees": "https://schema.org/FreeReturn"
         }
+
       }
     </script>
 
