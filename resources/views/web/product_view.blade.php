@@ -27,8 +27,8 @@
 {
   "@context": "https://schema.org/",
   "@type": "Product",
-  "name": "name",
-  "image": "ddd",
+  "name": "https://cottton.shop/",
+  "image": "https://freestyle4u.net/cottonShop/public/wp-content/uploads/2021/07/%D9%85%D8%B1%D8%AA%D8%A8%D8%A9-%D8%AC%D9%88%D9%84%D8%AF%D9%86-%D8%A7%D9%84%D9%85%D8%A3%D9%85%D9%88%D9%86.jpg",
   "description": "description",
   "brand": {
     "@type": "Brand",
@@ -40,13 +40,14 @@
     "url": "url",
     "priceCurrency": "EGP",
     "price": "1500",
+    "priceValidUntil": "2024-07-31",
     "availability": "https://schema.org/InStock",
     "itemCondition": "https://schema.org/NewCondition"
   }
 }
 </script>
 
-        
+
 
         <div class="sp-single sp-single-1 des_pr_layout_1 mb__60">
         <div class="container container_cat cat_default  d-noneX">
