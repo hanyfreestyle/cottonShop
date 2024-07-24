@@ -47,14 +47,7 @@
         "price": 39.99,
         "priceCurrency": "USD",
         "priceValidUntil": "2024-11-20",
-        "shippingDetails": {
-        "@type": "OfferShippingDetails",
-        "shippingRate": {
-        "@type": "MonetaryAmount",
-        "value": 3.49,
-        "currency": "USD"
-    },
-            "hasMerchantReturnPolicy": {
+       "hasMerchantReturnPolicy": {
         "@type": "MerchantReturnPolicy",
         "applicableCountry": "CH",
         "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
@@ -62,6 +55,14 @@
         "returnMethod": "https://schema.org/ReturnByMail",
         "returnFees": "https://schema.org/FreeReturn"
     },
+        "shippingDetails": {
+        "@type": "OfferShippingDetails",
+        "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": 3.49,
+        "currency": "USD"
+    },
+
         "shippingDestination": {
         "@type": "DefinedRegion",
         "addressCountry": "US"
