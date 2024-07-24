@@ -17,98 +17,6 @@
             <x-site.def.breadcrumbs>
                 {{ Breadcrumbs::render('ProductView',$product) }}
             </x-site.def.breadcrumbs>
-
-                <div class="container mt-5">
-                    <textarea style="direction: ltr">{!! $printSchema->Product($product,"") !!}</textarea>
-                </div>
-
-            {!! $printSchema->Product($product,"") !!}
-
-{{--<script type="application/ld+json">--}}
-{{--    {--}}
-{{--        "@context": "https://schema.org/",--}}
-{{--        "@type": "Product",--}}
-{{--        "sku": "trinket-12345",--}}
-{{--        "image": [--}}
-{{--        "https://example.com/photos/16x9/trinket.jpg",--}}
-{{--        "https://example.com/photos/4x3/trinket.jpg",--}}
-{{--        "https://example.com/photos/1x1/trinket.jpg"--}}
-{{--        ],--}}
-{{--        "name": "Nice trinket",--}}
-{{--        "description": "Trinket with clean lines",--}}
-{{--        "brand": {--}}
-{{--        "@type": "Brand",--}}
-{{--        "name": "MyBrand"--}}
-{{--    },--}}
-{{--        "offers": {--}}
-{{--        "@type": "Offer",--}}
-{{--        "url": "https://www.example.com/trinket_offer",--}}
-{{--        "itemCondition": "https://schema.org/NewCondition",--}}
-{{--        "availability": "https://schema.org/InStock",--}}
-{{--        "price": 39.99,--}}
-{{--        "priceCurrency": "USD",--}}
-{{--        "priceValidUntil": "2024-11-20",--}}
-{{--       "hasMerchantReturnPolicy": {--}}
-{{--        "@type": "MerchantReturnPolicy",--}}
-{{--        "applicableCountry": "CH",--}}
-{{--        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",--}}
-{{--        "merchantReturnDays": 60,--}}
-{{--        "returnMethod": "https://schema.org/ReturnByMail",--}}
-{{--        "returnFees": "https://schema.org/FreeReturn"--}}
-{{--    },--}}
-{{--        "shippingDetails": {--}}
-{{--        "@type": "OfferShippingDetails",--}}
-{{--        "shippingRate": {--}}
-{{--        "@type": "MonetaryAmount",--}}
-{{--        "value": 3.49,--}}
-{{--        "currency": "USD"--}}
-{{--    },--}}
-
-{{--        "shippingDestination": {--}}
-{{--        "@type": "DefinedRegion",--}}
-{{--        "addressCountry": "US"--}}
-{{--    },--}}
-{{--        "deliveryTime": {--}}
-{{--        "@type": "ShippingDeliveryTime",--}}
-{{--        "handlingTime": {--}}
-{{--        "@type": "QuantitativeValue",--}}
-{{--        "minValue": 0,--}}
-{{--        "maxValue": 1,--}}
-{{--        "unitCode": "DAY"--}}
-{{--    },--}}
-{{--        "transitTime": {--}}
-{{--        "@type": "QuantitativeValue",--}}
-{{--        "minValue": 1,--}}
-{{--        "maxValue": 5,--}}
-{{--        "unitCode": "DAY"--}}
-{{--    }--}}
-{{--    }--}}
-{{--    }--}}
-{{--    },--}}
-{{--        "review": {--}}
-{{--        "@type": "Review",--}}
-{{--        "reviewRating": {--}}
-{{--        "@type": "Rating",--}}
-{{--        "ratingValue": 4,--}}
-{{--        "bestRating": 5--}}
-{{--    },--}}
-{{--        "author": {--}}
-{{--        "@type": "Person",--}}
-{{--        "name": "Fred Benson"--}}
-{{--    }--}}
-{{--    },--}}
-{{--        "aggregateRating": {--}}
-{{--        "@type": "AggregateRating",--}}
-{{--        "ratingValue": 4.4,--}}
-{{--        "reviewCount": 89--}}
-{{--    }--}}
-
-{{--    }--}}
-
-{{--</script>--}}
-
-
-
             <div class="sp-single sp-single-1 des_pr_layout_1 mb__60">
                 <div class="container container_cat cat_default  d-noneX">
                     <div class="row product mt__10">
@@ -135,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-
+                {!! $printSchema->Product($product,"ProductView") !!}
                 <x-temp.products.description-tab :product="$product"/>
 
                 <div class="clearfix"></div>

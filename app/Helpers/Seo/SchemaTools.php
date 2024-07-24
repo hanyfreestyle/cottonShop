@@ -150,10 +150,10 @@ class SchemaTools {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function Product($row, $route) {
+        $url = urldecode(route($route, $row->slug));
 
         $Photo = getPhotoPath($row->photo, 'blog', "photo");
         $publisher_logo = getDefPhotoPath($this->DefPhotoList, 'logo', 'photo');
-
 
         $line = self::PHP_MY_EOL();
 
@@ -183,11 +183,11 @@ class SchemaTools {
             $line .= '},' . self::PHP_MY_EOL();
         }
 
-        $xx = 0 ;
-        if($xx){
+        if($row->on_stock){
+
             $line .= '"offers": {' . self::PHP_MY_EOL();
             $line .= '"@type": "Offer",' . self::PHP_MY_EOL();
-            $line .= '"url": "https://www.example.com/trinket_offer",' . self::PHP_MY_EOL();
+            $line .= '"url": "'.$url.'",' . self::PHP_MY_EOL();
             $line .= '"itemCondition": "https://schema.org/NewCondition",' . self::PHP_MY_EOL();
             $line .= '"availability": "https://schema.org/InStock",' . self::PHP_MY_EOL();
             $line .= '"price": ' . $row->price . ',' . self::PHP_MY_EOL();
@@ -250,8 +250,6 @@ class SchemaTools {
 
             $line .= '},' . self::PHP_MY_EOL();
         }
-
-
 
         $line .= '"aggregateRating": {' . self::PHP_MY_EOL();
         $line .= '"@type": "AggregateRating",' . self::PHP_MY_EOL();
