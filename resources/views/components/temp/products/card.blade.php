@@ -57,3 +57,6 @@
     <x-temp.model.quick-shop :product="$product" :product-info="$productInfo"/>
   @endif
 @endif
+
+
+{!! $printSchema->Product($product,"ProductView") !!}
