@@ -91,7 +91,8 @@
           "ratingValue": 4.4,
           "reviewCount": 89
         },
-                "hasMerchantReturnPolicy": {
+      },
+       "hasMerchantReturnPolicy": {
           "@type": "MerchantReturnPolicy",
           "applicableCountry": "CH",
           "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
@@ -99,8 +100,6 @@
           "returnMethod": "https://schema.org/ReturnByMail",
           "returnFees": "https://schema.org/FreeReturn"
         }
-
-      }
     </script>
 
 
