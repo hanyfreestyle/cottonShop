@@ -17,6 +17,11 @@
             <x-site.def.breadcrumbs>
                 {{ Breadcrumbs::render('ProductView',$product) }}
             </x-site.def.breadcrumbs>
+
+                <div class="container mt-5">
+                    <textarea style="direction: ltr">{!! $printSchema->Product($product,"") !!}</textarea>
+                </div>
+
             {!! $printSchema->Product($product,"") !!}
 
 {{--<script type="application/ld+json">--}}

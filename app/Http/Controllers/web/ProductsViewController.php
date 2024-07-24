@@ -24,6 +24,8 @@ class ProductsViewController extends WebMainController {
             self::abortError404('root');
         }
 
+//        dd($product);
+
         parent::printSeoMeta($product, 'ProductView');
 
         $pageView = $this->pageView;

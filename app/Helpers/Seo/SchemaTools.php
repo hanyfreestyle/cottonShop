@@ -151,23 +151,36 @@ class SchemaTools {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function Product($row, $route) {
 
+        $Photo = getPhotoPath($row->photo, 'blog', "photo");
+        $publisher_logo = getDefPhotoPath($this->DefPhotoList, 'logo', 'photo');
+
+
         $line = self::PHP_MY_EOL();
 
         $line .= '<script type="application/ld+json">{' . self::PHP_MY_EOL();
         $line .= '"@context": "https://schema.org/",' . self::PHP_MY_EOL();
         $line .= '"@type": "Product",' . self::PHP_MY_EOL();
-        $line .= '"sku": "trinket-12345",' . self::PHP_MY_EOL();
-        $line .= '"image": [' . self::PHP_MY_EOL();
-        $line .= '"https://example.com/photos/16x9/trinket.jpg",' . self::PHP_MY_EOL();
-        $line .= '"https://example.com/photos/4x3/trinket.jpg",' . self::PHP_MY_EOL();
-        $line .= '"https://example.com/photos/1x1/trinket.jpg"' . self::PHP_MY_EOL();
-        $line .= '],' . self::PHP_MY_EOL();
-        $line .= '"name": "Nice trinket",' . self::PHP_MY_EOL();
-        $line .= '"description": "Trinket with clean lines",' . self::PHP_MY_EOL();
+        $line .= '"sku": "'.$row->sku.'",' . self::PHP_MY_EOL();
+
+        if (count($row->more_photos) > 1 ){
+            $line .= '"image": [' . self::PHP_MY_EOL();
+            $line .= '"https://example.com/photos/16x9/trinket.jpg",' . self::PHP_MY_EOL();
+            $line .= '"https://example.com/photos/4x3/trinket.jpg",' . self::PHP_MY_EOL();
+            $line .= '"https://example.com/photos/1x1/trinket.jpg"' . self::PHP_MY_EOL();
+            $line .= '],' . self::PHP_MY_EOL();
+        }else{
+            $line .= '"image": "'.$Photo.'",' . self::PHP_MY_EOL();
+        }
+
+
+        $line .= '"name": "'.$row->name.'",' . self::PHP_MY_EOL();
+        $line .= '"description": "'.AdminHelper::seoDesClean($row->des).'",' . self::PHP_MY_EOL();
+
         $line .= '"brand": {' . self::PHP_MY_EOL();
         $line .= '"@type": "Brand",' . self::PHP_MY_EOL();
         $line .= '"name": "MyBrand"' . self::PHP_MY_EOL();
         $line .= '},' . self::PHP_MY_EOL();
+
         $line .= '"offers": {' . self::PHP_MY_EOL();
         $line .= '"@type": "Offer",' . self::PHP_MY_EOL();
         $line .= '"url": "https://www.example.com/trinket_offer",' . self::PHP_MY_EOL();
