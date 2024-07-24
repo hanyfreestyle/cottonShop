@@ -183,71 +183,75 @@ class SchemaTools {
             $line .= '},' . self::PHP_MY_EOL();
         }
 
+        $xx = 0 ;
+        if($xx){
+            $line .= '"offers": {' . self::PHP_MY_EOL();
+            $line .= '"@type": "Offer",' . self::PHP_MY_EOL();
+            $line .= '"url": "https://www.example.com/trinket_offer",' . self::PHP_MY_EOL();
+            $line .= '"itemCondition": "https://schema.org/NewCondition",' . self::PHP_MY_EOL();
+            $line .= '"availability": "https://schema.org/InStock",' . self::PHP_MY_EOL();
+            $line .= '"price": ' . $row->price . ',' . self::PHP_MY_EOL();
+            $line .= '"priceCurrency": "EGP",' . self::PHP_MY_EOL();
+            $line .= '"priceValidUntil": "' . Carbon::now()->addDays(30) . '",' . self::PHP_MY_EOL();
 
-        $line .= '"offers": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "Offer",' . self::PHP_MY_EOL();
-        $line .= '"url": "https://www.example.com/trinket_offer",' . self::PHP_MY_EOL();
-        $line .= '"itemCondition": "https://schema.org/NewCondition",' . self::PHP_MY_EOL();
-        $line .= '"availability": "https://schema.org/InStock",' . self::PHP_MY_EOL();
-        $line .= '"price": ' . $row->price . ',' . self::PHP_MY_EOL();
-        $line .= '"priceCurrency": "EGP",' . self::PHP_MY_EOL();
-        $line .= '"priceValidUntil": "' . Carbon::now()->addDays(30) . '",' . self::PHP_MY_EOL();
+            $line .= '"hasMerchantReturnPolicy": {' . self::PHP_MY_EOL();
+            $line .= '"@type": "MerchantReturnPolicy",' . self::PHP_MY_EOL();
+            $line .= '"applicableCountry": "EG",' . self::PHP_MY_EOL();
+            $line .= '"returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",' . self::PHP_MY_EOL();
+            $line .= '"merchantReturnDays": 15,' . self::PHP_MY_EOL();
+            $line .= '"returnMethod": "https://schema.org/ReturnByMail",' . self::PHP_MY_EOL();
+            $line .= '"returnFees": "https://schema.org/FreeReturn"' . self::PHP_MY_EOL();
+            $line .= '},' . self::PHP_MY_EOL();
 
-        $line .= '"hasMerchantReturnPolicy": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "MerchantReturnPolicy",' . self::PHP_MY_EOL();
-        $line .= '"applicableCountry": "EG",' . self::PHP_MY_EOL();
-        $line .= '"returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",' . self::PHP_MY_EOL();
-        $line .= '"merchantReturnDays": 15,' . self::PHP_MY_EOL();
-        $line .= '"returnMethod": "https://schema.org/ReturnByMail",' . self::PHP_MY_EOL();
-        $line .= '"returnFees": "https://schema.org/FreeReturn"' . self::PHP_MY_EOL();
-        $line .= '},' . self::PHP_MY_EOL();
+            $line .= '"shippingDetails": {' . self::PHP_MY_EOL();
+            $line .= '"@type": "OfferShippingDetails",' . self::PHP_MY_EOL();
+            $line .= '"shippingRate": {' . self::PHP_MY_EOL();
+            $line .= '"@type": "MonetaryAmount",' . self::PHP_MY_EOL();
+            $line .= '"value": 300,' . self::PHP_MY_EOL();
+            $line .= '"currency": "EGP"' . self::PHP_MY_EOL();
+            $line .= '},' . self::PHP_MY_EOL();
 
-        $line .= '"shippingDetails": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "OfferShippingDetails",' . self::PHP_MY_EOL();
-        $line .= '"shippingRate": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "MonetaryAmount",' . self::PHP_MY_EOL();
-        $line .= '"value": 300,' . self::PHP_MY_EOL();
-        $line .= '"currency": "EGP"' . self::PHP_MY_EOL();
-        $line .= '},' . self::PHP_MY_EOL();
+            $line .= '"shippingDestination": {' . self::PHP_MY_EOL();
+            $line .= '"@type": "DefinedRegion",' . self::PHP_MY_EOL();
+            $line .= '"addressCountry": "EG"' . self::PHP_MY_EOL();
+            $line .= '},' . self::PHP_MY_EOL();
 
-        $line .= '"shippingDestination": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "DefinedRegion",' . self::PHP_MY_EOL();
-        $line .= '"addressCountry": "EG"' . self::PHP_MY_EOL();
-        $line .= '},' . self::PHP_MY_EOL();
+            $line .= '"deliveryTime": {' . self::PHP_MY_EOL();
+            $line .= '"@type": "ShippingDeliveryTime",' . self::PHP_MY_EOL();
+            $line .= '"handlingTime": {' . self::PHP_MY_EOL();
+            $line .= '"@type": "QuantitativeValue",' . self::PHP_MY_EOL();
+            $line .= '"minValue": 0,' . self::PHP_MY_EOL();
+            $line .= '"maxValue": 1,' . self::PHP_MY_EOL();
+            $line .= '"unitCode": "DAY"' . self::PHP_MY_EOL();
+            $line .= '},' . self::PHP_MY_EOL();
 
-        $line .= '"deliveryTime": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "ShippingDeliveryTime",' . self::PHP_MY_EOL();
-        $line .= '"handlingTime": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "QuantitativeValue",' . self::PHP_MY_EOL();
-        $line .= '"minValue": 0,' . self::PHP_MY_EOL();
-        $line .= '"maxValue": 1,' . self::PHP_MY_EOL();
-        $line .= '"unitCode": "DAY"' . self::PHP_MY_EOL();
-        $line .= '},' . self::PHP_MY_EOL();
+            $line .= '"transitTime": {' . self::PHP_MY_EOL();
+            $line .= '"@type": "QuantitativeValue",' . self::PHP_MY_EOL();
+            $line .= '"minValue": 1,' . self::PHP_MY_EOL();
+            $line .= '"maxValue": 5,' . self::PHP_MY_EOL();
+            $line .= '"unitCode": "DAY"' . self::PHP_MY_EOL();
+            $line .= '}' . self::PHP_MY_EOL();
+            $line .= '}' . self::PHP_MY_EOL();
+            $line .= '}' . self::PHP_MY_EOL();
+            $line .= '},' . self::PHP_MY_EOL();
 
-        $line .= '"transitTime": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "QuantitativeValue",' . self::PHP_MY_EOL();
-        $line .= '"minValue": 1,' . self::PHP_MY_EOL();
-        $line .= '"maxValue": 5,' . self::PHP_MY_EOL();
-        $line .= '"unitCode": "DAY"' . self::PHP_MY_EOL();
-        $line .= '}' . self::PHP_MY_EOL();
-        $line .= '}' . self::PHP_MY_EOL();
-        $line .= '}' . self::PHP_MY_EOL();
-        $line .= '},' . self::PHP_MY_EOL();
+            $line .= '"review": {' . self::PHP_MY_EOL();
+            $line .= '"@type": "Review",' . self::PHP_MY_EOL();
+            $line .= '"reviewRating": {' . self::PHP_MY_EOL();
+            $line .= '"@type": "Rating",' . self::PHP_MY_EOL();
+            $line .= '"ratingValue": 4,' . self::PHP_MY_EOL();
+            $line .= '"bestRating": 5' . self::PHP_MY_EOL();
+            $line .= '},' . self::PHP_MY_EOL();
 
-        $line .= '"review": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "Review",' . self::PHP_MY_EOL();
-        $line .= '"reviewRating": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "Rating",' . self::PHP_MY_EOL();
-        $line .= '"ratingValue": 4,' . self::PHP_MY_EOL();
-        $line .= '"bestRating": 5' . self::PHP_MY_EOL();
-        $line .= '},' . self::PHP_MY_EOL();
+            $line .= '"author": {' . self::PHP_MY_EOL();
+            $line .= '"@type": "Person",' . self::PHP_MY_EOL();
+            $line .= '"name": "' . $this->WebConfig->translate($this->lang)->name . '"' . self::PHP_MY_EOL();
+            $line .= '}' . self::PHP_MY_EOL();
 
-        $line .= '"author": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "Person",' . self::PHP_MY_EOL();
-        $line .= '"name": "' . $this->WebConfig->translate($this->lang)->name . '"' . self::PHP_MY_EOL();
-        $line .= '}' . self::PHP_MY_EOL();
+            $line .= '},' . self::PHP_MY_EOL();
+        }
 
-        $line .= '},' . self::PHP_MY_EOL();
+
 
         $line .= '"aggregateRating": {' . self::PHP_MY_EOL();
         $line .= '"@type": "AggregateRating",' . self::PHP_MY_EOL();
