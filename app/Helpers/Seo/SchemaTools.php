@@ -68,7 +68,7 @@ class SchemaTools {
         $line .= '"streetAddress": "' . $this->WebConfig->translate($this->lang)->schema_address . '",' . self::PHP_MY_EOL();
         $line .= '"addressLocality": "' . $this->WebConfig->translate($this->lang)->schema_city . '",' . self::PHP_MY_EOL();
         $line .= '"postalCode": "' . $this->WebConfig->schema_postal_code . '",' . self::PHP_MY_EOL();
-        $line .= '"addressCountry": "' . $this->WebConfig->schema_country . '",' . self::PHP_MY_EOL();
+        $line .= '"addressCountry": "' . $this->WebConfig->schema_country . '"' . self::PHP_MY_EOL();
 //        $line .= '"addressRegion": "' . __('web/schema.b_address_region') . '"' . self::PHP_MY_EOL();
         $line .= '},' . self::PHP_MY_EOL();
         //        $line .= '"geo": {"@type": "GeoCoordinates","latitude": "30.031952","longitude": "31.475441"},'.self::PHP_MY_EOL();
