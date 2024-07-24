@@ -107,10 +107,46 @@ class SchemaTools {
         return $line;
     }
 
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function Article($row, $route) {
+
+        $url = urldecode(route($route, $row->slug));
+        $Photo = getPhotoPath($row->photo, 'blog', "photo");
+        $publisher_logo = getDefPhotoPath($this->DefPhotoList, 'logo', 'photo');
+
+        $line = self::PHP_MY_EOL();
+        $line .= '<script type="application/ld+json">' . self::PHP_MY_EOL();
+        $line .= '{' . self::PHP_MY_EOL();
+        $line .= '"@context": "https://schema.org",' . self::PHP_MY_EOL();
+        $line .= '"@type": "NewsArticle",' . self::PHP_MY_EOL();
+        $line .= '"url": "' . $url . '",' . self::PHP_MY_EOL();
+
+        $line .= '"author": {' . self::PHP_MY_EOL();
+        $line .= '"@type": "Website",' . self::PHP_MY_EOL();
+        $line .= '"name": "' . $this->WebConfig->translate($this->lang)->name . '",' . self::PHP_MY_EOL();
+        $line .= '"url": "' . $Photo . '"' . self::PHP_MY_EOL();
+        $line .= '},' . self::PHP_MY_EOL();
+
+        $line .= '"publisher":{' . self::PHP_MY_EOL();
+        $line .= '"@type":"Organization",' . self::PHP_MY_EOL();
+        $line .= '"name":"' . $this->WebConfig->translate($this->lang)->name . '",' . self::PHP_MY_EOL();
+        $line .= '"logo":"' . $publisher_logo . '"' . self::PHP_MY_EOL();
+        $line .= ' },' . self::PHP_MY_EOL();
+
+        $line .= '"headline": "' . self::Clean($row->translate($this->lang)->name) . '",' . self::PHP_MY_EOL();
+        $line .= '"mainEntityOfPage": "' . $url . '",' . self::PHP_MY_EOL();
+        $line .= '"articleBody": "' . self::Clean($row->translate($this->lang)->g_des) . '",' . self::PHP_MY_EOL();
+        $line .= '"image": "' . $Photo . '",' . self::PHP_MY_EOL();
+        $line .= '"datePublished": "' . date(DATE_ATOM, strtotime($row->published_at)) . '",' . self::PHP_MY_EOL();
+        $line .= '"dateModified": "' . date(DATE_ATOM, strtotime($row->updated_at)) . '"' . self::PHP_MY_EOL();
+
+        $line .= '}' . self::PHP_MY_EOL();
+        $line .= '</script>' . self::PHP_MY_EOL();
+
+        return $line;
+    }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -294,43 +330,7 @@ class SchemaTools {
 
     #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     #|||||||||||||||||||||||||||||||||||||| #   Article
-        public function Article($row, $route) {
 
-            $url = urldecode(route($route, [$row->getCatName->slug, $row->slug]));
-            $Photo = getPhotoPath($row->photo, 'blog', "photo");
-            $publisher_logo = getDefPhotoPath($this->DefPhotoList, 'logo', 'photo');
-
-            $line = self::PHP_MY_EOL();
-            $line .= '<script type="application/ld+json">' . self::PHP_MY_EOL();
-            $line .= '{' . self::PHP_MY_EOL();
-            $line .= '"@context": "https://schema.org",' . self::PHP_MY_EOL();
-            $line .= '"@type": "NewsArticle",' . self::PHP_MY_EOL();
-            $line .= '"url": "' . $url . '",' . self::PHP_MY_EOL();
-
-            $line .= '"author": {' . self::PHP_MY_EOL();
-            $line .= '"@type": "Website",' . self::PHP_MY_EOL();
-            $line .= '"name": "' . $this->WebConfig->translate($this->lang)->name . '",' . self::PHP_MY_EOL();
-            $line .= '"url": "' . $Photo . '"' . self::PHP_MY_EOL();
-            $line .= '},' . self::PHP_MY_EOL();
-
-            $line .= '"publisher":{' . self::PHP_MY_EOL();
-            $line .= '"@type":"Organization",' . self::PHP_MY_EOL();
-            $line .= '"name":"' . $this->WebConfig->translate($this->lang)->name . '",' . self::PHP_MY_EOL();
-            $line .= '"logo":"' . $publisher_logo . '"' . self::PHP_MY_EOL();
-            $line .= ' },' . self::PHP_MY_EOL();
-
-            $line .= '"headline": "' . self::Clean($row->translate($this->lang)->name) . '",' . self::PHP_MY_EOL();
-            $line .= '"mainEntityOfPage": "' . $url . '",' . self::PHP_MY_EOL();
-            $line .= '"articleBody": "' . self::Clean($row->translate($this->lang)->g_des) . '",' . self::PHP_MY_EOL();
-            $line .= '"image": "' . $Photo . '",' . self::PHP_MY_EOL();
-            $line .= '"datePublished": "' . date(DATE_ATOM, strtotime($row->published_at)) . '",' . self::PHP_MY_EOL();
-            $line .= '"dateModified": "' . date(DATE_ATOM, strtotime($row->updated_at)) . '"' . self::PHP_MY_EOL();
-
-            $line .= '}' . self::PHP_MY_EOL();
-            $line .= '</script>' . self::PHP_MY_EOL();
-
-            return $line;
-        }
 
     #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     #|||||||||||||||||||||||||||||||||||||| #   Businesses
