@@ -45,9 +45,13 @@
         </div>
     </header>
 
-    <div class="container mt-5">
-        <textarea style="direction: ltr">{!! SEO::generate() !!}</textarea>
-    </div>
+{{--    <div class="container mt-5">--}}
+{{--        <textarea style="direction: ltr">{!! SEO::generate() !!}</textarea>--}}
+{{--    </div>--}}
+
+{{--    <div class="container mt-5">--}}
+{{--        <textarea style="direction: ltr">{!! $printSchema->Businesses() !!}</textarea>--}}
+{{--    </div>--}}
 
     @yield('content')
     @include('web.layouts.inc.footer')
@@ -114,6 +118,6 @@
 </script>
 @yield('AddScript')
 @stack('ScriptCode')
-
+{!! $printSchema->Businesses() !!}
 </body>
 </html>

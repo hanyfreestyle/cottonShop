@@ -111,22 +111,44 @@
                                 </div>
                             </x-admin.card.normal>
 
-                            <x-admin.card.normal col="col-lg-6" title="{{__('admin/config/webConfig.social_media')}}">
+                            <x-admin.card.normal col="col-lg-6" title="Schema">
                                 <div class="row">
-                                    <x-admin.form.input :row="$setting" name="facebook" label="Facebook" col="12" tdir="en"/>
-                                    <x-admin.form.input :row="$setting" name="youtube" label="Youtube" col="12" tdir="en"/>
-                                    <x-admin.form.input :row="$setting" name="twitter" label="Twitter" col="12" tdir="en"/>
-                                    <x-admin.form.input :row="$setting" name="instagram" label="Instagram" col="12" tdir="en"/>
-                                    <x-admin.form.input :row="$setting" name="linkedin" label="Linkedin" col="12" tdir="en"/>
-                                    <x-admin.form.input :row="$setting" name="google_api" label="Google Api" col="12" tdir="en"/>
+                                    <x-admin.form.input :row="$setting" name="schema_type" label="Type" col="4" tdir="en"/>
+                                    <x-admin.form.input :row="$setting" name="schema_lat" label="latitude" col="4" tdir="en"/>
+                                    <x-admin.form.input :row="$setting" name="schema_long" label="longitude" col="4" tdir="en"/>
+                                    <x-admin.form.input :row="$setting" name="schema_postal_code" label="postalCode" col="4" tdir="en"/>
+                                    <x-admin.form.input :row="$setting" name="schema_country" label="addressCountry" col="4" tdir="en"/>
+                                </div>
+                                <div class="row">
+                                    @foreach ( config('app.web_lang') as $key=>$lang )
+                                        <div class="col-lg-{{getColLang(6)}}">
+                                            <x-admin.form.trans-input name="schema_address" :row="$setting" :key="$key" :tdir="$key" label="streetAddress"/>
+                                            <x-admin.form.trans-input name="schema_city" :row="$setting" :key="$key" :tdir="$key" label="addressLocality"/>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </x-admin.card.normal>
+
+
                         </div>
                     </div>
                 @endif
 
                 <div class="col-lg-12">
                     <div class="row">
+                        <x-admin.card.normal col="col-lg-6" title="{{__('admin/config/webConfig.social_media')}}">
+                            <div class="row">
+                                <x-admin.form.input :row="$setting" name="facebook" label="Facebook" col="12" tdir="en"/>
+                                <x-admin.form.input :row="$setting" name="youtube" label="Youtube" col="12" tdir="en"/>
+                                <x-admin.form.input :row="$setting" name="twitter" label="Twitter" col="12" tdir="en"/>
+                                <x-admin.form.input :row="$setting" name="instagram" label="Instagram" col="12" tdir="en"/>
+                                <x-admin.form.input :row="$setting" name="linkedin" label="Linkedin" col="12" tdir="en"/>
+                                <x-admin.form.input :row="$setting" name="google_api" label="Google Api" col="12" tdir="en"/>
+                            </div>
+
+
+                        </x-admin.card.normal>
+
                         {{--                        <x-admin.card.normal col="col-lg-6" title="Telegram">--}}
                         {{--                            <div class="row">--}}
                         {{--                                <x-admin.form.select-arr name="telegram_send" :sendvalue="old('telegram_send',$setting->telegram_send)" label="Send" col="4"--}}

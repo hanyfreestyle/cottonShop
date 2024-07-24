@@ -105,6 +105,13 @@ class SettingsController extends AdminMainController {
             $saveData->pro_social_share = $request->input('pro_social_share');
         }
 
+        $saveData->schema_type = $request->input('schema_type');
+        $saveData->schema_lat = $request->input('schema_lat');
+        $saveData->schema_long = $request->input('schema_long');
+        $saveData->schema_postal_code = $request->input('schema_postal_code');
+        $saveData->schema_country = $request->input('schema_country');
+
+
         $saveData->save();
 
         foreach (config('app.web_lang') as $key => $lang) {
@@ -114,6 +121,8 @@ class SettingsController extends AdminMainController {
             $saveTranslation->closed_mass = $request->input($key . '.closed_mass');
             $saveTranslation->whatsapp_des = $request->input($key . '.whatsapp_des');
             $saveTranslation->meta_des = $request->input($key . '.meta_des');
+            $saveTranslation->schema_address = $request->input($key . '.schema_address');
+            $saveTranslation->schema_city = $request->input($key . '.schema_city');
             $saveTranslation->save();
         }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2024 at 12:04 PM
+-- Generation Time: Jul 24, 2024 at 01:56 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -25,8 +25,8 @@ SET time_zone = "+00:00";
 -- Dumping data for table `config_settings`
 --
 
-INSERT INTO `config_settings` (`id`, `web_url`, `web_status`, `switch_lang`, `users_login`, `serach`, `serach_type`, `wish_list`, `phone_num`, `whatsapp_num`, `phone_call`, `whatsapp_send`, `email`, `def_url`, `facebook`, `youtube`, `twitter`, `instagram`, `linkedin`, `google_api`, `telegram_send`, `telegram_key`, `telegram_phone`, `telegram_group`, `page_about`, `page_warranty`, `page_shipping`, `pro_sale_lable`, `pro_quick_view`, `pro_quick_shop`, `pro_warranty_tab`, `pro_shipping_tab`, `pro_social_share`) VALUES
-(1, '#', 0, 0, 1, 1, 1, 1, '0100-34-00002', '0100-34-00002', '01003400002', '201003400002', 'shopcottton@gmail.com', 'https://cottton.shop', 'https://www.facebook.com/', 'https://www.youtube.com', 'https://www.twitter.com/', 'https://www.Instagram.com/', 'https://www.linkedin.com/', NULL, 0, '6313317483:AAEooBTEFel1ej1uaDpXcZzCrbX_ID3aYEw', '-4091280818', '200119925', 1, 2, 3, 1, 1, 1, 1, 1, 1);
+INSERT INTO `config_settings` (`id`, `web_url`, `web_status`, `switch_lang`, `users_login`, `serach`, `serach_type`, `wish_list`, `phone_num`, `whatsapp_num`, `phone_call`, `whatsapp_send`, `email`, `def_url`, `facebook`, `youtube`, `twitter`, `instagram`, `linkedin`, `google_api`, `telegram_send`, `telegram_key`, `telegram_phone`, `telegram_group`, `page_about`, `page_warranty`, `page_shipping`, `pro_sale_lable`, `pro_quick_view`, `pro_quick_shop`, `pro_warranty_tab`, `pro_shipping_tab`, `pro_social_share`, `schema_type`, `schema_lat`, `schema_long`, `schema_postal_code`, `schema_country`) VALUES
+(1, '#', 0, 0, 1, 1, 1, 1, '0100-34-00002', '0100-34-00002', '01003400002', '201003400002', 'shopcottton@gmail.com', 'https://cottton.shop', 'https://www.facebook.com/', 'https://www.youtube.com', 'https://www.twitter.com/', 'https://www.Instagram.com/', 'https://www.linkedin.com/', NULL, 0, '6313317483:AAEooBTEFel1ej1uaDpXcZzCrbX_ID3aYEw', '-4091280818', '200119925', 1, 2, 3, 1, 1, 1, 1, 1, 1, 'Store', '1.2222', '2.2222', '21111', 'EG');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -47,6 +47,12 @@ return new class extends Migration {
             $table->integer('pro_shipping_tab')->default('1');
             $table->integer('pro_social_share')->default('1');
 
+            $table->string('schema_type')->nullable();
+            $table->string('schema_lat')->nullable();
+            $table->string('schema_long')->nullable();
+            $table->string('schema_postal_code')->nullable();
+            $table->string('schema_country')->nullable();
+
         });
 
 
@@ -59,6 +65,8 @@ return new class extends Migration {
             $table->text('closed_mass')->nullable();
             $table->text('meta_des')->nullable();
             $table->text('whatsapp_des')->nullable();
+            $table->text('schema_address')->nullable();
+            $table->text('schema_city')->nullable();
             $table->unique(['setting_id','locale']);
             $table->foreign('setting_id')->references('id')->on('config_settings')->onDelete('cascade');
         });

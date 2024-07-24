@@ -54,9 +54,19 @@ class SettingFormRequest extends FormRequest {
             ];
         }
 
+        $rules += [
+            'schema_type' => 'required|alpha',
+            'schema_lat'=> "nullable|numeric|required_with:schema_lat",
+            'schema_long'=> "nullable|numeric|required_with:schema_long",
+            'schema_country' => 'required|alpha',
+            'schema_postal_code'=> 'required|regex:/^[0-9]{3,7}$/',
+        ];
+
         foreach (config('app.web_lang') as $key => $lang) {
             $rules[$key . ".name"] = 'required';
             $rules[$key . ".closed_mass"] = 'required';
+            $rules[$key . ".schema_address"] = 'required';
+            $rules[$key . ".schema_city"] = 'required';
         }
         return $rules;
     }
