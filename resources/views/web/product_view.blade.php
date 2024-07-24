@@ -49,9 +49,9 @@
           "@type": "PriceSpecification",
           "price": 39.99,
           "priceValidUntil": "2024-11-20",
-          "priceCurrency": "EGP",
-          
+          "priceCurrency": "EGP"
         },
+
         "hasMerchantReturnPolicy": {
           "@type": "MerchantReturnPolicy",
           "applicableCountry": "EG",
