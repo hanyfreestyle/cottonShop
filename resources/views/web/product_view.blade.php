@@ -48,7 +48,33 @@
         "priceSpecification": {
           "@type": "PriceSpecification",
           "price": 39.99,
-          "priceCurrency": "EGP"
+          "priceValidUntil": "2024-11-20",
+          "priceCurrency": "EGP",
+                  "shippingDetails": {
+        "@type": "OfferShippingDetails",
+        "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": 3.49,
+        "currency": "USD"
+    },
+        "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "US"
+    },
+        "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+        "@type": "QuantitativeValue",
+        "minValue": 0,
+        "maxValue": 1,
+        "unitCode": "DAY"
+    },
+        "transitTime": {
+        "@type": "QuantitativeValue",
+        "minValue": 1,
+        "maxValue": 5,
+        "unitCode": "DAY"
+    }
         },
         "hasMerchantReturnPolicy": {
           "@type": "MerchantReturnPolicy",
