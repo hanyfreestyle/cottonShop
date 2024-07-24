@@ -51,11 +51,6 @@ class SettingFormRequest extends FormRequest {
                 'pro_shipping_tab' => 'required',
                 'pro_social_share' => 'required',
 
-                'pro_main_city_id' => "required|array|min:1",
-                'pro_main_city_rate' => 'required|numeric',
-                'pro_main_city_discount' => 'required|numeric',
-                'pro_all_city_rate' => 'required|numeric',
-                'pro_all_city_discount' => 'required|numeric',
             ];
         }
 

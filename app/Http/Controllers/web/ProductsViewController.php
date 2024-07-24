@@ -12,7 +12,7 @@ class ProductsViewController extends WebMainController {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   ProductView
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ProductView($slug) {
 
         try {
@@ -31,7 +31,7 @@ class ProductsViewController extends WebMainController {
         $pageView['page'] = 'page_ProductsCategories';
         $pageView['page'] = 'page_indexXXX';
 
-        if(count($product->translations) == 1) {
+        if (count($product->translations) == 1) {
             $pageView['slug'] = route('page_index');
         } else {
             $pageView['slug'] = "product/" . $product->translate(webChangeLocale())->slug;

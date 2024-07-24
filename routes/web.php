@@ -55,7 +55,7 @@ Route::group(['middleware' => ['UnderConstruction', 'MinifyHtml']], function () 
         Route::get('/order-completed', [ShoppingCartController::class, 'CartOrderCompleted'])->name('Shop_CartOrderCompleted');
 
         Route::get('/shop/', [ProductsPageController::class, 'ShopView'])->name('page_ShopView');
-        Route::get('/offers/', [ProductsPageController::class, 'Offers'])->name('page_Offers');
+        Route::get('/offers/', [ProductsPageController::class, 'Offers'])->name('page_Offers_x');
 
         Route::get('/products/categories', [ProductsCategoriesViewController::class, 'ProductsCategoriesList'])->name('ProductsCategoriesList');
         Route::get('/product-category/{slug}', [ProductsCategoriesViewController::class, 'ProductsCategoriesView'])->name('ProductsCategoriesView');

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2024 at 08:19 AM
+-- Generation Time: Jul 24, 2024 at 12:43 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `a_cart`
+-- Database: `cottton_shop`
 --
 
 --
@@ -44,7 +44,7 @@ INSERT INTO `config_meta_tag_translations` (`id`, `meta_tag_id`, `locale`, `name
 (16, 8, 'en', NULL, NULL, 'Wish List | A cotton store that sells all brands and types of bed mattresses', 'Wish List A cotton store that sells all brands and types of bed mattresses'),
 (17, 9, 'ar', 'المتجر', 'متجر قطن لبيع كل براندات وانواع مراتب السرير', 'المتجر | متجر قطن لبيع كل براندات وانواع مراتب السرير', 'المتجر متجر قطن لبيع كل براندات وانواع مراتب السرير'),
 (18, 9, 'en', NULL, NULL, 'Shop | A cotton store that sells all brands and types of bed mattresses', 'Shop A cotton store that sells all brands and types of bed mattresses'),
-(19, 10, 'ar', 'العلامات التجارية', 'يعتبر متجر Cottton.shop أحد أشهر المتاجر الإلكترونية في مصر، حيث يوفر مجموعة كبيرة ومتنوعة من المنتجات المنزلية، بما في ذلك مُراتِب السَّرِير الفاخرة وذات الجودة العالية. ولتسهيل هذه المهمة عليكم، قُمنا بتجميع قائمة بأفضل ماركات المُراتِب التي يتوفرها المتجر، وذلك لتسهيل عليكم الاختيار المناسب لأحتياجاتكم.', 'العلامات التجارية', 'يعتبر متجر Cottton.shop أحد أشهر المتاجر الإلكترونية في مصر، حيث يوفر مجموعة كبيرة ومتنوعة من المنتجات المنزلية،'),
+(19, 10, 'ar', 'العلامات التجارية', 'يعتبر متجر Cottton.shop أحد أشهر المتاجر الإلكترونية في مصر، حيث يوفر مجموعة كبيرة ومتنوعة من المنتجات المنزلية، بما في ذلك مُراتِب السَّرِير الفاخرة وذات الجودة العالية. ولتسهيل هذه المهمة عليكم، قُمنا بتجميع قائمة بأفضل ماركات المُراتِب التي يتوفرها المتجر، وذلك لتسهيل عليكم الاختيار المناسب لأحتياجاتكم.', 'العلامات التجارية | متجر قطن لبيع كل براندات وانواع مراتب السرير', 'يعتبر متجر Cottton.shop أحد أشهر المتاجر الإلكترونية في مصر، حيث يوفر مجموعة كبيرة ومتنوعة من المنتجات المنزلية،'),
 (20, 10, 'en', NULL, NULL, 'العلامات التجارية', 'يعتبر متجر Cottton.shop أحد أشهر المتاجر الإلكترونية في مصر، حيث يوفر مجموعة كبيرة ومتنوعة من المنتجات المنزلية، بما في ذلك مُراتِب السَّرِير الفاخرة وذات الجودة العالية. ولتسهيل هذه المهمة عليكم، قُمنا بتجميع قائمة بأفضل ماركات المُراتِب التي يتوفرها المتجر، وذلك لتسهيل عليكم الاختيار المناسب لأحتياجاتكم.'),
 (21, 11, 'ar', 'تسجيل دخول', 'انشاء حساب على الموقع يساعدك على اتمام عمليه الشراء والاستفادة من العروض والخصومات على منتجات الموقع', '%SiteName% تسجيل دخول', '%SiteName% تسجيل دخول'),
 (22, 11, 'en', 'Login', 'Creating an account on the site will help you complete the purchase process and benefit from offers and discounts on the site’s products', '%SiteName% Login Page', '%SiteName% Login Page'),
@@ -56,7 +56,7 @@ INSERT INTO `config_meta_tag_translations` (`id`, `meta_tag_id`, `locale`, `name
 (28, 14, 'en', NULL, NULL, 'Categories', 'Categories'),
 (29, 15, 'ar', 'البحث', 'البحث', '%SiteName%  البحث', '%SiteName%  البحث'),
 (30, 15, 'en', '%SiteName%  البحث', '%SiteName%  البحث', '%SiteName%  البحث', '%SiteName%  البحث'),
-(31, 16, 'ar', 'سلة المشتريات', NULL, 'سلة المشتريات', 'سلة المشتريات'),
+(31, 16, 'ar', 'سلة المشتريات', 'سلة المشتريات متجر قطن لبيع كل براندات وانواع مراتب السرير', 'سلة المشتريات | متجر قطن لبيع كل براندات وانواع مراتب السرير', 'سلة المشتريات متجر قطن لبيع كل براندات وانواع مراتب السرير'),
 (32, 16, 'en', 'Shopping cart', NULL, 'Shopping cart', 'Shopping cart');
 COMMIT;
 

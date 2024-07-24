@@ -47,15 +47,6 @@ return new class extends Migration {
             $table->integer('pro_shipping_tab')->default('1');
             $table->integer('pro_social_share')->default('1');
 
-            $table->integer('pro_free_shipping')->default('1');
-            $table->json('pro_main_city_id')->nullable();
-            $table->integer('pro_main_city_rate')->nullable();
-            $table->integer('pro_main_city_discount')->nullable();
-            $table->integer('pro_all_city_rate')->nullable();
-            $table->integer('pro_all_city_discount')->nullable();
-
-
-
         });
 
 
@@ -66,6 +57,8 @@ return new class extends Migration {
             $table->string('locale')->index();
             $table->string('name')->nullable();
             $table->text('closed_mass')->nullable();
+            $table->text('meta_des')->nullable();
+            $table->text('whatsapp_des')->nullable();
             $table->unique(['setting_id','locale']);
             $table->foreign('setting_id')->references('id')->on('config_settings')->onDelete('cascade');
         });

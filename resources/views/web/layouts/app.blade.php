@@ -35,7 +35,7 @@
 </head>
 
 <body class="{{htmlBodyStyle($pageView)}}">
-{{--<x-temp.header-offers/>--}}
+
 
 <div id="nt_wrapper">
     <header id="ntheader" class="ntheader header_3 h_icon_la">
@@ -44,6 +44,11 @@
             @include('web.layouts.inc.header_menu')
         </div>
     </header>
+
+    <div class="container mt-5">
+        <textarea style="direction: ltr">{!! SEO::generate() !!}</textarea>
+    </div>
+
     @yield('content')
     @include('web.layouts.inc.footer')
 </div>
@@ -76,7 +81,7 @@
 <a id="nt_backtop" class="pf br__50 z__100 des_bt2" href="#"><span class="tc br__50 db cw"><i class="pr pegk pe-7s-angle-up"></i></span></a>
 
 @if( Route::currentRouteName() == 'ProductView')
-    <x-temp.footer-call :config="$WebConfig" :product="$product" />
+    <x-temp.footer-call :config="$WebConfig" :product="$product"/>
 @else
     <x-temp.footer-call :config="$WebConfig"/>
 @endif
