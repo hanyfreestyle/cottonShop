@@ -189,9 +189,9 @@ class SchemaTools {
         $line .= '"url": "https://www.example.com/trinket_offer",' . self::PHP_MY_EOL();
         $line .= '"itemCondition": "https://schema.org/NewCondition",' . self::PHP_MY_EOL();
         $line .= '"availability": "https://schema.org/InStock",' . self::PHP_MY_EOL();
-        $line .= '"price": ' .$row->price . ',' . self::PHP_MY_EOL();
+        $line .= '"price": ' . $row->price . ',' . self::PHP_MY_EOL();
         $line .= '"priceCurrency": "EGP",' . self::PHP_MY_EOL();
-        $line .= '"priceValidUntil": "'.Carbon::now()->addDays(30).'",' . self::PHP_MY_EOL();
+        $line .= '"priceValidUntil": "' . Carbon::now()->addDays(30) . '",' . self::PHP_MY_EOL();
 
         $line .= '"hasMerchantReturnPolicy": {' . self::PHP_MY_EOL();
         $line .= '"@type": "MerchantReturnPolicy",' . self::PHP_MY_EOL();
@@ -244,7 +244,7 @@ class SchemaTools {
 
         $line .= '"author": {' . self::PHP_MY_EOL();
         $line .= '"@type": "Person",' . self::PHP_MY_EOL();
-        $line .= '"name": "Fred Benson"' . self::PHP_MY_EOL();
+        $line .= '"name": "' . $this->WebConfig->translate($this->lang)->name . '"' . self::PHP_MY_EOL();
         $line .= '}' . self::PHP_MY_EOL();
 
         $line .= '},' . self::PHP_MY_EOL();
