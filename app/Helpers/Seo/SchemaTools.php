@@ -71,7 +71,11 @@ class SchemaTools {
         $line .= '"addressCountry": "' . $this->WebConfig->schema_country . '"' . self::PHP_MY_EOL();
 //        $line .= '"addressRegion": "' . __('web/schema.b_address_region') . '"' . self::PHP_MY_EOL();
         $line .= '},' . self::PHP_MY_EOL();
-        //        $line .= '"geo": {"@type": "GeoCoordinates","latitude": "30.031952","longitude": "31.475441"},'.self::PHP_MY_EOL();
+
+        if ($this->WebConfig->schema_lat and $this->WebConfig->schema_long) {
+            $line .= '"geo": {"@type": "GeoCoordinates","latitude": "' . $this->WebConfig->schema_lat . '","longitude": "' . $this->WebConfig->schema_long . '"},' . self::PHP_MY_EOL();
+        }
+
         $line .= '"openingHoursSpecification": [' . self::PHP_MY_EOL();
         $line .= '{"@type": "OpeningHoursSpecification","dayOfWeek": "Monday","opens": "10:00","closes": "18:00"},' . self::PHP_MY_EOL();
         $line .= '{"@type": "OpeningHoursSpecification","dayOfWeek": "Tuesday","opens": "10:00","closes": "18:00"},' . self::PHP_MY_EOL();
