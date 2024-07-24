@@ -160,57 +160,61 @@ class SchemaTools {
         $line .= '<script type="application/ld+json">{' . self::PHP_MY_EOL();
         $line .= '"@context": "https://schema.org/",' . self::PHP_MY_EOL();
         $line .= '"@type": "Product",' . self::PHP_MY_EOL();
-        $line .= '"sku": "'.$row->sku.'",' . self::PHP_MY_EOL();
+        $line .= '"sku": "' . $row->sku . '",' . self::PHP_MY_EOL();
 
-        if (count($row->more_photos) > 1 ){
+        if (count($row->more_photos) > 1) {
             $line .= '"image": [' . self::PHP_MY_EOL();
             $line .= '"https://example.com/photos/16x9/trinket.jpg",' . self::PHP_MY_EOL();
             $line .= '"https://example.com/photos/4x3/trinket.jpg",' . self::PHP_MY_EOL();
             $line .= '"https://example.com/photos/1x1/trinket.jpg"' . self::PHP_MY_EOL();
             $line .= '],' . self::PHP_MY_EOL();
-        }else{
-            $line .= '"image": "'.$Photo.'",' . self::PHP_MY_EOL();
+        } else {
+            $line .= '"image": "' . $Photo . '",' . self::PHP_MY_EOL();
         }
 
 
-        $line .= '"name": "'.$row->name.'",' . self::PHP_MY_EOL();
-        $line .= '"description": "'.AdminHelper::seoDesClean($row->des).'",' . self::PHP_MY_EOL();
+        $line .= '"name": "' . $row->name . '",' . self::PHP_MY_EOL();
+        $line .= '"description": "' . AdminHelper::seoDesClean($row->des) . '",' . self::PHP_MY_EOL();
 
-        if ($row->brand->name ?? null){
+        if ($row->brand->name ?? null) {
             $line .= '"brand": {' . self::PHP_MY_EOL();
             $line .= '"@type": "Brand",' . self::PHP_MY_EOL();
-            $line .= '"name": "'.$row->brand->name.'"' . self::PHP_MY_EOL();
+            $line .= '"name": "' . $row->brand->name . '"' . self::PHP_MY_EOL();
             $line .= '},' . self::PHP_MY_EOL();
         }
+
 
         $line .= '"offers": {' . self::PHP_MY_EOL();
         $line .= '"@type": "Offer",' . self::PHP_MY_EOL();
         $line .= '"url": "https://www.example.com/trinket_offer",' . self::PHP_MY_EOL();
         $line .= '"itemCondition": "https://schema.org/NewCondition",' . self::PHP_MY_EOL();
         $line .= '"availability": "https://schema.org/InStock",' . self::PHP_MY_EOL();
-        $line .= '"price": 39.99,' . self::PHP_MY_EOL();
-        $line .= '"priceCurrency": "USD",' . self::PHP_MY_EOL();
-        $line .= '"priceValidUntil": "2024-11-20",' . self::PHP_MY_EOL();
+        $line .= '"price": ' .$row->price . ',' . self::PHP_MY_EOL();
+        $line .= '"priceCurrency": "EGP",' . self::PHP_MY_EOL();
+        $line .= '"priceValidUntil": "'.Carbon::now()->addDays(30).'",' . self::PHP_MY_EOL();
+
         $line .= '"hasMerchantReturnPolicy": {' . self::PHP_MY_EOL();
         $line .= '"@type": "MerchantReturnPolicy",' . self::PHP_MY_EOL();
-        $line .= '"applicableCountry": "CH",' . self::PHP_MY_EOL();
+        $line .= '"applicableCountry": "EG",' . self::PHP_MY_EOL();
         $line .= '"returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",' . self::PHP_MY_EOL();
-        $line .= '"merchantReturnDays": 60,' . self::PHP_MY_EOL();
+        $line .= '"merchantReturnDays": 15,' . self::PHP_MY_EOL();
         $line .= '"returnMethod": "https://schema.org/ReturnByMail",' . self::PHP_MY_EOL();
         $line .= '"returnFees": "https://schema.org/FreeReturn"' . self::PHP_MY_EOL();
         $line .= '},' . self::PHP_MY_EOL();
+
         $line .= '"shippingDetails": {' . self::PHP_MY_EOL();
         $line .= '"@type": "OfferShippingDetails",' . self::PHP_MY_EOL();
         $line .= '"shippingRate": {' . self::PHP_MY_EOL();
         $line .= '"@type": "MonetaryAmount",' . self::PHP_MY_EOL();
-        $line .= '"value": 3.49,' . self::PHP_MY_EOL();
-        $line .= '"currency": "USD"' . self::PHP_MY_EOL();
+        $line .= '"value": 300,' . self::PHP_MY_EOL();
+        $line .= '"currency": "EGP"' . self::PHP_MY_EOL();
         $line .= '},' . self::PHP_MY_EOL();
 
         $line .= '"shippingDestination": {' . self::PHP_MY_EOL();
         $line .= '"@type": "DefinedRegion",' . self::PHP_MY_EOL();
-        $line .= '"addressCountry": "US"' . self::PHP_MY_EOL();
+        $line .= '"addressCountry": "EG"' . self::PHP_MY_EOL();
         $line .= '},' . self::PHP_MY_EOL();
+
         $line .= '"deliveryTime": {' . self::PHP_MY_EOL();
         $line .= '"@type": "ShippingDeliveryTime",' . self::PHP_MY_EOL();
         $line .= '"handlingTime": {' . self::PHP_MY_EOL();
@@ -219,6 +223,7 @@ class SchemaTools {
         $line .= '"maxValue": 1,' . self::PHP_MY_EOL();
         $line .= '"unitCode": "DAY"' . self::PHP_MY_EOL();
         $line .= '},' . self::PHP_MY_EOL();
+
         $line .= '"transitTime": {' . self::PHP_MY_EOL();
         $line .= '"@type": "QuantitativeValue",' . self::PHP_MY_EOL();
         $line .= '"minValue": 1,' . self::PHP_MY_EOL();
@@ -228,6 +233,7 @@ class SchemaTools {
         $line .= '}' . self::PHP_MY_EOL();
         $line .= '}' . self::PHP_MY_EOL();
         $line .= '},' . self::PHP_MY_EOL();
+
         $line .= '"review": {' . self::PHP_MY_EOL();
         $line .= '"@type": "Review",' . self::PHP_MY_EOL();
         $line .= '"reviewRating": {' . self::PHP_MY_EOL();
@@ -235,49 +241,23 @@ class SchemaTools {
         $line .= '"ratingValue": 4,' . self::PHP_MY_EOL();
         $line .= '"bestRating": 5' . self::PHP_MY_EOL();
         $line .= '},' . self::PHP_MY_EOL();
-        $line .= '"author": {' . self::PHP_MY_EOL();
-        $line .= '"@type": "Person",' . self::PHP_MY_EOL();
-        $line .= '"name": "Fred Benson"' . self::PHP_MY_EOL();
-        $line .= '}' . self::PHP_MY_EOL();
+
+//        $line .= '"author": {' . self::PHP_MY_EOL();
+//        $line .= '"@type": "Person",' . self::PHP_MY_EOL();
+//        $line .= '"name": "Fred Benson"' . self::PHP_MY_EOL();
+//        $line .= '}' . self::PHP_MY_EOL();
+
         $line .= '},' . self::PHP_MY_EOL();
+
         $line .= '"aggregateRating": {' . self::PHP_MY_EOL();
         $line .= '"@type": "AggregateRating",' . self::PHP_MY_EOL();
         $line .= '"ratingValue": 4.4,' . self::PHP_MY_EOL();
         $line .= '"reviewCount": 89' . self::PHP_MY_EOL();
         $line .= '}' . self::PHP_MY_EOL();
 
+
         $line .= '}</script>' . self::PHP_MY_EOL();
 
-
-        /*
-        $line = self::PHP_MY_EOL();
-        $line .= '<script type="application/ld+json">' . self::PHP_MY_EOL();
-        $line .= '{' . self::PHP_MY_EOL();
-        $line .= '"@context": "https://schema.org",' . self::PHP_MY_EOL();
-        $line .= '"@type": "Product",' . self::PHP_MY_EOL();
-        $line .= '"name": "' . $row->name . '",' . self::PHP_MY_EOL();
-        $line .= '"image": "' . $row->name . '",' . self::PHP_MY_EOL();
-        $line .= '"description": "' . $row->name . '",' . self::PHP_MY_EOL();
-
-        $line .= '"brand": {,' . self::PHP_MY_EOL();
-        $line .= '"@type": "Brand",' . self::PHP_MY_EOL();
-        $line .= '"name": "' . $row->name . '"' . self::PHP_MY_EOL();
-        $line .= '},' . self::PHP_MY_EOL();
-
-        $line .= '"offers": {,' . self::PHP_MY_EOL();
-        $line .= '"@type": "Offer",' . self::PHP_MY_EOL();
-        $line .= '"url": "' . $row->name . '",' . self::PHP_MY_EOL();
-        $line .= '"priceCurrency": "EGP",' . self::PHP_MY_EOL();
-        $line .= '"price": "1500",' . self::PHP_MY_EOL();
-        $line .= '"availability": "https://schema.org/InStock",' . self::PHP_MY_EOL();
-        $line .= '"itemCondition": "https://schema.org/NewCondition"' . self::PHP_MY_EOL();
-        $line .= '},' . self::PHP_MY_EOL();
-
-
-        $line .= '"sku": "' . $row->name . '"' . self::PHP_MY_EOL();
-        $line .= '}' . self::PHP_MY_EOL();
-        $line .= '</script>' . self::PHP_MY_EOL();
-*/
         return $line;
 
     }
