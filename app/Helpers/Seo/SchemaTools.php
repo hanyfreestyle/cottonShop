@@ -147,10 +147,40 @@ class SchemaTools {
         return $line;
     }
 
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function Product($row, $route) {
+        $line = self::PHP_MY_EOL();
+        $line .= '<script type="application/ld+json">' . self::PHP_MY_EOL();
+        $line .= '{' . self::PHP_MY_EOL();
+        $line .= '"@context": "https://schema.org",' . self::PHP_MY_EOL();
+        $line .= '"@type": "Product",' . self::PHP_MY_EOL();
+        $line .= '"name": "' . $row->name . '",' . self::PHP_MY_EOL();
+        $line .= '"image": "' . $row->name . '",' . self::PHP_MY_EOL();
+        $line .= '"description": "' . $row->name . '",' . self::PHP_MY_EOL();
 
+        $line .= '"brand": {,' . self::PHP_MY_EOL();
+        $line .= '"@type": "Brand",' . self::PHP_MY_EOL();
+        $line .= '"name": "' . $row->name . '"' . self::PHP_MY_EOL();
+        $line .= '},' . self::PHP_MY_EOL();
+
+        $line .= '"offers": {,' . self::PHP_MY_EOL();
+        $line .= '"@type": "Offer",' . self::PHP_MY_EOL();
+        $line .= '"url": "' . $row->name . '",' . self::PHP_MY_EOL();
+        $line .= '"priceCurrency": "EGP",' . self::PHP_MY_EOL();
+        $line .= '"price": "1500",' . self::PHP_MY_EOL();
+        $line .= '"availability": "https://schema.org/InStock",' . self::PHP_MY_EOL();
+        $line .= '"itemCondition": "https://schema.org/NewCondition"' . self::PHP_MY_EOL();
+        $line .= '},' . self::PHP_MY_EOL();
+
+
+        $line .= '"sku": "' . $row->name . '"' . self::PHP_MY_EOL();
+        $line .= '}' . self::PHP_MY_EOL();
+        $line .= '</script>' . self::PHP_MY_EOL();
+
+        return $line;
+
+    }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
@@ -328,12 +358,7 @@ class SchemaTools {
             return $line;
         }
 
-    #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    #|||||||||||||||||||||||||||||||||||||| #   Article
 
-
-    #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    #|||||||||||||||||||||||||||||||||||||| #   Businesses
 
     */
 
