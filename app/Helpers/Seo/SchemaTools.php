@@ -240,12 +240,12 @@ class SchemaTools {
         $line .= '"@type": "Rating",' . self::PHP_MY_EOL();
         $line .= '"ratingValue": 4,' . self::PHP_MY_EOL();
         $line .= '"bestRating": 5' . self::PHP_MY_EOL();
-        $line .= '}' . self::PHP_MY_EOL();
+        $line .= '},' . self::PHP_MY_EOL();
 
-//        $line .= '"author": {' . self::PHP_MY_EOL();
-//        $line .= '"@type": "Person",' . self::PHP_MY_EOL();
-//        $line .= '"name": "Fred Benson"' . self::PHP_MY_EOL();
-//        $line .= '}' . self::PHP_MY_EOL();
+        $line .= '"author": {' . self::PHP_MY_EOL();
+        $line .= '"@type": "Person",' . self::PHP_MY_EOL();
+        $line .= '"name": "Fred Benson"' . self::PHP_MY_EOL();
+        $line .= '}' . self::PHP_MY_EOL();
 
         $line .= '},' . self::PHP_MY_EOL();
 
