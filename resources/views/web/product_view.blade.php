@@ -21,7 +21,34 @@
                 <textarea style="direction: ltr">{!! $printSchema->Product($product,"") !!}</textarea>
             </div>
 
-      <div class="sp-single sp-single-1 des_pr_layout_1 mb__60">
+
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "name",
+  "image": "ddd",
+  "description": "description",
+  "brand": {
+    "@type": "Brand",
+    "name": "barnd"
+  },
+  "sku": "555555",
+  "offers": {
+    "@type": "Offer",
+    "url": "url",
+    "priceCurrency": "EGP",
+    "price": "1500",
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition"
+  }
+}
+</script>
+
+        
+
+        <div class="sp-single sp-single-1 des_pr_layout_1 mb__60">
         <div class="container container_cat cat_default  d-noneX">
           <div class="row product mt__10">
             <div class="col-md-12 col-12 thumb_left">
