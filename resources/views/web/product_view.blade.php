@@ -29,7 +29,6 @@
       "@context": "https://schema.org/",
       "@type": "Product",
       "sku": "trinket-12345",
-      "gtin14": "12345678901234",
       "image": [
         "https://example.com/photos/16x9/trinket.jpg",
         "https://example.com/photos/4x3/trinket.jpg",
@@ -49,13 +48,13 @@
         "priceSpecification": {
           "@type": "PriceSpecification",
           "price": 39.99,
-          "priceCurrency": "CHF"
+          "priceCurrency": "EG"
         },
         "hasMerchantReturnPolicy": {
           "@type": "MerchantReturnPolicy",
-          "applicableCountry": "CH",
+          "applicableCountry": "EG",
           "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-          "merchantReturnDays": 60,
+          "merchantReturnDays": 15,
           "returnMethod": "https://schema.org/ReturnByMail",
           "returnFees": "https://schema.org/FreeReturn"
         }
