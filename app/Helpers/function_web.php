@@ -251,9 +251,9 @@ if(!function_exists('htmlBodyStyle')) {
 //            $string = str_replace('[/caption]', '', $string);
 //            $string = preg_replace('#\s*\[caption[^]]*\].*?\[/caption\]\s*#is', '', $string);
 
-            $pattern = '/.*(<img[^>]+)>.*/';
-            $remplacement = '$1';
-            $string =  preg_replace($pattern, $remplacement, $string);
+//            $pattern = '/.*(<img[^>]+)>.*/';
+//            $remplacement = '$1';
+//            $string =  preg_replace($pattern, $remplacement, $string);
 //            $string = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $string);
 
             return $string;

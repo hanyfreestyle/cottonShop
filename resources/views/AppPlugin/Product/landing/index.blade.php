@@ -19,6 +19,7 @@
                             <th class="TD_100">اسم العرض</th>
                             <th class="TD_100">العلامة التجارية</th>
                             <th class="TD_100">عدد المنتجات</th>
+                            <th class="TD_20">Soft View</th>
                             <th class="TD_20"></th>
                             <x-admin.table.action-but po="top" type="edit"/>
                             <x-admin.table.action-but po="top" type="delete"/>
@@ -33,6 +34,7 @@
                                 <td>{{$row->name ?? ''}}</td>
                                 <td>{{$row->barnd->name ?? ''}}</td>
                                 <td>{{ count($row->product_id)}}</td>
+                                <td>{!! is_active($row->is_soft) !!}</td>
                                 <td>{!! is_active($row->is_active) !!}</td>
                                 <x-admin.table.action-but type="edit" :row="$row"/>
                                 <x-admin.table.action-but type="delete" :row="$row"/>

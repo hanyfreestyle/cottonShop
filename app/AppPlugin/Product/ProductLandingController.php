@@ -107,6 +107,7 @@ class ProductLandingController extends AdminMainController {
                 $saveData->brand_id = $request->input('brand_id');
                 $saveData->product_id = $request->input('product_id');
                 $saveData->is_active = intval((bool)$request->input('is_active'));
+                $saveData->is_soft = intval((bool)$request->input('is_soft'));
                 $saveData->save();
 
                 self::SaveAndUpdateDefPhoto($saveData, $request, "lp", 'ar.name');

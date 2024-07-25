@@ -33,9 +33,9 @@
                                 <a class="lh__1 flex al_center pr {{activeMenu($pageView,'shop')}}" href="{{route('page_ShopView')}}">{{__('web/menu.main_shop')}}</a>
                             </li>
 
-                            {{--              <li class="menu-item menu_has_offsets menu_right pos_right">--}}
-                            {{--                <a class="lh__1 flex al_center pr {{activeMenu($pageView,'Offers')}}" href="{{route('page_Offers')}}">{{__('web/menu.main_offers_2')}}</a>--}}
-                            {{--              </li>--}}
+                            <li class="menu-item menu_has_offsets menu_right pos_right">
+                                <a class="lh__1 flex al_center pr {{activeMenu($pageView,'Offers')}}" href="{{route('page_Offers')}}">{{__('web/menu.main_offers_2')}}</a>
+                            </li>
 
                             <li class="menu-item menu_has_offsets menu_right pos_right">
                                 <a class="lh__1 flex al_center pr {{activeMenu($pageView,'ProductsCategories')}}"

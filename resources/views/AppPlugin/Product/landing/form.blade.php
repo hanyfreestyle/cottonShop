@@ -12,6 +12,11 @@
 
 
                 <div class="row">
+
+                    <x-admin.form.select-arr name="is_soft" :sendvalue="old('is_soft',$rowData->is_soft)"
+                                             label="Soft View" col="3"
+                                             select-type="selActive"/>
+
                     <x-admin.form.select-arr name="brand_id" sendvalue="{{old('brand_id',$rowData->brand_id)}}" :required-span="false"
                                              :send-arr="$CashBrandList" label="{{__('admin/proProduct.app_menu_brand')}}" col="3"/>
 
@@ -27,11 +32,14 @@
                         <div class="row">
                             <x-admin.form.trans-input name="name" col="6" :key="$key" :row="$rowData" label="اسم العرض" :tdir="$key"/>
                             <x-admin.form.trans-input name="slug" col="6" :key="$key" :row="$rowData" :label="__('admin/form.text_g_slug')" :tdir="$key"/>
-                            <x-admin.form.trans-text-area name="des" :key="$key" :row="$rowData" label="وصف الصفحة يظهر اسفل المنتجات" :tdir="$key"
-                                                          add-class="bigTextArea" :req="false"/>
 
                             <x-admin.form.trans-text-area name="desup" :key="$key" :row="$rowData" label="وصف الصفحة يظهر اعلى المنتجات" :tdir="$key"
                                                           add-class="bigTextArea" :req="false"/>
+
+                            <x-admin.form.trans-text-area name="des" :key="$key" :row="$rowData" label="وصف الصفحة يظهر اسفل المنتجات" :tdir="$key"
+                                                          add-class="bigTextArea" :req="false"/>
+
+
 
                             <x-admin.form.trans-input name="g_title" col="12" :key="$key" :row="$rowData" :label="__('admin/form.text_g_title')" :req="true"
                                                       :tdir="$key"/>

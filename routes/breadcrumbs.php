@@ -102,6 +102,12 @@ Breadcrumbs::for('Offers', function (BreadcrumbTrail $trail,$meta) {
     $trail->push($meta->name ?? '', route('page_Offers'));
 });
 
+Breadcrumbs::for('OffersView', function (BreadcrumbTrail $trail,$meta) {
+    $trail->parent('home');
+    $trail->push(__('web/menu.main_offers_2'), route('page_Offers'));
+    $trail->push($meta->name ?? '', route('page_Offers'));
+});
+
 Breadcrumbs::for('loginPage', function (BreadcrumbTrail $trail, $meta) {
     $trail->parent('home');
     $trail->push($meta->name ?? '', route('page_index'));

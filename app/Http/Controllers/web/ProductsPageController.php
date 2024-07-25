@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\web;
 
 use App\AppPlugin\Product\Helpers\FilterBuilder;
+use App\AppPlugin\Product\Models\Brand;
+use App\AppPlugin\Product\Models\LandingPage;
 use App\AppPlugin\Product\Models\Product;
+use App\Helpers\AdminHelper;
 use App\Http\Controllers\WebMainController;
 use Illuminate\Http\Request;
 
@@ -46,7 +49,6 @@ class ProductsPageController extends WebMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function Offers(Request $request) {
-
         $meta = parent::getMeatByCatId('offers');
         parent::printSeoMeta($meta, 'page_Offers');
 
@@ -54,18 +56,72 @@ class ProductsPageController extends WebMainController {
         $pageView['SelMenu'] = 'Offers';
         $pageView['page'] = 'Offers';
 
-        $products = Product::defwepall()->take(5)->paginate(12);
+        $offers = LandingPage::query()->where('is_active',true)
+            ->with('barnd')
+            ->get();
+//            ->paginate(100);
 
-        if($products->isEmpty() and isset($_GET['page'])) {
+//        foreach ($offers as $offer){
+//            dd($offer->barnd->photo_thum_1);
+//            dd($offer->brand->first()->photo);
+//        }
+
+        if ($offers->isEmpty() and isset($_GET['page'])) {
             self::abortError404('Empty');
         }
-
         return view('web.products_page.offers')->with([
             'meta' => $meta,
             'pageView' => $pageView,
-            'products' => $products,
-
+            'offers' => $offers,
         ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+    public function OffersView($slug) {
+
+        try {
+            $slug = AdminHelper::Url_Slug($slug);
+            $offer = LandingPage::whereTranslation('slug', $slug)
+                ->translatedIn()
+                ->with('translation')
+                ->firstOrFail();
+        } catch (\Exception $e) {
+            self::abortError404('root');
+        }
+
+        parent::printSeoMeta($offer, 'page_OffersView');
+
+        $pageView = $this->pageView;
+        $pageView['SelMenu'] = 'Offers';
+        $pageView['page'] = 'Offers';
+
+        if (count($offer->translations) == 1) {
+            $pageView['go_home'] = route('page_index');
+        } else {
+            $pageView['slug'] = "brands/" . $offer->translate(webChangeLocale())->slug;
+        }
+
+        $products = Product::query()->whereIn('id',$offer->product_id)->get();
+
+
+        if ($offer->is_soft){
+            return view('web.products_page.offers_view_soft')->with([
+                'pageView' => $pageView,
+                'offer' => $offer,
+                'products' => $products,
+            ]);
+        }else{
+            return view('web.products_page.offers_view')->with([
+                'pageView' => $pageView,
+                'offer' => $offer,
+                'products' => $products,
+            ]);
+        }
+
+
+
 
     }
 

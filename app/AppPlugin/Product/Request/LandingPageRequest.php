@@ -33,7 +33,8 @@ class LandingPageRequest extends FormRequest {
 
         $rules = [
             'image' => 'nullable|mimes:jpeg,jpg,png,gif,webp|max:10000',
-            'product_id'=> 'required|array|min:4'
+            'product_id'=> 'required|array|min:4',
+            'is_soft'=> 'required'
         ];
 
 

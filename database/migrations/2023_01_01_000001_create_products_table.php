@@ -57,11 +57,11 @@ return new class extends Migration {
         Schema::create('pro_landing_page', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->boolean("is_active")->nullable()->default(true);
+            $table->boolean("is_soft")->nullable()->default(true);
             $table->integer('brand_id')->nullable();
             $table->json('product_id')->nullable();
             $table->string("photo")->nullable();
             $table->string("photo_thum_1")->nullable();
-//            $table->softDeletes();
             $table->timestamps();
         });
 

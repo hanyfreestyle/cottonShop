@@ -20,19 +20,19 @@
                 <div class="col-lg-9 order-2 col-12">
                     <x-temp.tools.filte-result :products="$products"/>
 
-{{--                    <div class="kalles-section tp_se_cdt">--}}
+                    <div class="kalles-section tp_se_cdt">
 
-{{--                        <h1 class="headline__title">{{$brand->name}}</h1>--}}
-{{--                        <div class="{{$proStyle['cardStyleHolder']}}">--}}
-{{--                            @foreach($products as $product)--}}
-{{--                                <x-temp.products.card :product="$product"/>--}}
-{{--                            @endforeach--}}
-{{--                        </div>--}}
+                        <h1 class="headline__title">{{$brand->name}}</h1>
+                        <div class="{{$proStyle['cardStyleHolder']}}">
+                            @foreach($products as $product)
+                                <x-temp.products.card :product="$product"/>
+                            @endforeach
+                        </div>
 
 
-{{--                        <div class="products-footer tc mt__40">--}}
-{{--                            <x-site.def.pagination :rows="$products"/>--}}
-{{--                        </div>--}}
+                        <div class="products-footer tc mt__40">
+                            <x-site.def.pagination :rows="$products"/>
+                        </div>
 
                     <div class="products-footer BrandDesView">
                         {!! cleanDes($brand->des)  !!}

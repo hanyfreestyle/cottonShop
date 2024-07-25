@@ -280,6 +280,12 @@ class WebMainController extends DefaultMainController {
                 $alternatUrl = urldecode(LaravelLocalization::getLocalizedURL($alternateLang, route('ProductView', $row->slug)));
                 break;
 
+            case 'page_OffersView':
+                $Url = urldecode(LaravelLocalization::getLocalizedURL($lang, route('page_OffersView', $row->slug)));
+                $alternatUrl = urldecode(LaravelLocalization::getLocalizedURL($alternateLang, route('page_OffersView', $row->slug)));
+                break;
+
+
             default:
                 $Url = urldecode(LaravelLocalization::getLocalizedURL($lang, route($route, $pages)));
                 $alternatUrl = urldecode(LaravelLocalization::getLocalizedURL($alternateLang, route($route, $pages)));
