@@ -9,7 +9,6 @@
     <x-site.def.fav-icon/>
     {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/drift-basic.min.css',$cssMinifyType,$cssReBuild) !!}
     {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/flickity-fade.css',$cssMinifyType,$cssReBuild) !!}
-    {{--  {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/photoswipe.css',$cssMinifyType,$cssReBuild) !!}--}}
     {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/font-icon.min.css',$cssMinifyType,$cssReBuild) !!}
     {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/bootstrap.min.css',$cssMinifyType,$cssReBuild) !!}
     {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/reset.css',$cssMinifyType,$cssReBuild) !!}
@@ -44,15 +43,6 @@
             @include('web.layouts.inc.header_menu')
         </div>
     </header>
-
-{{--    <div class="container mt-5">--}}
-{{--        <textarea style="direction: ltr">{!! SEO::generate() !!}</textarea>--}}
-{{--    </div>--}}
-
-{{--    <div class="container mt-5">--}}
-{{--        <textarea style="direction: ltr">{!! $printSchema->Businesses() !!}</textarea>--}}
-{{--    </div>--}}
-
     @yield('content')
     @include('web.layouts.inc.footer')
 </div>
@@ -66,7 +56,7 @@
         </div>
     @endif
 @endif
-{{--@include('web.layouts.quick.cart')--}}
+
 <div id="nt_cart_canvas" class="nt_fk_canvas dn">
     <div class="nt_mini_cart nt_js_cart flex column h__100 btns_cart_1">
         <div class="mini_cart_header flex fl_between al_center">
