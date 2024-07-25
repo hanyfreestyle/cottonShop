@@ -75,6 +75,8 @@ class BrandViewController extends WebMainController {
             ->orderby('def_cat')
             ->paginate(12)->appends(request()->query());
 
+
+
         if ($products->isEmpty() and isset($_GET['page'])) {
             self::abortError404('Empty');
         }

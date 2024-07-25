@@ -164,6 +164,7 @@ input.iti__tel-input, .iti--allow-dropdown input.iti__tel-input[type="text"], .i
     bottom: 60px;
     width: 45px;
     height: 100px;
+    z-index: 100!important;
 }
 
 @media (max-width: 767px) {
@@ -179,6 +180,7 @@ input.iti__tel-input, .iti--allow-dropdown input.iti__tel-input[type="text"], .i
     height: 45px;
     text-align: center;
     border-radius: 50%;
+
 }
 
 .phoneCall {
