@@ -32,14 +32,14 @@
             </div>
 
 
-            <div class="col-lg-3 col-6 mb-3 text-center">
-              <div class="menu">
-                <a href="{{route('page_Offers')}}">
-                  <i class="las la-gift"></i>
-                  <p> {{__('web/menu.main_offers_2')}}</p>
-                </a>
-              </div>
-            </div>
+{{--            <div class="col-lg-3 col-6 mb-3 text-center">--}}
+{{--              <div class="menu">--}}
+{{--                <a href="{{route('page_Offers')}}">--}}
+{{--                  <i class="las la-gift"></i>--}}
+{{--                  <p> {{__('web/menu.main_offers_2')}}</p>--}}
+{{--                </a>--}}
+{{--              </div>--}}
+{{--            </div>--}}
 
             <div class="col-lg-3 col-6 mb-3 text-center">
               <div class="menu">
