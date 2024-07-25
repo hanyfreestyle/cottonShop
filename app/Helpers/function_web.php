@@ -254,7 +254,8 @@ if(!function_exists('htmlBodyStyle')) {
             $pattern = '/.*(<img[^>]+)>.*/';
             $remplacement = '$1';
             $string =  preg_replace($pattern, $remplacement, $string);
-            $string = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $string);
+//            $string = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $string);
+
             return $string;
         }
     }

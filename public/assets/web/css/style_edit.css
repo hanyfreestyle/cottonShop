@@ -312,7 +312,7 @@ caption, th, td {
 .BrandDesView img{
     display: block;
     max-width: 90%;
-    height: auto;
+    height: auto!important;
     margin: auto;
     margin-top: 15px;
     margin-bottom: 15px;

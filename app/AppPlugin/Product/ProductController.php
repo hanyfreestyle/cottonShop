@@ -653,6 +653,37 @@ class ProductController extends AdminMainController {
         $subMenu->icon = "fas fa-hand-holding-usd";
         $subMenu->save();
 
+
+
+        $mainMenu = new AdminMenu();
+        $mainMenu->type = "Many";
+        $mainMenu->sel_routs = "admin.LandingPage";
+        $mainMenu->name = "admin/proProduct.app_menu_lp_page";
+        $mainMenu->icon = "fab fa-html5";
+        $mainMenu->roleView = "Product_view";
+        $mainMenu->postion = 1;
+        $mainMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = setActiveRoute("LandingPage");
+        $subMenu->url = "admin.LandingPage.index";
+        $subMenu->name = "admin/proProduct.app_menu_lp_page_list";
+        $subMenu->roleView = "Product_view";
+        $subMenu->icon = "fas fa-sitemap";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = 'LandingPage.AddNew';
+        $subMenu->url = "admin.LandingPage.AddNew";
+        $subMenu->name = "admin/proProduct.app_menu_lp_page_add";
+        $subMenu->roleView = "Product_view";
+        $subMenu->icon = "fas fa-plus-circle";
+        $subMenu->save();
+
+
+
     }
 
 

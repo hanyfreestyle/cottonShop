@@ -53,10 +53,42 @@ return new class extends Migration {
             $table->foreign('product_id')->references('id')->on('pro_products')->onDelete('cascade');
         });
 
+
+        Schema::create('pro_landing_page', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->boolean("is_active")->nullable()->default(true);
+            $table->integer('brand_id')->nullable();
+            $table->json('product_id')->nullable();
+            $table->string("photo")->nullable();
+            $table->string("photo_thum_1")->nullable();
+//            $table->softDeletes();
+            $table->timestamps();
+        });
+
+        Schema::create('pro_landing_page_translations', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('page_id')->unsigned();
+            $table->string('locale')->index();
+            $table->string('slug')->nullable();
+
+            $table->string('name')->nullable();
+            $table->longText('des')->nullable();
+            $table->longText('desup')->nullable();
+            $table->string('g_title')->nullable();
+            $table->text('g_des')->nullable();
+
+            $table->unique(['page_id', 'locale']);
+            $table->unique(['locale', 'slug']);
+            $table->foreign('page_id')->references('id')->on('pro_landing_page')->onDelete('cascade');
+        });
+
+
     }
 
 
     public function down(): void {
+        Schema::dropIfExists('pro_landing_page_translations');
+        Schema::dropIfExists('pro_landing_page');
         Schema::dropIfExists('pro_product_translations');
         Schema::dropIfExists('pro_products');
     }

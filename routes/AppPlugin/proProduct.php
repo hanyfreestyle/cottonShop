@@ -7,6 +7,7 @@ use App\AppPlugin\Product\ProductBrandController;
 use App\AppPlugin\Product\ProductCategoryController;
 use App\AppPlugin\Product\ProductController;
 use App\AppPlugin\Product\ProductDashboardController;
+use App\AppPlugin\Product\ProductLandingController;
 use App\AppPlugin\Product\ProductTagsController;
 use Illuminate\Support\Facades\Route;
 
@@ -123,6 +124,18 @@ Route::get('/product/remove-attribute/{proId}/{AttributeId}', [ManageAttributeCo
 Route::post('/product/attribute-value-update', [ManageAttributeController::class, 'ManageAttributeValueUpdate'])->name('Shop.Product.value-update');
 Route::post('/product/UpdateVariants/{proId}', [ManageAttributeController::class, 'UpdateVariants'])->name('Shop.Product.UpdateVariants');
 Route::get('/product/remove-variants/{proId}', [ManageAttributeController::class, 'RemoveVariants'])->name('Shop.Product.RemoveVariants');
+
+
+
+Route::get('/LandingPage/',[ProductLandingController::class,'index'])->name('LandingPage.index');
+Route::get('/LandingPage/create',[ProductLandingController::class,'PageCreate'])->name('LandingPage.create');
+Route::get('/LandingPage/AddNew',[ProductLandingController::class,'PageCreate'])->name('LandingPage.AddNew');
+Route::get('/LandingPage/edit/{id}',[ProductLandingController::class,'PageEdit'])->name('LandingPage.edit');
+Route::post('/LandingPage/update/{id}',[ProductLandingController::class,'PageStoreUpdate'])->name('LandingPage.update');
+Route::get('/LandingPage/destroy/{id}',[ProductLandingController::class,'destroy'])->name('LandingPage.destroy');
+Route::get('/LandingPage/emptyPhoto/{id}', [ProductLandingController::class,'emptyPhoto'])->name('LandingPage.emptyPhoto');
+Route::get('/LandingPage/config', [ProductLandingController::class,'config'])->name('LandingPage.config');
+
 
 
 

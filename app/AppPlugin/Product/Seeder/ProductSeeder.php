@@ -3,6 +3,8 @@
 namespace App\AppPlugin\Product\Seeder;
 
 use App\AppPlugin\Product\Models\CategoryProduct;
+use App\AppPlugin\Product\Models\LandingPage;
+use App\AppPlugin\Product\Models\LandingPageTranslation;
 use App\AppPlugin\Product\Models\Product;
 use App\AppPlugin\Product\Models\ProductAttribute;
 use App\AppPlugin\Product\Models\ProductPhoto;
@@ -21,6 +23,15 @@ class ProductSeeder extends Seeder {
         ProductTranslation::unguard();
         $tablePath = public_path('db/pro_product_translations.sql');
         DB::unprepared(file_get_contents($tablePath));
+
+        LandingPage::unguard();
+        $tablePath = public_path('db/pro_landing_page.sql');
+        DB::unprepared(file_get_contents($tablePath));
+
+        LandingPageTranslation::unguard();
+        $tablePath = public_path('db/pro_landing_page_translations.sql');
+        DB::unprepared(file_get_contents($tablePath));
+
 
         ProductPhoto::unguard();
         $tablePath = public_path('db/pro_product_photos.sql');
