@@ -23,8 +23,8 @@ trait PageConfigTraits {
 
             'TableCategory' => true,
             'TableTags' => false,
-            'TableTagsOnFly' => true,
-            'TableReview' => true,
+            'TableTagsOnFly' => false,
+            'TableReview' => false,
 
             'TableMorePhotos' => true,
             'MorePhotosEdit' => true,
