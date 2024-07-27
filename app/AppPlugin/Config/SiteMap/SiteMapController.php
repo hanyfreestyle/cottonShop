@@ -8,7 +8,6 @@ use App\AppPlugin\Product\Models\Brand;
 use App\AppPlugin\Product\Models\Category;
 use App\AppPlugin\Product\Models\Product;
 use App\Http\Controllers\AdminMainController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 
@@ -39,7 +38,7 @@ class SiteMapController extends AdminMainController {
 
         $this->config = [
             'singlePage' => true,
-            'addAlternate' => false,
+            'addAlternate' => true,
             'addPhoto' => true,
             'langAr' => true,
             'langEn' => false,
@@ -54,13 +53,16 @@ class SiteMapController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # index
     public function index() {
-        $rowData = SiteMap::get()->keyBy('cat_id');
-        return view('AppPlugin.ConfigSiteMap.index', compact('rowData'));
+        $rowData = SiteMap::get();
+        return view('AppPlugin.ConfigSiteMap.index')->with([
+            'rowData' => $rowData
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateSiteMap() {
+        SiteMap::query()->truncate();
         $siteMapTools = new SiteMapTools();
         $siteMapTools->addAlternate = IsArr($this->config, 'addAlternate', false);
         $siteMapTools->addPhoto = IsArr($this->config, 'addPhoto', false);
@@ -77,6 +79,7 @@ class SiteMapController extends AdminMainController {
 
         $stringData .= self::UpdateIndexPages('index');
         $stringData .= self::UpdateBlogPages('blog');
+        $stringData .= self::UpdateProductsPages('product');
 
         if ($this->config['singlePage']) {
             $stringData .= "</urlset>\n";
@@ -84,7 +87,7 @@ class SiteMapController extends AdminMainController {
             fclose($fh);
         }
 
-        SiteMapTools::updateIndexSiteMapXmlFile();
+        SiteMapTools::updateIndexSiteMapXmlFile($this->config['singlePage']);
         return redirect()->back();
     }
 
@@ -97,29 +100,27 @@ class SiteMapController extends AdminMainController {
         $siteMapTools->addPhoto = IsArr($this->config, 'addPhoto', false);
         $siteMapTools->langAr = IsArr($this->config, 'langAr', false);
         $siteMapTools->langEn = IsArr($this->config, 'langEn', false);
-
+        $urlCount = 0;
 
         if (!$this->config['singlePage']) {
-            SiteMapTools::updateIndexSiteOneFile($catId);
-            $xmlFileList = SiteMap::where('cat_id', $catId)->firstOrFail();
-            $xmlFileName = public_path($xmlFileList->name);
-
+            $xmlFileName = public_path("sitemap." . $catId . ".xml");
             $fh = fopen($xmlFileName, 'w') or die("can't open file");
             $stringData = $siteMapTools->XML_Header();
         } else {
             $stringData = "";
         }
 
+        $routes = ['page_index', 'page_AboutUs', 'page_Trems', 'page_WishList', 'page_AboutUs',
+            'page_ContactUs', 'page_ShopView', 'page_Offers'];
+
         foreach (config('app.web_lang') as $key => $lang) {
-            $stringData .= $siteMapTools->AddSinglePage($key, 'page_index');
-            $stringData .= $siteMapTools->AddSinglePage($key, 'page_AboutUs');
-            $stringData .= $siteMapTools->AddSinglePage($key, 'page_Trems');
-            $stringData .= $siteMapTools->AddSinglePage($key, 'page_WishList');
-            $stringData .= $siteMapTools->AddSinglePage($key, 'page_AboutUs');
-            $stringData .= $siteMapTools->AddSinglePage($key, 'page_ContactUs');
-            $stringData .= $siteMapTools->AddSinglePage($key, 'page_ShopView');
-            $stringData .= $siteMapTools->AddSinglePage($key, 'page_Offers');
+            foreach ($routes as $route) {
+                $stringData .= $siteMapTools->AddSinglePage($key, $route);
+            }
+            $urlCount = $urlCount + count($routes);
         }
+
+        SiteMapTools::updateIndexSiteOneFile($catId, $urlCount);
 
         if (!$this->config['singlePage']) {
             $stringData .= "</urlset>\n";
@@ -139,12 +140,11 @@ class SiteMapController extends AdminMainController {
         $siteMapTools->addPhoto = IsArr($this->config, 'addPhoto', true);
         $siteMapTools->langAr = IsArr($this->config, 'langAr', false);
         $siteMapTools->langEn = IsArr($this->config, 'langEn', false);
+        $urlCount = 0;
         if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
 
             if (!$this->config['singlePage']) {
-                SiteMapTools::updateIndexSiteOneFile($catId);
-                $xmlFileList = SiteMap::where('cat_id', $catId)->firstOrFail();
-                $xmlFileName = public_path($xmlFileList->name);
+                $xmlFileName = public_path("sitemap." . $catId . ".xml");
                 $fh = fopen($xmlFileName, 'w') or die("can't open file");
                 $stringData = $siteMapTools->XML_Header();
             } else {
@@ -153,23 +153,24 @@ class SiteMapController extends AdminMainController {
 
             $dataRows = BlogCategory::orderBy('id')
                 ->where('is_active', true)
-
                 ->get();
-
+            $urlCount = $urlCount + count($dataRows);
             $siteMapTools->urlRoute = "BlogCategoryView";
             $stringData .= $siteMapTools->Create_XML_Code_new($dataRows);
 
             foreach (config('app.web_lang') as $key => $lang) {
                 $stringData .= $siteMapTools->AddSinglePage($key, 'BlogList');
+                $urlCount = $urlCount + 1;
             }
 
             $dataRows = Blog::orderBy('id')
                 ->where('is_active', true)
-                ->take(300)
                 ->get();
-
+            $urlCount = $urlCount + count($dataRows);
             $siteMapTools->urlRoute = "BlogView";
             $stringData .= $siteMapTools->Create_XML_Code_new($dataRows);
+
+            SiteMapTools::updateIndexSiteOneFile($catId, $urlCount);
 
             if (!$this->config['singlePage']) {
                 $stringData .= "</urlset>\n";
@@ -183,184 +184,59 @@ class SiteMapController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function UpdateProducts(Request $request) {
-
-        $cat_id = $request->input('cat_id');
-        SiteMapTools::updateIndexSiteOneFile($cat_id);
-        $xmlFileList = SiteMap::where('cat_id', $cat_id)->firstOrFail();
-        $xmlFileName = public_path($xmlFileList->name);
-
+    public function UpdateProductsPages($catId) {
         $siteMapTools = new SiteMapTools();
-        $siteMapTools->urlRoute = "ProductsCategoriesView";
-        $siteMapTools->langAr = true;
-        $siteMapTools->langEn = false;
-        $siteMapTools->addAlternate = false;
-        $siteMapTools->addPhoto = true;
+        $siteMapTools->addAlternate = IsArr($this->config, 'addAlternate', false);
+        $siteMapTools->addPhoto = IsArr($this->config, 'addPhoto', true);
+        $siteMapTools->langAr = IsArr($this->config, 'langAr', false);
+        $siteMapTools->langEn = IsArr($this->config, 'langEn', false);
+        $urlCount = 0;
+        if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
 
-        $fh = fopen($xmlFileName, 'w') or die("can't open file");
-        $stringData = $siteMapTools->XML_Header();
+            if (!$this->config['singlePage']) {
+                $xmlFileName = public_path("sitemap." . $catId . ".xml");
+                $fh = fopen($xmlFileName, 'w') or die("can't open file");
+                $stringData = $siteMapTools->XML_Header();
+            } else {
+                $stringData = "";
+            }
 
-        $dataRows = Category::orderBy('id')
-            ->where('is_active', true)
-            ->get();
-        $stringData .= $siteMapTools->Create_XML_Code_new($dataRows);
+            $dataRows = Category::orderBy('id')
+                ->where('is_active', true)
+                ->get();
+            $urlCount = $urlCount + count($dataRows);
+            $siteMapTools->urlRoute = "ProductsCategoriesView";
+            $stringData .= $siteMapTools->Create_XML_Code_new($dataRows);
 
 
-        $dataRows = Brand::orderBy('id')
-            ->where('is_active', true)
-            ->get();
+            $dataRows = Brand::orderBy('id')
+                ->where('is_active', true)
+                ->get();
+            $urlCount = $urlCount + count($dataRows);
+            $siteMapTools->urlRoute = "BrandView";
+            $stringData .= $siteMapTools->Create_XML_Code_new($dataRows);
 
-        $siteMapTools->urlRoute = "BrandView";
-        $stringData .= $siteMapTools->Create_XML_Code_new($dataRows);
+
+            $dataRows = Product::orderBy('id')
+                ->where('parent_id', null)
+                ->where('is_active', true)
+                ->get();
+            $urlCount = $urlCount + count($dataRows);
+            $siteMapTools->urlRoute = "ProductView";
+            $stringData .= $siteMapTools->Create_XML_Code_new($dataRows);
 
 
-        $dataRows = Product::orderBy('id')
-            ->where('parent_id', null)
-            ->where('is_active', true)
-            ->get();
+            SiteMapTools::updateIndexSiteOneFile($catId, $urlCount);
 
-        $siteMapTools->urlRoute = "ProductView";
-        $siteMapTools->dataRows = $dataRows;
-        $stringData .= $siteMapTools->Create_XML_Code();
-
-        $stringData .= "</urlset>\n";
-        fwrite($fh, $stringData);
-        fclose($fh);
-
-        SiteMapTools::updateIndexSiteMapXmlFile();
-        return redirect()->back();
+            if (!$this->config['singlePage']) {
+                $stringData .= "</urlset>\n";
+                fwrite($fh, $stringData);
+                fclose($fh);
+            } else {
+                return $stringData;
+            }
+        }
     }
-
-
-
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function UpdateDeveloper(Request $request) {
-//
-//        $cat_id = $request->input('cat_id');
-//        $siteMap_PerFile = '500';
-//        $countTable = Developer::where('is_active', true)->count();
-//
-//        SiteMapTools::updateIndexSiteMapTable($cat_id, $siteMap_PerFile, $countTable);
-//        $xmlFileList = SiteMap::where('cat_id', $cat_id)->get()->toArray();
-//
-//        if(count($xmlFileList) > 0) {
-//            for ($i = 0; $i < count($xmlFileList); $i++) {
-//                $xmlFileName = public_path($xmlFileList[$i]['name']);
-//
-//                if($i == '0') {
-//                    $EndTo = $siteMap_PerFile;
-//                    $dataRows = Developer::orderBy('id')
-//                        ->with('tablename')
-//                        ->limit($EndTo)
-//                        ->get();
-//                } else {
-//                    $StartFrom = $i * $siteMap_PerFile;
-//                    $EndTo = $siteMap_PerFile;
-//                    $dataRows = Developer::orderBy('id')
-//                        ->with('tablename')
-//                        ->offset($StartFrom)
-//                        ->limit($EndTo)
-//                        ->get();
-//                }
-//
-//                $siteMapTools = new SiteMapTools();
-//                $siteMapTools->xmlFileName = $xmlFileName;
-//                $siteMapTools->dataRows = $dataRows;
-//                $siteMapTools->urlRoute = "page_developer_view";
-//                $siteMapTools->langAr = true;
-//                $siteMapTools->langEn = true;
-//                $siteMapTools->addAlternate = true;
-//                $siteMapTools->Create_XML_File();
-//
-//            }
-//        }
-//
-//        SiteMapTools::updateIndexSiteMapXmlFile();
-//        return redirect()->back();
-//    }
-
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function UpdateListing(Request $request) {
-//        ini_set('max_execution_time', 0);
-//        $cat_id = $request->input('cat_id');
-//        $siteMap_PerFile = '15000';
-//        $countTable = Listing::where('is_published', true)->count();
-//
-//        SiteMapTools::updateIndexSiteMapTable($cat_id, $siteMap_PerFile, $countTable);
-//        $xmlFileList = SiteMap::where('cat_id', $cat_id)->get()->toArray();
-//        if(count($xmlFileList) > 0) {
-//            for ($i = 0; $i < count($xmlFileList); $i++) {
-//                $xmlFileName = public_path($xmlFileList[$i]['name']);
-//
-//                if($i == '0') {
-//                    $EndTo = $siteMap_PerFile;
-//                    $dataRows = Listing::orderBy('id')
-//                        ->with('tablename')
-//
-//                        ->limit($EndTo)
-//                        ->get();
-//                } else {
-//                    $StartFrom = $i * $siteMap_PerFile;
-//                    $EndTo = $siteMap_PerFile;
-//                    $dataRows = Listing::orderBy('id')
-//                        ->with('tablename')
-//
-//                        ->offset($StartFrom)
-//                        ->limit($EndTo)
-//                        ->get();
-//                }
-//
-//                $siteMapTools = new SiteMapTools();
-//                $siteMapTools->xmlFileName = $xmlFileName;
-//                $siteMapTools->dataRows = $dataRows;
-//                $siteMapTools->urlRoute = "page_ListView";
-//                if(Route::currentRouteName() == 'config.SiteMap.UpdateListingAr') {
-//                    $siteMapTools->langAr = true;
-//                }
-//                if(Route::currentRouteName() == 'config.SiteMap.UpdateListingEn') {
-//                    $siteMapTools->langEn = true;
-//                }
-//                $siteMapTools->addAlternate = true;
-//                $siteMapTools->Create_XML_File();
-//            }
-//        }
-//
-//        SiteMapTools::updateIndexSiteMapXmlFile();
-//        return redirect()->back();
-//    }
-//
-
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function UpdateForSale(Request $request) {
-//        $cat_id = $request->input('cat_id');
-//        SiteMapTools::updateIndexSiteOneFile($cat_id);
-//        $xmlFileList = SiteMap::where('cat_id', $cat_id)->firstOrFail();
-//        $xmlFileName = public_path($xmlFileList->name);
-//
-//        $siteMapTools = new SiteMapTools();
-//
-//
-//        $dataRows = Page::orderBy('id')
-//            ->where('is_active', true)
-//            ->get();
-//
-//        $fh = fopen($xmlFileName, 'w') or die("can't open file");
-//        $stringData = $siteMapTools->XML_Header();
-//        $stringData .= $siteMapTools->ForSaleCode($dataRows, "en", 'ar');
-//        $stringData .= $siteMapTools->ForSaleCode($dataRows, "ar", 'en');
-//
-//        $stringData .= "</urlset>\n";
-//        fwrite($fh, $stringData);
-//        fclose($fh);
-//
-//        SiteMapTools::updateIndexSiteMapXmlFile();
-//        return redirect()->back();
-//
-//    }
-
 
 }
 

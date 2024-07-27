@@ -8,32 +8,45 @@
             </div>
         </div>
     </div>
+
     <x-admin.hmtl.section>
-        <div class="row">
-
-            <form action="{{route($PrefixRoute.".Update")}}" method="post">
-                @csrf
-                <button type="submit" class="btn btn-block btn-primary">{{__('admin/configSitemap.f_but_update')}}</button>
-            </form>
-
-{{--            @if(IsArr($Config,"singlePage",true))--}}
-{{--                <form action="{{route($PrefixRoute.".Update")}}" method="post">--}}
-{{--                    @csrf--}}
-{{--                    <button type="submit" class="btn btn-block btn-primary">{{__('admin/configSitemap.f_but_update')}}</button>--}}
-{{--                </form>--}}
-{{--            @else--}}
-{{--                <x-admin.app-plugin.site-map.update-block catid="index" route=".UpdateIndex" :row="$rowData" title="{{__('admin/config/sitemap.t_index')}}"/>--}}
-{{--                <x-admin.app-plugin.site-map.update-block catid="blog" route=".UpdateBlog" :row="$rowData" title="{{__('admin/config/sitemap.t_blog')}}"/>--}}
-{{--                <x-admin.app-plugin.site-map.update-block catid="products" route=".UpdateProducts" :row="$rowData" title="Products"/>--}}
-{{--            @endif--}}
-
-
-            {{--            <x-admin.app-plugin.site-map.update-block catid="developer" route="UpdateDeveloper" :row="$rowData" title="{{__('admin/config/sitemap.t_developer')}}"  />--}}
-            {{--            <x-admin.app-plugin.site-map.update-block catid="listing_ar" route="UpdateListingAr" :row="$rowData" title="{{__('admin/config/sitemap.t_listing_ar')}}"  />--}}
-            {{--            <x-admin.app-plugin.site-map.update-block catid="listing_en" route="UpdateListingEn" :row="$rowData" title="{{__('admin/config/sitemap.t_listing_en')}}"  />--}}
-            {{--            <x-admin.app-plugin.site-map.update-block catid="for_sale" route="UpdateForSale" :row="$rowData" title="{{__('admin/config/sitemap.t_for_sale')}}"  />--}}
+        <div class="row mt-3">
+            <x-admin.card.normal title="Site Maps">
+                <div class="card-body table-responsive p-0">
+                    <table {!! Table_Style(false,false)  !!} >
+                        <thead>
+                        <tr>
+                            <th class="TD_20">#</th>
+                            <th class="TD_250">{{__('admin/siteMap.t_name')}}</th>
+                            <th class="TD_100">{{__('admin/siteMap.t_url_count')}}</th>
+                            <th class="TD_100">{{__('admin/siteMap.t_date')}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($rowData as $row)
+                            <tr>
+                                <td>{{$row->id}}</td>
+                                <td>{{ __('admin/siteMap.model_'.$row->cat_id) }}</td>
+                                <td>{{$row->url_count}}</td>
+                                <td>{{$row->updated_at}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </x-admin.card.normal>
         </div>
     </x-admin.hmtl.section>
 
+    <x-admin.hmtl.section>
+        <div class="row">
+            <div class="col-lg-12">
+                <form action="{{route($PrefixRoute.".Update")}}" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-block btn-primary">{{__('admin/configSitemap.f_but_update')}}</button>
+                </form>
+            </div>
+        </div>
+    </x-admin.hmtl.section>
 @endsection
 
