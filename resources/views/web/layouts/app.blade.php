@@ -7,30 +7,43 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {!! SEO::generate() !!}
     <x-site.def.fav-icon/>
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/drift-basic.min.css',$cssMinifyType,$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/flickity-fade.css',$cssMinifyType,$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/font-icon.min.css',$cssMinifyType,$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/bootstrap.min.css',$cssMinifyType,$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/reset.css',$cssMinifyType,$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/defined.css',$cssMinifyType,$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/base.css',$cssMinifyType,$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/style.css',$cssMinifyType,$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/home-bags.css',$cssMinifyType,$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/shop.css',"Seo",$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('css/home_page.css',"Seo",$cssReBuild) !!}
-    @yield('AddStyle')
-    @stack('StyleFile')
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/drift-basic.min.css',$cssMinifyType,$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/flickity-fade.css',$cssMinifyType,$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/font-icon.min.css',$cssMinifyType,$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/bootstrap.min.css',$cssMinifyType,$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/reset.css',$cssMinifyType,$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/defined.css',$cssMinifyType,$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/base.css',$cssMinifyType,$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/style.css',$cssMinifyType,$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/home-bags.css',$cssMinifyType,$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/shop.css',"Seo",$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('css/home_page.css',"Seo",$cssReBuild) !!}
+@yield('AddStyle')
+@stack('StyleFile')
 
-    @if(thisCurrentLocale() == 'ar')
-        {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/rtl.css',$cssMinifyType,$cssReBuild) !!}
-    @endif
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('css/style_edit.css',"Seo",$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('css/profile.css',"Seo",$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('css/form.css',"Seo",$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('css/products_view.css',"Seo",$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('css/cart_view.css',"Seo",$cssReBuild) !!}
-    {!! (new \App\Helpers\MinifyTools)->MinifyCss('css/style_lang_'.thisCurrentLocale().'.css',"Seo",$cssReBuild) !!}
-    @livewireStyles
+@if(thisCurrentLocale() == 'ar')
+    {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/rtl.css',$cssMinifyType,$cssReBuild) !!}
+@endif
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('css/style_edit.css',"Seo",$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('css/profile.css',"Seo",$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('css/form.css',"Seo",$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('css/products_view.css',"Seo",$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('css/cart_view.css',"Seo",$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('css/style_lang_'.thisCurrentLocale().'.css',"Seo",$cssReBuild) !!}
+@livewireStyles
+
+<!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQBEXFVS4Y"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'G-PQBEXFVS4Y');
+    </script>
 </head>
 
 <body class="{{htmlBodyStyle($pageView)}}">
