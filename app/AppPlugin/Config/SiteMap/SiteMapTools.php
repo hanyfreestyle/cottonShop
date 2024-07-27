@@ -70,6 +70,23 @@ class SiteMapTools{
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #   XML_HeaderSinglePage
+    public function XML_HeaderSinglePage(){
+        $stringData = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+        $stringData .= '<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  ';
+        $stringData .=  ' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" ';
+        $stringData .=  ' xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 ';
+        $stringData .=  ' http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd ';
+        $stringData .=  ' http://www.google.com/schemas/sitemap-image/1.1 ';
+        $stringData .=  ' http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" ';
+        $stringData .=  ' xmlns:xhtml="http://www.w3.org/1999/xhtml"';
+        $stringData .=  ' xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ';
+        $stringData .=  ' >'."\n";
+        return $stringData ;
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     AddSinglePage
     public function AddSinglePage($lang,$Route){
         if($lang == 'en'){

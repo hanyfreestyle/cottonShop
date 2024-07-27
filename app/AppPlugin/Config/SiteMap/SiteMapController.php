@@ -38,7 +38,7 @@ class SiteMapController extends AdminMainController {
 
 
         $this->config = [
-            'singlePage' => false,
+            'singlePage' => true,
             'addAlternate' => false,
             'addPhoto' => true,
             'langAr' => true,
@@ -62,15 +62,15 @@ class SiteMapController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateSiteMap() {
         $siteMapTools = new SiteMapTools();
-        $siteMapTools->addAlternate = IsArr($this->config,'addAlternate',false);
-        $siteMapTools->addPhoto = IsArr($this->config,'addPhoto',false);
-        $siteMapTools->langAr = IsArr($this->config,'langAr',false);
-        $siteMapTools->langEn =  IsArr($this->config,'langEn',false);
+        $siteMapTools->addAlternate = IsArr($this->config, 'addAlternate', false);
+        $siteMapTools->addPhoto = IsArr($this->config, 'addPhoto', false);
+        $siteMapTools->langAr = IsArr($this->config, 'langAr', false);
+        $siteMapTools->langEn = IsArr($this->config, 'langEn', false);
 
         if ($this->config['singlePage']) {
             $xmlFileName = public_path('sitemap.xml');
             $fh = fopen($xmlFileName, 'w') or die("can't open file");
-            $stringData = $siteMapTools->XML_Header();
+            $stringData = $siteMapTools->XML_HeaderSinglePage();
         } else {
             $stringData = "";
         }
@@ -92,16 +92,17 @@ class SiteMapController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateIndexPages($catId) {
+        $siteMapTools = new SiteMapTools();
+        $siteMapTools->addAlternate = IsArr($this->config, 'addAlternate', false);
+        $siteMapTools->addPhoto = IsArr($this->config, 'addPhoto', false);
+        $siteMapTools->langAr = IsArr($this->config, 'langAr', false);
+        $siteMapTools->langEn = IsArr($this->config, 'langEn', false);
+
+
         if (!$this->config['singlePage']) {
             SiteMapTools::updateIndexSiteOneFile($catId);
             $xmlFileList = SiteMap::where('cat_id', $catId)->firstOrFail();
             $xmlFileName = public_path($xmlFileList->name);
-
-            $siteMapTools = new SiteMapTools();
-            $siteMapTools->addAlternate = IsArr($this->config,'addAlternate',false);
-            $siteMapTools->addPhoto = IsArr($this->config,'addPhoto',false);
-            $siteMapTools->langAr = IsArr($this->config,'langAr',false);
-            $siteMapTools->langEn =  IsArr($this->config,'langEn',false);
 
             $fh = fopen($xmlFileName, 'w') or die("can't open file");
             $stringData = $siteMapTools->XML_Header();
@@ -133,7 +134,11 @@ class SiteMapController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateBlogPages($catId) {
-
+        $siteMapTools = new SiteMapTools();
+        $siteMapTools->addAlternate = IsArr($this->config, 'addAlternate', false);
+        $siteMapTools->addPhoto = IsArr($this->config, 'addPhoto', true);
+        $siteMapTools->langAr = IsArr($this->config, 'langAr', false);
+        $siteMapTools->langEn = IsArr($this->config, 'langEn', false);
         if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
 
             if (!$this->config['singlePage']) {
@@ -141,11 +146,6 @@ class SiteMapController extends AdminMainController {
                 $xmlFileList = SiteMap::where('cat_id', $catId)->firstOrFail();
                 $xmlFileName = public_path($xmlFileList->name);
                 $fh = fopen($xmlFileName, 'w') or die("can't open file");
-                $siteMapTools = new SiteMapTools();
-                $siteMapTools->addAlternate = IsArr($this->config,'addAlternate',false);
-                $siteMapTools->addPhoto = IsArr($this->config,'addPhoto',false);
-                $siteMapTools->langAr = IsArr($this->config,'langAr',false);
-                $siteMapTools->langEn =  IsArr($this->config,'langEn',false);
                 $stringData = $siteMapTools->XML_Header();
             } else {
                 $stringData = "";
@@ -153,6 +153,7 @@ class SiteMapController extends AdminMainController {
 
             $dataRows = BlogCategory::orderBy('id')
                 ->where('is_active', true)
+
                 ->get();
 
             $siteMapTools->urlRoute = "BlogCategoryView";
@@ -164,6 +165,7 @@ class SiteMapController extends AdminMainController {
 
             $dataRows = Blog::orderBy('id')
                 ->where('is_active', true)
+                ->take(300)
                 ->get();
 
             $siteMapTools->urlRoute = "BlogView";
