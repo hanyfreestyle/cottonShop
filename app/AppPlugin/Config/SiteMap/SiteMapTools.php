@@ -1,7 +1,6 @@
 <?php
 
 namespace App\AppPlugin\Config\SiteMap;
-use App\Http\Controllers\admin\PageAdminController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
@@ -83,7 +82,7 @@ class SiteMapTools{
         $stringData = "\t\t<url>\n";
         $stringData .= "\t\t\t<loc>$Url</loc>\n";
 
-        if($this->addAlternate == true){
+        if($this->addAlternate == true and count(config('app.web_lang')) > 1){
             $UrlAlternate = urldecode (LaravelLocalization::getLocalizedURL($alternateLang,route($Route)));
             $stringData .= "\t\t\t".'<xhtml:link rel="alternate" hreflang="'.$alternateLang.'" href="'.$UrlAlternate.'"/>' ."\n";
         }
@@ -129,7 +128,38 @@ class SiteMapTools{
     }
 
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #    Create_XML_Code_new
+    public function  Create_XML_Code_new($dataRows){
 
+        $stringData = "";
+        if($this->langEn == true){
+            $lang = 'en';
+            foreach ($dataRows as $row){
+                if(isset($row->translate($lang)->name)){
+                    $stringData .= "\t\t<url>\n";
+                    $stringData .= self::addUrlCode($lang, $row);
+                    $stringData .= self::AddLastUpdateCode($row);
+                    $stringData .= self::AddPhotoCode($row, $lang);
+                    $stringData .= "\t\t</url>\n";
+                }
+            }
+        }
+
+        if($this->langAr == true){
+            $lang = 'ar';
+            foreach ($dataRows as $row){
+                if(isset($row->translate($lang)->name)){
+                    $stringData .= "\t\t<url>\n";
+                    $stringData .= self::addUrlCode($lang, $row);
+                    $stringData .= self::AddLastUpdateCode($row);
+                    $stringData .= self::AddPhotoCode($row, $lang);
+                    $stringData .= "\t\t</url>\n";
+                }
+            }
+        }
+        return $stringData ;
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #    Create_XML_File
@@ -182,15 +212,11 @@ class SiteMapTools{
             $alternateLang = 'en';
         }
 
-        if($this->blogslug == true){
-            $Url = urldecode (LaravelLocalization::getLocalizedURL($lang,route($this->urlRoute, [$row->getCatName->slug,$row->slug])));
-        }else{
-            $Url = urldecode (LaravelLocalization::getLocalizedURL($lang,route($this->urlRoute, $row['slug'])));
-        }
+        $Url = urldecode (LaravelLocalization::getLocalizedURL($lang,route($this->urlRoute, $row['slug'])));
 
         $stringData = "\t\t\t<loc>$Url</loc>\n";
 
-        if($this->addAlternate == true){
+        if($this->addAlternate == true and count(config('app.web_lang')) >1){
             if(isset($row->translate($alternateLang)->name)){
                 if($this->blogslug == true){
                     $UrlAlternate = urldecode (LaravelLocalization::getLocalizedURL($alternateLang,route($this->urlRoute,[$row->getCatName->slug,$row->slug])));

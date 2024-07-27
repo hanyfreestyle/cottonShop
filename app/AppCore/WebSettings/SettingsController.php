@@ -203,6 +203,18 @@ class SettingsController extends AdminMainController {
             $subMenu->save();
         }
 
+        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
+            $subMenu = new AdminMenu();
+            $subMenu->parent_id = $mainMenu->id;
+            $subMenu->sel_routs = "SiteMap.index";
+            $subMenu->url = "admin.config.SiteMap.index";
+            $subMenu->name = "Site Maps";
+            $subMenu->roleView = "sitemap_view";
+            $subMenu->icon = "fas fa-sitemap";
+            $subMenu->save();
+        }
+
+
         if (File::isFile(base_path('routes/AppPlugin/config/Branch.php'))) {
             $subMenu = new AdminMenu();
             $subMenu->parent_id = $mainMenu->id;
