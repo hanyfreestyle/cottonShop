@@ -32,18 +32,7 @@
 {!! (new \App\Helpers\MinifyTools)->MinifyCss('css/style_lang_'.thisCurrentLocale().'.css',"Seo",$cssReBuild) !!}
 @livewireStyles
 
-<!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQBEXFVS4Y"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-        gtag('config', 'G-PQBEXFVS4Y');
-    </script>
 </head>
 
 <body class="{{htmlBodyStyle($pageView)}}">
