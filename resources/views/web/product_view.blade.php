@@ -23,18 +23,17 @@
                         <div class="col-md-12 col-12 thumb_left">
                             <div class="row mb__10 pr_sticky_content this_product_view">
                                 <x-temp.products.product-slider :product="$product" :product-info="$productInfo"/>
-
-
                                 <div class="col-md-6 col-12 product-infors pr_sticky_su ">
                                     <div class="theiaStickySidebar">
                                         <div class="kalles-section-pr_summary kalles-section summary entry-summary">
 
-                                            <h1 class="headline__title">{{$product->name}}</h1>
-
+                                            <h1 class="headline__title">{{$product->name}}
+                                                @if(\Illuminate\Support\Facades\Auth::user())
+                                                    <a target="_blank" href="{{route('admin.Shop.Product.edit',$product->id)}}" style="font-size: 15px">  [تعديل] </a>
+                                                @endif
+                                            </h1>
                                             <livewire:site.cart.add-to-cart-but :product="$product" :key="$product->id" :product-info="$productInfo"/>
-
                                             <x-temp.products.product-meta :product="$product"/>
-
                                             <x-temp.social-share :row="$product"/>
                                         </div>
                                     </div>
