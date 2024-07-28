@@ -26,7 +26,7 @@
       <input type="number" class="between_price" name="between[from]" value="{{issetArr($_GET,'from',null)}}" class="form-control" placeholder="{{__('web/filter.title_price_min')}}">
     </div>
     <div class="col">
-      <input type="number" class="between_price" name="between[to]" value="{{issetArr($_GET,'to',null)}}" class="form-control" placeholder="{{__('web/filter.title_price_min')}}">
+      <input type="number" class="between_price" name="between[to]" value="{{issetArr($_GET,'to',null)}}" class="form-control" placeholder="{{__('web/filter.title_price_max')}}">
     </div>
   </div>
 
