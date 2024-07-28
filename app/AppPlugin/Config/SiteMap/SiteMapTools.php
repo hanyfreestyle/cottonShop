@@ -381,6 +381,8 @@ class SiteMapTools {
         $lines .= "Disallow: /temp/" . "\n";
         $lines .= "Disallow: /tests/" . "\n";
         $lines .= "Disallow: /vendor/" . "\n";
+        $lines .= "Disallow: /*?sort=" . "\n";
+        $lines .= "Disallow: /*?page=" . "\n";
 
         fwrite($fh, $lines);
         if (count($siteMapList) > '0') {
@@ -419,6 +421,8 @@ class SiteMapTools {
         $lines .= "Disallow: /temp/" . "\n";
         $lines .= "Disallow: /tests/" . "\n";
         $lines .= "Disallow: /vendor/" . "\n";
+        $lines .= "Disallow: /*?sort=" . "\n";
+        $lines .= "Disallow: /*?page=" . "\n";
 
         fwrite($fh, $lines);
         $This_stringData = "\n";
