@@ -3,7 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="index, follow">
+    @if(Route::currentRouteName() == "BlogTagView" or  Route::currentRouteName() == 'ProductsTagView')
+        <meta name="robots" content="noindex, nofollow">
+    @else
+        <meta name="robots" content="index, follow">
+    @endif
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {!! SEO::generate() !!}
     <x-site.def.fav-icon/>
@@ -29,15 +33,24 @@
 {!! (new \App\Helpers\MinifyTools)->MinifyCss('css/form.css',"Seo",$cssReBuild) !!}
 {!! (new \App\Helpers\MinifyTools)->MinifyCss('css/products_view.css',"Seo",$cssReBuild) !!}
 {!! (new \App\Helpers\MinifyTools)->MinifyCss('css/cart_view.css',"Seo",$cssReBuild) !!}
+{!! (new \App\Helpers\MinifyTools)->MinifyCss('css/blog_view.css',"Seo",$cssReBuild) !!}
 {!! (new \App\Helpers\MinifyTools)->MinifyCss('css/style_lang_'.thisCurrentLocale().'.css',"Seo",$cssReBuild) !!}
 @livewireStyles
 
 <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-PG7D4NS');
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-PG7D4NS');
     </script>
     <!-- End Google Tag Manager -->
 </head>
@@ -45,8 +58,10 @@
 <body class="{{htmlBodyStyle($pageView)}}">
 
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PG7D4NS"
-                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PG7D4NS"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
 <!-- End Google Tag Manager (noscript) -->
 <div id="nt_wrapper">
     <header id="ntheader" class="ntheader header_3 h_icon_la">

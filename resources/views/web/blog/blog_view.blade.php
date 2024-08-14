@@ -24,7 +24,7 @@
                             <article class="post type-post">
                                 <h1 class="headline__title">{{$blog->name}}</h1>
                                 <div class="blog_main_photo"><img src="{{getPhotoPath($blog->photo_thum_1,"blog","photo")}}"></div>
-                                <div class="main_des_view">{!! $blog->des !!}</div>
+                                <div class="main_des_view blog_des_view_div">{!! $blog->des !!}</div>
                             </article>
 
                             <x-temp.blog.blog-tags :row="$blog"/>

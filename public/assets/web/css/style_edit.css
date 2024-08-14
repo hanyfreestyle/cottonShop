@@ -192,7 +192,7 @@ caption, th, td {
 .blog_main_photo img{
     display: block;
     margin: auto;
-    max-width: 100%;
+    max-width: 90%;
     height: auto;
 }
 .blog_author_name a{
