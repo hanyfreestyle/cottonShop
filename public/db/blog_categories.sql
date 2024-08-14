@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2024 at 12:00 AM
+-- Generation Time: Aug 14, 2024 at 12:24 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,17 +18,17 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `a_cart_new`
+-- Database: `cottton_blog`
 --
 
 --
 -- Dumping data for table `blog_categories`
 --
 
-INSERT INTO `blog_categories` (`id`, `parent_id`, `deep`, `icon`, `photo`, `photo_thum_1`, `is_active`, `postion`, `created_at`, `updated_at`) VALUES
-(1, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-03-07 17:06:42', '2024-03-07 17:06:42'),
-(2, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-03-07 17:06:42', '2024-03-07 17:06:42'),
-(3, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-03-07 17:06:42', '2024-03-07 17:06:42');
+INSERT INTO `blog_categories` (`id`, `parent_id`, `deep`, `old_id`, `old_parent`, `icon`, `photo`, `photo_thum_1`, `is_active`, `postion`, `created_at`, `updated_at`) VALUES
+(1, NULL, 0, 1, 0, NULL, NULL, NULL, 1, 0, '2024-08-14 07:24:05', '2024-08-14 07:24:05'),
+(2, NULL, 0, 316, 0, NULL, NULL, NULL, 1, 0, '2024-08-14 07:24:05', '2024-08-14 07:24:05'),
+(3, NULL, 0, 328, 0, NULL, NULL, NULL, 1, 0, '2024-08-14 07:24:05', '2024-08-14 07:24:05');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

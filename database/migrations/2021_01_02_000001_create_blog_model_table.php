@@ -16,6 +16,8 @@ return new class extends Migration {
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('parent_id')->nullable();
                 $table->integer('deep')->default(0);
+                $table->integer('old_id')->default(0);
+                $table->integer('old_parent')->default(0);
                 $table->string("icon")->nullable();
                 $table->string("photo")->nullable();
                 $table->string("photo_thum_1")->nullable();
@@ -43,10 +45,12 @@ return new class extends Migration {
         Schema::create('blog_post', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->nullable();
+
             $table->integer('cat_id')->nullable();
             $table->integer('brand_id')->nullable();
             $table->boolean("is_active")->nullable()->default(true);
             $table->string("photo")->nullable();
+            $table->string("post_status")->nullable();
             $table->string("photo_thum_1")->nullable();
             $table->integer('url_type')->nullable()->default(0);
             $table->string('youtube')->nullable();
@@ -56,6 +60,9 @@ return new class extends Migration {
             $table->timestamps();
             $table->integer('view_count')->nullable();
             $table->integer('old_id')->nullable();
+            $table->integer('old_cat')->nullable();
+            $table->integer('update_tags')->nullable();
+            $table->text('old_tags')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
         });
 
@@ -70,6 +77,7 @@ return new class extends Migration {
             $table->string('g_title')->nullable();
             $table->text('g_des')->nullable();
             $table->string('youtube_title')->nullable();
+            $table->integer('clean_des')->nullable();
 
             $table->unique(['blog_id', 'locale']);
             $table->unique(['locale', 'slug']);
@@ -103,6 +111,7 @@ return new class extends Migration {
         if ($Config['TableTags']) {
             Schema::create('blog_tags', function (Blueprint $table) {
                 $table->bigIncrements('id');
+                $table->integer('old_id')->default(0);
                 $table->boolean("is_active")->default(true);
             });
 
