@@ -44,7 +44,7 @@ Route::group(['middleware' => ['UnderConstruction', 'MinifyHtml']], function () 
         Route::get('/contact/thanks/', [PagesViewController::class, 'ContactUsThanksPage'])->name('ContactUsThanksPage');
 
         Route::get('/our-brands/', [BrandViewController::class, 'BrandList'])->name('BrandList');
-        Route::get('/brands/{slug}', [BrandViewController::class, 'BrandView'])->name('BrandView');
+        Route::get('/brands/{slug?}', [BrandViewController::class, 'BrandView'])->name('BrandView');
 
 
         Route::get('/cart/', [ShoppingCartController::class, 'CartView'])->name('Shop_CartView');
