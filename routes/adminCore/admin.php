@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\BackLinksController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\HooverDataController;
 use Illuminate\Support\Facades\File;
@@ -19,6 +20,18 @@ if (File::isFile(base_path('app\AppPlugin\Crm\Periodicals\BookDashboardControlle
 
 Route::get('/testpdf', [DashboardController::class, 'testpdf'])->name('testpdf');
 Route::get('/getConfigData', [HooverDataController::class, 'getConfigData'])->name('getConfigData');
+
+Route::get('/listBackLink', [BackLinksController::class, 'listBackLink'])->name('listBackLink');
+Route::get('/listBackLinkProduct', [BackLinksController::class, 'listBackLink'])->name('listBackLinkProduct');
+Route::get('/listBackLinkBlog', [BackLinksController::class, 'listBackLink'])->name('listBackLinkBlog');
+
+
+Route::get('/scanBrand', [BackLinksController::class, 'scanBrand'])->name('scanBrand');
+Route::get('/scanBlog', [BackLinksController::class, 'scanBlog'])->name('scanBlog');
+Route::get('/scanProducts', [BackLinksController::class, 'scanProducts'])->name('scanProducts');
+Route::get('/scanLinks', [BackLinksController::class, 'scanLinks'])->name('scanLinks');
+
+
 
 
 

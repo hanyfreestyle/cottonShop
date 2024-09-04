@@ -9,16 +9,17 @@ use Illuminate\Support\Facades\Session;
 
 class DashboardController extends AdminMainController {
 
-public function ChangeCollapse(){
-    $session = Session::get('sidebarCollapse');
-    if($session == null){
-        Session::put("sidebarCollapse", 'sidebar-collapse sidebar-mini');
-        Session::save();
-    }else{
-        Session::forget('sidebarCollapse');
+    public function ChangeCollapse() {
+        $session = Session::get('sidebarCollapse');
+        if ($session == null) {
+            Session::put("sidebarCollapse", 'sidebar-collapse sidebar-mini');
+            Session::save();
+        } else {
+            Session::forget('sidebarCollapse');
+        }
+        return redirect()->back();
     }
-    return redirect()->back();
-}
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function Dashboard() {
@@ -42,7 +43,6 @@ public function ChangeCollapse(){
         return $pdf->stream('document.pdf');
         // return $pdf->download("hany.pdf");
     }
-
 
 
 

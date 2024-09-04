@@ -19,8 +19,16 @@
                     <i class="fas fa-language"></i>
                 </a>
             </li>
+
         @endif
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('admin.listBackLink')}}" role="button">
+                <i class="fas fa-unlink"></i>
+            </a>
+        </li>
     </ul>
+
 
     <ul class="navbar-nav ml-auto">
         @include('admin.layouts.inc.topNav.search')

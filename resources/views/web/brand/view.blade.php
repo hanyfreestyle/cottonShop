@@ -9,7 +9,7 @@
 
         <div class="container container_cat pop_default cat_default mb__20">
 
-            <x-temp.tools.filter-toolbar :filter-data="$filterData"/>
+{{--            <x-temp.tools.filter-toolbar :filter-data="$filterData"/>--}}
 
             <div class="row">
 
@@ -25,7 +25,7 @@
                         <h1 class="headline__title">{{$brand->name}}</h1>
                         <div class="{{$proStyle['cardStyleHolder']}}">
                             @foreach($products as $product)
-                                <x-temp.products.card :product="$product"/>
+                                <x-temp.products.card :product="$product" :quick-view="false"/>
                             @endforeach
                         </div>
 
