@@ -74,6 +74,7 @@ class PageController extends AdminMainController {
 #|||||||||||||||||||||||||||||||||||||| # ClearCash
     public function ClearCash() {
         Cache::forget('CashProductPageInfo');
+        Cache::forget('PolicyPages_Cash');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -106,6 +107,4 @@ class PageController extends AdminMainController {
         self::ClearCash();
         return back()->with('confirmDelete', "");
     }
-
-
 }

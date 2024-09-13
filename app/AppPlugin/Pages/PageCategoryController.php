@@ -67,6 +67,7 @@ class PageCategoryController extends AdminMainController {
 #|||||||||||||||||||||||||||||||||||||| # ClearCash
     public function ClearCash() {
         Cache::forget('CashProductPageInfo');
+        Cache::forget('PolicyPages_Cash');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
