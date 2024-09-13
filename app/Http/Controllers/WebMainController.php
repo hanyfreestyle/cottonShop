@@ -44,6 +44,9 @@ class WebMainController extends DefaultMainController {
         $this->DefPhotoList = self::getDefPhotoList($this->StopeCash);
         View::share('DefPhotoList', $this->DefPhotoList);
 
+        $this->policyPages = self::getPolicyPages($this->StopeCash);
+        View::share('policyPages', $this->policyPages);
+
         $pageView = [
             'SelMenu' => '',
             'page' => '',
@@ -198,6 +201,12 @@ class WebMainController extends DefaultMainController {
                 break;
 
 
+            case 'page_policy':
+                $setTitle = self::CheckMeta($row, 'g_title', 'g_title') ;
+                $setDescription = self::CheckMeta($row, 'g_des', 'des');
+                $xx = "8";
+                break;
+
             default:
                 $setTitle = ($row->g_title ?? $row->name);
                 $setDescription = ($row->g_des ?? $row->name);
@@ -212,8 +221,8 @@ class WebMainController extends DefaultMainController {
         $setTitle = str_replace($rep1, $rep2, $setTitle);
         $setDescription = str_replace($rep1, $rep2, $setDescription);
 
-        $setTitle = Str::limit($setTitle,70,"");
-        $setDescription = Str::limit($setDescription,160,"");
+        $setTitle = Str::limit($setTitle, 70, "");
+        $setDescription = Str::limit($setDescription, 160, "");
         return ['Title' => $setTitle, 'Description' => $setDescription];
     }
 
@@ -283,6 +292,11 @@ class WebMainController extends DefaultMainController {
             case 'page_OffersView':
                 $Url = urldecode(LaravelLocalization::getLocalizedURL($lang, route('page_OffersView', $row->slug)));
                 $alternatUrl = urldecode(LaravelLocalization::getLocalizedURL($alternateLang, route('page_OffersView', $row->slug)));
+                break;
+
+            case 'page_policy':
+                $Url = urldecode(LaravelLocalization::getLocalizedURL($lang, route('page_policy', $row->slug)));
+                $alternatUrl = urldecode(LaravelLocalization::getLocalizedURL($alternateLang, route('page_policy', $row->slug)));
                 break;
 
 

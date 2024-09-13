@@ -17,7 +17,7 @@ Breadcrumbs::for('AboutUs', function (BreadcrumbTrail $trail,$meta) {
 
 Breadcrumbs::for('Trems', function (BreadcrumbTrail $trail,$meta) {
     $trail->parent('home');
-    $trail->push($meta->name ?? '' , route('page_Trems'));
+    $trail->push($meta->name ?? '' , route('page_policy',$meta->slug));
 });
 
 Breadcrumbs::for('WishList', function (BreadcrumbTrail $trail,$meta) {

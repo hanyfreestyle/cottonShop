@@ -34,9 +34,11 @@ Route::group(['middleware' => ['UnderConstruction', 'MinifyHtml']], function () 
 
         Route::get('/', [PagesViewController::class, 'index'])->name('page_index');
         Route::get('/about-us/', [PagesViewController::class, 'AboutUs'])->name('page_AboutUs');
-        Route::get('/terms-and-conditions/', [PagesViewController::class, 'Trems'])->name('page_Trems');
+//        Route::get('/terms-and-conditions/', [PagesViewController::class, 'Trems'])->name('page_Trems');
+
         Route::get('/wish-list/', [PagesViewController::class, 'WishList'])->name('page_WishList');
         Route::get('/search/', [PagesViewController::class, 'Search'])->name('page_search');
+        Route::get('/policy/{slug}', [PagesViewController::class, 'PolicyView'])->name('page_policy');
 
 
         Route::get('/contact/', [PagesViewController::class, 'ContactUs'])->name('page_ContactUs');

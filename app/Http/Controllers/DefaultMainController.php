@@ -7,6 +7,7 @@ use App\AppCore\WebSettings\Models\Setting;
 use App\AppPlugin\Config\Meta\MetaTag;
 use App\AppPlugin\Data\City\Models\City;
 use App\AppPlugin\Data\Country\Country;
+use App\AppPlugin\Pages\Models\Page;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
@@ -87,6 +88,22 @@ class DefaultMainController extends Controller {
         }
         return $DefPhotoList;
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function getPolicyPages($stopCash = 0) {
+        $idPage = ['2','4','5','6'];
+        if ($stopCash) {
+            $PolicyPages = Page::query()->wherein('id',$idPage)->get();
+        } else {
+            $PolicyPages = Cache::remember('PolicyPages_Cash', cashDay(7), function () {
+                $idPage = ['2','4','5','6'];
+                return Page::query()->wherein('id',$idPage)->get();
+            });
+        }
+        return $PolicyPages;
+    }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     getDefPhotoById
     static function getDefPhotoById($cat_id) {

@@ -29,10 +29,13 @@
                             <div class="menu_footer widget_footer">
                                 <ul class="menu">
                                     <li class="menu-item"><a href="{{route('page_index')}}">{{__('web/menu.main_home_page')}}</a></li>
-                                    <li class="menu-item"><a href="{{route('page_Offers')}}">{{__('web/menu.main_offers')}}</a></li>
+{{--                                    <li class="menu-item"><a href="{{route('page_Offers')}}">{{__('web/menu.main_offers')}}</a></li>--}}
                                     <li class="menu-item"><a href="{{route('page_AboutUs')}}">{{__('web/menu.main_about')}}</a></li>
                                     <li class="menu-item"><a href="{{route('BlogList')}}">{{__('web/menu.main_blog')}}</a></li>
-                                    <li class="menu-item"><a href="{{route('page_Trems')}}">{!! __('web/menu.main_terms_2') !!}</a></li>
+{{--                                    <li class="menu-item"><a href="{{route('page_Trems')}}">{!! __('web/menu.main_terms_2') !!}</a></li>--}}
+                                    @foreach($policyPages as $page)
+                                        <li class="menu-item"><a href="{{route('page_policy',$page->slug)}}">{{$page->name}}</a></li>
+                                    @endforeach
                                     <li class="menu-item"><a href="{{route('page_ContactUs')}}">{{__('web/menu.main_contatc_us')}}</a></li>
                                 </ul>
                             </div>

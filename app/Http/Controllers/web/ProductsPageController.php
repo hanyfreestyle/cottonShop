@@ -32,7 +32,7 @@ class ProductsPageController extends WebMainController {
 
         $products = $productsQuery->paginate(12)->appends(request()->query());
 
-        if($products->isEmpty() and isset($_GET['page'])) {
+        if ($products->isEmpty() and isset($_GET['page'])) {
             self::abortError404('Empty');
         }
 
@@ -56,7 +56,7 @@ class ProductsPageController extends WebMainController {
         $pageView['SelMenu'] = 'Offers';
         $pageView['page'] = 'Offers';
 
-        $offers = LandingPage::query()->where('is_active',true)
+        $offers = LandingPage::query()->where('is_active', true)
             ->with('barnd')
             ->get();
 //            ->paginate(100);
@@ -103,26 +103,22 @@ class ProductsPageController extends WebMainController {
             $pageView['slug'] = "brands/" . $offer->translate(webChangeLocale())->slug;
         }
 
-        $products = Product::query()->whereIn('id',$offer->product_id)->get();
+        $products = Product::query()->whereIn('id', $offer->product_id)->get();
 
 
-        if ($offer->is_soft){
+        if ($offer->is_soft) {
             return view('web.products_page.offers_view_soft')->with([
                 'pageView' => $pageView,
                 'offer' => $offer,
                 'products' => $products,
             ]);
-        }else{
+        } else {
             return view('web.products_page.offers_view')->with([
                 'pageView' => $pageView,
                 'offer' => $offer,
                 'products' => $products,
             ]);
         }
-
-
-
-
     }
 
 }

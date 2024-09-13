@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\web;
 
 use App\AppPlugin\BlogPost\Models\Blog;
-use App\AppPlugin\Config\Privacy\WebPrivacy;
 use App\AppPlugin\Leads\ContactUs\ContactUsForm;
 use App\AppPlugin\Leads\ContactUs\ContactUsFormRequest;
 use App\AppPlugin\Pages\Models\Page;
+use App\AppPlugin\Product\Models\LandingPage;
+use App\AppPlugin\Product\Models\Product;
+use App\Helpers\AdminHelper;
 use App\Http\Controllers\WebMainController;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,6 +36,38 @@ class PagesViewController extends WebMainController {
         ]);
     }
 
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function PolicyView($slug) {
+        try {
+            $slug = AdminHelper::Url_Slug($slug);
+            $page = Page::whereTranslation('slug', $slug)
+                ->translatedIn()
+                ->with('translation')
+                ->firstOrFail();
+        } catch (\Exception $e) {
+            self::abortError404('root');
+        }
+
+        parent::printSeoMeta($page, 'page_policy');
+
+        $pageView = $this->pageView;
+        $pageView['SelMenu'] = 'page_policy';
+        $pageView['page'] = 'page_policy';
+
+        if (count($page->translations) == 1) {
+            $pageView['go_home'] = route('page_index');
+        } else {
+            $pageView['slug'] = "policy/" . $page->translate(webChangeLocale())->slug;
+        }
+
+        return view('web.pages.policy_view')->with([
+            'pageView' => $pageView,
+            'page' => $page,
+        ]);
+
+    }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function AboutUs() {
@@ -53,23 +87,23 @@ class PagesViewController extends WebMainController {
     }
 
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function Trems() {
-        $meta = parent::getMeatByCatId('trems');
-        parent::printSeoMeta($meta, "page_Trems");
-
-        $pageView = $this->pageView;
-        $pageView['SelMenu'] = 'page_Trems';
-        $pageView['page'] = 'page_Trems';
-        $webPrivacy = WebPrivacy::where('is_active', true)->orderby('postion', 'asc')->with('translation')->get();
-
-        return view('web.pages.trems')->with([
-            'pageView' => $pageView,
-            'meta' => $meta,
-            'webPrivacy' => $webPrivacy,
-        ]);
-    }
+//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+//    public function Trems() {
+//        $meta = parent::getMeatByCatId('trems');
+//        parent::printSeoMeta($meta, "page_Trems");
+//
+//        $pageView = $this->pageView;
+//        $pageView['SelMenu'] = 'page_Trems';
+//        $pageView['page'] = 'page_Trems';
+//        $webPrivacy = WebPrivacy::where('is_active', true)->orderby('postion', 'asc')->with('translation')->get();
+//
+//        return view('web.pages.trems')->with([
+//            'pageView' => $pageView,
+//            'meta' => $meta,
+//            'webPrivacy' => $webPrivacy,
+//        ]);
+//    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
