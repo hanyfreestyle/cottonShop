@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 16, 2024 at 07:52 AM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Host: localhost:3306
+-- Generation Time: Sep 13, 2024 at 04:48 AM
+-- Server version: 10.5.22-MariaDB-cll-lve
+-- PHP Version: 8.1.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `a_cart`
+-- Database: `realogyc_cotttonshop`
 --
 
 --
@@ -28,7 +28,10 @@ SET time_zone = "+00:00";
 INSERT INTO `pagecategory_page` (`id`, `category_id`, `page_id`, `postion`) VALUES
 (1, 1, 1, 0),
 (3, 2, 2, 0),
-(4, 2, 3, 0);
+(4, 2, 3, 0),
+(5, 2, 4, 0),
+(6, 2, 5, 0),
+(7, 2, 6, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

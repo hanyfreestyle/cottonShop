@@ -51,8 +51,8 @@ trait PageConfigTraits {
             'postShowLang' => true,
             'postEditor' => true,
             'postDes' => true,
-            'postSeo' => false,
-            'postSlug' => false,
+            'postSeo' => true,
+            'postSlug' => true,
             'postYoutube' => false,
             'postWebSlug' => null,
 
