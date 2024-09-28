@@ -65,6 +65,7 @@ Route::group(['middleware' => ['UnderConstruction', 'MinifyHtml']], function () 
         Route::get('/product-tag/{slug}', [ProductsCategoriesViewController::class, 'ProductsTagView'])->name('ProductsTagView');
         Route::get('/product/{slug}', [ProductsViewController::class, 'ProductView'])->name('ProductView');
 
+
         Route::get('/blog', [BlogViewController::class, 'BlogList'])->name('BlogList');
         Route::get('/category/{slug}', [BlogViewController::class, 'BlogCategoryView'])->name('BlogCategoryView');
         Route::get('/author/{slug}', [BlogViewController::class, 'BlogAuthorView'])->name('BlogAuthorView');
