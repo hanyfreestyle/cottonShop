@@ -38,4 +38,6 @@ return
 	'title_empty' => 'سلة المشتريات فارغة',
 	'title_h1' => 'سلة المشتربات',
 	'title_subtotal' => 'الاجمالى',
+	'payment_visa' => 'الدفع بواسطة (Debit/Credit cards/Wallets/Installments)',
+	'payment_cash' => 'الدفع عن الاستلام',
 ];

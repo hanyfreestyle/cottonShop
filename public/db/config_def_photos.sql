@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2024 at 02:40 AM
+-- Generation Time: Sep 30, 2024 at 01:03 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `a_cart_new`
+-- Database: `cottton_shop`
 --
 
 --
@@ -43,7 +43,9 @@ INSERT INTO `config_def_photos` (`id`, `cat_id`, `photo`, `photo_thum_1`, `photo
 (17, 'shipping', 'images/def-photo/shipping-sk3oDtqxOg.webp', NULL, NULL, 15, '2024-04-16 03:56:10', '2024-04-29 21:39:14'),
 (18, 'search_start', 'images/def-photo/search-start-pqbJrKdx9S.webp', NULL, NULL, 16, '2024-04-19 01:38:41', '2024-04-29 21:39:14'),
 (19, 'no_result', 'images/def-photo/no-result-71LgjcBIF0.webp', NULL, NULL, 18, '2024-04-19 01:39:24', '2024-04-29 21:39:14'),
-(20, 'blog_t', 'images/def-photo/blog-t-BFirabuYZB.webp', 'images/def-photo/blog-t-JPshscLovA.webp', NULL, 5, '2024-04-29 21:38:55', '2024-04-29 21:39:14');
+(20, 'blog_t', 'images/def-photo/blog-t-BFirabuYZB.webp', 'images/def-photo/blog-t-JPshscLovA.webp', NULL, 5, '2024-04-29 21:38:55', '2024-04-29 21:39:14'),
+(21, 'pay_cash', 'images/def-photo/pay-cash-MI48dfW2I4.webp', NULL, NULL, 0, '2024-09-30 07:25:15', '2024-09-30 07:25:15'),
+(22, 'pay_visa', 'images/def-photo/pay-visa-ndjEMKizHY.webp', NULL, NULL, 0, '2024-09-30 07:47:00', '2024-09-30 07:47:00');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
