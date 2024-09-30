@@ -16,6 +16,8 @@ return
 	'confrim_login_3' => 'حساب جديد',
 	'mass_free_1' => 'شحن مجانى',
 	'mass_free_2' => 'للطلبات اكثر من',
+	'payment_cash' => 'الدفع عن الاستلام',
+	'payment_visa' => 'الدفع بواسطة (Debit/Credit cards/Wallets)',
 	'review_confirm' => 'اتمام عملية الشراء',
 	'review_invoce_form' => 'تفاصيل الفاتورة',
 	'review_pro_subtotal' => 'المجموع',
@@ -38,6 +40,4 @@ return
 	'title_empty' => 'سلة المشتريات فارغة',
 	'title_h1' => 'سلة المشتربات',
 	'title_subtotal' => 'الاجمالى',
-	'payment_visa' => 'الدفع بواسطة (Debit/Credit cards/Wallets/Installments)',
-	'payment_cash' => 'الدفع عن الاستلام',
 ];
