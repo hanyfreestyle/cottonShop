@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17ad6b61003c305fe9b73416d799111f",
+    "content-hash": "4f1c1265ce77b33d5bb77f87600f8227",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -4172,6 +4172,58 @@
                 "source": "https://github.com/paragonie/random_compat"
             },
             "time": "2020-10-15T08:29:30+00:00"
+        },
+        {
+            "name": "paymob/php-library",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/paymob-integrations/php-lib.git",
+                "reference": "ee4f01c7e4f695140d7a522c47da79d65f9f6995"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/paymob-integrations%2Fphp-lib/repository/archive.zip?sha=ee4f01c7e4f695140d7a522c47da79d65f9f6995",
+                "reference": "ee4f01c7e4f695140d7a522c47da79d65f9f6995",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=7"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Paymob.php"
+                ],
+                "psr-4": {
+                    "Paymob\\Library\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Paymob Team"
+                }
+            ],
+            "description": "Paymob PHP Library",
+            "homepage": "https://paymob.com",
+            "keywords": [
+                "api integration",
+                "e-commerce",
+                "gateway",
+                "library",
+                "payment",
+                "paymob"
+            ],
+            "support": {
+                "issues": "https://gitlab.com/paymob-integrations/php-lib/-/issues",
+                "source": "https://gitlab.com/paymob-integrations/php-lib/-/tree/1.0.3"
+            },
+            "time": "2024-06-03T12:26:37+00:00"
         },
         {
             "name": "phattarachai/laravel-mobile-detect",

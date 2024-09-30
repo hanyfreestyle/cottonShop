@@ -6,16 +6,15 @@ use App\AppPlugin\Customers\Models\ShoppingOrder;
 use App\AppPlugin\Customers\Models\ShoppingOrderAddress;
 use App\AppPlugin\Customers\Models\ShoppingOrderProduct;
 use App\AppPlugin\Customers\Models\UsersCustomersAddress;
-
 use App\AppPlugin\Customers\Request\ShoppingOrderSaveNoneUserRequest;
 use App\AppPlugin\Customers\Request\ShoppingOrderSaveRequest;
 use App\AppPlugin\Data\City\Models\City;
+use App\AppPlugin\Orders\Models\Order;
+use App\AppPlugin\Orders\Models\PayMobResponses;
 use App\AppPlugin\Orders\Models\ShippingCity;
 use App\AppPlugin\Product\Models\Product;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\WebMainController;
-
-
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use Paymob\Library\Paymob;
 
 class ShoppingCartController extends WebMainController {
 
@@ -33,6 +33,70 @@ class ShoppingCartController extends WebMainController {
 
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function PaymobResponse(Request $request) {
+        $orderInfo = explode("#", $request->merchant_order_id);
+
+        if (intval($request->id) > 0 and count($orderInfo) == 2) {
+            try {
+                $getData = DB::transaction(function () use ($request, $orderInfo) {
+                    $response = json_encode($request->all());
+                    if ($request->success == 'true') {
+                        $success = 1;
+                    } else {
+                        $success = 0;
+                    }
+                    $saveResponse = new PayMobResponses();
+                    $saveResponse->paymob_id = $request->id;
+                    $saveResponse->paymob_order_id = $request->order;
+                    $saveResponse->success = $success;
+                    $saveResponse->merchant_order_id = $request->merchant_order_id;
+                    $saveResponse->amount_cents = $request->amount_cents;
+                    $saveResponse->order_id = $orderInfo[0];
+                    $saveResponse->order_uuid = $orderInfo[1];
+                    $saveResponse->responses = $response;
+                    $saveResponse->save();
+                });
+            } catch (\Exception $exception) {
+                return redirect()->route('Shop_CartView');
+            }
+
+            return redirect()->route('Shop_PaymobConfirm', [$orderInfo[1], $request->id]);
+
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function PaymobConfirm($uuid, $id) {
+        try {
+            $res = PayMobResponses::query()
+                ->where('order_uuid', $uuid)
+                ->where('paymob_id', $id)
+                ->firstOrFail();
+
+            $orderUpdate = Order::query()
+                ->where('id', $res->order_id)
+                ->where('uuid', $res->order_uuid)
+                ->where('payment_method', 1)
+                ->firstOrFail();
+
+            $orderUpdate->paymob_id = $res->paymob_id;
+            $orderUpdate->paymob_order_id = $res->paymob_order_id;
+            $orderUpdate->success = $res->success;
+            $orderUpdate->save();
+
+            if ($res->success) {
+                Cart::destroy();
+                return redirect()->route('Shop_CartOrderCompleted');
+            } else {
+                return redirect()->route('Shop_CartOrderCompleted');
+            }
+        } catch (\Exception $e) {
+            self::abortError404('root');
+        }
+    }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     CartView
     public function CartView(Request $request) {
@@ -275,8 +339,8 @@ class ShoppingCartController extends WebMainController {
         $CartList = Cart::content();
 
         if ($CartList->count() > 0) {
-            try {
 
+            try {
                 $getData = DB::transaction(function () use ($request) {
                     $saveData = true;
 
@@ -289,7 +353,7 @@ class ShoppingCartController extends WebMainController {
                     $newAddress->name = $request->input('name');
                     $newAddress->city = $cityName;
                     $newAddress->address = $request->input('address');
-                    $newAddress->phone = $request->input('phone');;
+                    $newAddress->phone = $request->input('phone');
                     $newAddress->phone_option = $request->input('phone_option');
                     $newAddress->notes = $request->input('notes');
                     if ($saveData == true) {
@@ -299,13 +363,18 @@ class ShoppingCartController extends WebMainController {
                     $newOrder = self::saveOrderData($request, $saveData, $newAddress);
 
                     if ($saveData == true) {
-                        Cart::destroy();
+                        if ($request->input('payment_method') == 2) {
+                            Cart::destroy();
+                        }
                     }
 
-                    return $data = [
+                    return [
                         'order_id' => $newOrder->id,
+                        'order_uuid' => $newOrder->uuid,
                         'cust_name' => $request->input('name'),
+                        'city_name' => $cityName,
                         'order_total' => $subtotal,
+                        'total_invoice' => $newOrder->total_invoice,
                         'order_units' => $CartList->count(),
                         'order_date' => $newOrder->getFormatteDateOrderView(),
                     ];
@@ -315,11 +384,58 @@ class ShoppingCartController extends WebMainController {
                 return redirect()->back()->with('Error', __('web/order.err_order_not_saved'));
             }
 
-            if ($this->WebConfig->telegram_send) {
-                self::sendTelegramConfirm($getData);
-            }
+            if ($request->input('payment_method') == 2) {
+                return redirect()->route('Shop_CartOrderCompleted');
+            } else {
 
-            return redirect()->route('Shop_CartOrderCompleted');
+                $paymobKeys['apiKey'] = env('PAYMOB_API_KEY');
+                $paymobKeys['pubKey'] = env('PAYMOB_PUB_KEY');
+                $paymobKeys['secKey'] = env('PAYMOB_SEC_KEY');
+                $cents = 100; // 100 for all countries and 1000 for Oman
+                $name = $request->input('name');
+
+                if ((count(explode(" ", $name)) == 1)) {
+                    $first_name = $name;
+                    $last_name = $name;
+                } else {
+                    $first_name = explode(" ", $name)[0];
+                    $last_name = explode(" ", $name)[1];
+                }
+
+                $paymobReq = new Paymob();
+                $result = $paymobReq->authToken($paymobKeys);
+
+                $billing = [
+                    "first_name" => $first_name,
+                    "last_name" => $last_name,
+                    "street" => $request->input('address'),
+                    "phone_number" => $request->input('phone'),
+                    "city" => $getData['city_name'],
+                    "country" => 'Egypt',
+                    "state" => $getData['city_name'],
+                    "postal_code" => "21111",
+                ];
+
+                $orderId = $getData['order_id'] . '#' . $getData['order_uuid'];
+                $order_total = intval($getData['total_invoice']);
+                $data = [
+                    "amount" => $order_total * $cents,
+                    "currency" => 'EGP',
+                    "payment_methods" => array(3768464), // replace this id 1234567 with your integration ID(s)
+                    "billing_data" => $billing,
+                    "extras" => ["merchant_intention_id" => $orderId],
+                    "special_reference" => $orderId
+                ];
+
+                $status = $paymobReq->createIntention($paymobKeys['secKey'], $data, $orderId);
+
+                $countryCode = $paymobReq->getCountryCode($paymobKeys['secKey']);
+                $apiUrl = $paymobReq->getApiUrl($countryCode);
+                $cs = $status['cs'];
+
+                $to = $apiUrl . "unifiedcheckout/?publicKey=" . $paymobKeys['pubKey'] . "&clientSecret=$cs";
+                return redirect($to);
+            }
 
         } else {
             return redirect()->route('Shop_CartView');
@@ -370,6 +486,7 @@ class ShoppingCartController extends WebMainController {
         $newOrder->city_id = $request->input('city_id');
         $newOrder->address_id = $newAddress->id;
         $newOrder->uuid = Str::uuid()->toString();
+        $newOrder->payment_method = $request->input('payment_method');
         $newOrder->order_date = now();
         $newOrder->status = 1;
         $newOrder->total = $subtotal;

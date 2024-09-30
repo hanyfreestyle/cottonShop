@@ -24,6 +24,12 @@ return new class extends Migration {
             $table->unsignedBigInteger('city_id');
 
             $table->uuid()->unique();
+            $table->integer('paymob_id')->nullable();
+            $table->integer('paymob_order_id')->nullable();
+            $table->integer('success')->nullable();
+            $table->integer('payment_method')->nullable();
+
+
             $table->dateTime('order_date');
             $table->string('invoice_number')->nullable();
             $table->boolean("status")->default(1);

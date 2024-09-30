@@ -21,6 +21,7 @@
         "mindscms/laravelshoppingcart": "^2.1",
         "mpdf/mpdf": "^8.2",
         "opcodesio/log-viewer": "^3.1",
+        "paymob/php-library": "^1.0",
         "phattarachai/laravel-mobile-detect": "^1.0",
         "propaganistas/laravel-phone": "^5.1",
         "simplesoftwareio/simple-qrcode": "~4",

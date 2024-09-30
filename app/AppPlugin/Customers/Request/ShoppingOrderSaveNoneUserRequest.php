@@ -17,7 +17,7 @@ class ShoppingOrderSaveNoneUserRequest extends FormRequest {
 
         return [
             'shipping' => "required|numeric",
-            'name' => "required|min:4|max:50",
+            'name' => "required|regex:/^\S+\s+\S+$/",
             'city_id' => "required",
             'phone' => "numeric|phone:mobile,$countryCode",
             'phone_option' => "nullable|numeric|min_digits:7",
@@ -31,6 +31,7 @@ class ShoppingOrderSaveNoneUserRequest extends FormRequest {
             'phone_option.max_digits' => __('web/profileMass.login_phone_err'),
             'phone.min_digits' => __('web/profileMass.login_phone_err'),
             'phone.max_digits' => __('web/profileMass.login_phone_err'),
+            'name.regex' => "الرجاء إدخال الاسم الأول والاسم الثاني",
         ];
 
     }
