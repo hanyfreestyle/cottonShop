@@ -8,7 +8,6 @@ use App\AppPlugin\Orders\Models\Order;
 use App\AppPlugin\Orders\Request\OrderConfirmNewRequest;
 use App\AppPlugin\Orders\Request\OrderConfirmPendingRequest;
 use App\Http\Controllers\AdminMainController;
-
 use App\Http\Traits\CrudTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -58,6 +57,32 @@ class OrderController extends AdminMainController {
         ];
         View::share('PendingStatusArr', $PendingStatusArr);
 
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function search(Request $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+
+        if(count($request->all()) == 0){
+            $order  = null;
+        }else{
+            if (intval($request->id) > 0 ) {
+                $order = Order::query()->where('id', intval($request->id))->first();
+            }elseif (intval($request->paymob_id) > 0){
+                $order = Order::query()->where('paymob_id', intval($request->paymob_id))->first();
+            }elseif (intval($request->paymob_order_id) > 0){
+                $order = Order::query()->where('paymob_order_id', intval($request->paymob_order_id))->first();
+            }else{
+                $order  = null;
+            }
+        }
+        return view('AppPlugin.Orders.index_serach')->with([
+            'pageData' => $pageData,
+            'order' => $order,
+            'requestCount' => count($request->all()),
+        ]);
     }
 
 
@@ -411,12 +436,21 @@ class OrderController extends AdminMainController {
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = setActiveRoute("ShopOrders.Shipping") ;
-
         $subMenu->url = "admin.ShopOrders.Shipping.index";
         $subMenu->name = "admin/orders.app_menu_shipping";
         $subMenu->roleView = "orders_view";
         $subMenu->icon = "fas fa-cogs";
         $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = setActiveRoute("ShopOrders.Search.form|ShopOrders.Search.filter") ;
+        $subMenu->url = "admin.ShopOrders.Search.form";
+        $subMenu->name = "admin/orders.app_menu_search";
+        $subMenu->roleView = "orders_view";
+        $subMenu->icon = "fas fa-search";
+        $subMenu->save();
+
 
     }
 }

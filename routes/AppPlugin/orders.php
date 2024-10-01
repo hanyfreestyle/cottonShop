@@ -18,6 +18,8 @@ Route::get('/orders/Canceled',[OrderController::class,'index'])->name('ShopOrder
 Route::get('/orders/view/{uuid}',[OrderController::class,'OrderView'])->name('ShopOrders.OrderView');
 Route::get('/orders/config', [OrderController::class,'config'])->name('ShopOrders.config');
 
+Route::get('/orders/search',[OrderController::class,'search'])->name('ShopOrders.Search.form');
+Route::post('/orders/search', [OrderController::class, 'search'])->name('ShopOrders.Search.filter');
 
 Route::post('/orders/ConfirmNew/{uuid}',[OrderController::class,'ConfirmNew'])->name('ShopOrders.ConfirmNew');
 Route::post('/orders/ConfirmPending/{uuid}',[OrderController::class,'ConfirmPending'])->name('ShopOrders.ConfirmPending');

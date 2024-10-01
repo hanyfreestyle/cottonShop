@@ -64,4 +64,5 @@ return
 	'title_view' => 'Details',
 	'var_payment_method_1' => 'Paymob',
 	'var_payment_method_2' => 'Cash on delivery',
+	'app_menu_search' => 'Order Search',
 ];

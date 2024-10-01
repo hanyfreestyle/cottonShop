@@ -64,4 +64,5 @@ return
 	'title_view' => 'التفاصيل',
 	'var_payment_method_1' => 'باى موب',
 	'var_payment_method_2' => 'الدفع عند الاستلام',
+	'app_menu_search' => 'البحث عن طلب',
 ];
