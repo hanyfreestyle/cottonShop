@@ -18,32 +18,35 @@
         <x-site.form.text-area name="address" :label="__('web/profile.form_address')" col="12" :value="old('address',$address->address ?? '')"/>
     </div>
 
-    <div class="form-row">
-        <div class="col">
-            <div class="accordion-started accordion-bral">
-                <div class="accordion_div">
-                    <input class="ac-input" id="ac-1" value="1" name="payment_method" type="radio" @if( old('payment_method',issetArr($_POST,'payment_method',1)) == 1 ) checked @endif />
-                    <label class="ac-label" for="ac-1">{{__('web/cart.payment_visa')}}</label>
-                    <div class="article ac-content">
-                        <p class="text-justify">
-                            <x-site.def.img type="DefPhotoList" :row="$DefPhotoList" def="pay_visa" def-name="photo" alt="404" :lazy-active="false" class="img-fluid"/>
-                        </p>
-                    </div>
-                </div>
+{{--    <div class="form-row">--}}
+{{--        <div class="col">--}}
+{{--            <div class="accordion-started accordion-bral">--}}
+{{--                <div class="accordion_div">--}}
+{{--                    <input class="ac-input" id="ac-1" value="1" name="payment_method" type="radio" @if( old('payment_method',issetArr($_POST,'payment_method',1)) == 1 ) checked @endif />--}}
+{{--                    <label class="ac-label" for="ac-1">{{__('web/cart.payment_visa')}}</label>--}}
+{{--                    <div class="article ac-content">--}}
+{{--                        <p class="text-justify">--}}
+{{--                            <x-site.def.img type="DefPhotoList" :row="$DefPhotoList" def="pay_visa" def-name="photo" alt="404" :lazy-active="false" class="img-fluid"/>--}}
+{{--                        </p>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-                <div class="accordion_div">
-                    <input class="ac-input" id="ac-2" value="2" name="payment_method" type="radio" @if( old('payment_method') == 2) checked @endif />
-                    <label class="ac-label" for="ac-2">{{__('web/cart.payment_cash')}}</label>
-                    <div class="article ac-content">
-                        <p class="text-justify">
-                            <x-site.def.img type="DefPhotoList" :row="$DefPhotoList" def="pay_cash" def-name="photo" alt="404" :lazy-active="false" class="img-fluid"/>
-                        </p>
-                    </div>
-                </div>
+{{--                <div class="accordion_div">--}}
+{{--                    <input class="ac-input" id="ac-2" value="2" name="payment_method" type="radio" @if( old('payment_method') == 2) checked @endif />--}}
+{{--                    <label class="ac-label" for="ac-2">{{__('web/cart.payment_cash')}}</label>--}}
+{{--                    <div class="article ac-content">--}}
+{{--                        <p class="text-justify">--}}
+{{--                            <x-site.def.img type="DefPhotoList" :row="$DefPhotoList" def="pay_cash" def-name="photo" alt="404" :lazy-active="false" class="img-fluid"/>--}}
+{{--                        </p>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-            </div>
-        </div>
-    </div>
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
+    <input type="hidden" name="payment_method" value="2">
+
     <div class="form-row mt__20">
         <div class="col text_left_lang">
             <button class="btn def_but" id="SaveOrder" type="submit">{{__('web/cart.but_confirm')}}</button>
