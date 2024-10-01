@@ -105,7 +105,7 @@ class OrderController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   DataTable
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DataTable(Request $request) {
         if ($request->ajax()) {
             $id = $request->id;
@@ -120,9 +120,8 @@ class OrderController extends AdminMainController {
         }
     }
 
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     OrderView
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function OrderView($uuid) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
@@ -145,8 +144,6 @@ class OrderController extends AdminMainController {
             'pageData' => $pageData,
             'order' => $order,
         ]);
-
-
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

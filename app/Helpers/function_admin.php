@@ -305,6 +305,29 @@ if (!function_exists('RandomNumber')) {
 }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('ordersInvoiceInfo')) {
+    function ordersInvoiceInfo($row) {
+        $info = "";
+        if ($row->payment_method == 1){
+            $info .= '<p> '. __('admin/orders.title_payment_method').' : <span>'.__('admin/orders.var_payment_method_1').'</span></p>';
+            if ($row->success == 1){
+                $info .= '<p> '. __('admin/orders.title_payment_method_state').' : <span> تم التحصيل </span></p>';
+                $info .= '<p> رقم العملية : <span> '.$row->paymob_id ?? null .' </span></p>';
+                $info .= '<p> رقم الطلب : <span> '.$row->paymob_order_id ?? null .' </span></p>';
+            }else{
+                $info .= '<p> '. __('admin/orders.title_payment_method_state').' : <span> غير محصل </span></p>';
+            }
+        }else{
+            $info .= '<p> '. __('admin/orders.title_payment_method').' : <span>'.__('admin/orders.var_payment_method_2').'</span></p>';
+        }
+        return $info;
+    }
+}
+
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
