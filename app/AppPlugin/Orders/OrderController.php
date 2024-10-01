@@ -64,11 +64,6 @@ class OrderController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index(Request $request) {
-       $orders =   Order::where('payment_method', null)->get();
-       foreach ($orders as  $order){
-           $order->payment_method = 2;
-           $order->save();
-       }
 
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
