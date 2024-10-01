@@ -62,11 +62,16 @@ class OrderController extends AdminMainController {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index(Request $request) {
+       $orders =   Order::where('payment_method', null)->get();
+       foreach ($orders as  $order){
+           $order->payment_method = 2;
+           $order->save();
+       }
+
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-
 
         $session = self::getSessionData($request);
         if (isset($request->formName)) {
@@ -282,7 +287,7 @@ class OrderController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #  DataTableAddColumns
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function OrdersDataTableAddColumns($data, $arr = array()) {
 
         return DataTables::eloquent($data)
@@ -292,6 +297,20 @@ class OrderController extends AdminMainController {
             })
             ->editColumn('city', function ($row) {
                 return $row->address->city;
+            })
+            ->editColumn('payment_method', function ($row) {
+                if ($row->payment_method == 1){
+                    return __('admin/orders.var_payment_method_1') ;
+                }else{
+                    return __('admin/orders.var_payment_method_2') ;
+                }
+            })
+            ->editColumn('payment_method_state', function ($row) {
+                if ($row->success  == 1){
+                    return "تم التحصيل" ;
+                }else{
+                    return null ;
+                }
             })
             ->editColumn('name', function ($row) {
                 return $row->address->name;

@@ -10,6 +10,7 @@
 /public/media
 #/public/db
 /public/db/*.zip
+/public/db/db/*.zip
 /public/db/SQLDumpSplitterResult
 /public/ckfinder
 /public/images/product

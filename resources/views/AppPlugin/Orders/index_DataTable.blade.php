@@ -57,9 +57,9 @@
                       }
                   },
                   @endif
-                  {
-                      data: 'city', name: 'address.city', orderable: false, searchable: true
-                  },
+                  {data: 'payment_method', name: 'payment_method', orderable: false, searchable: false},
+                  {data: 'payment_method_state', name: 'payment_method_state', orderable: false, searchable: false},
+                  {data: 'city', name: 'address.city', orderable: false, searchable: true},
                   {data: 'name', name: 'address.name', orderable: false, searchable: true},
                   {data: 'phone', name: 'address.phone', orderable: false, searchable: true},
                   {data: 'total', name: 'total', orderable: true, searchable: true},
