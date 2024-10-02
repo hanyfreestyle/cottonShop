@@ -17,7 +17,8 @@ class ShoppingOrderSaveNoneUserRequest extends FormRequest {
 
         return [
             'shipping' => "required|numeric",
-            'name' => "required|regex:/^\S+\s+\S+$/",
+//            'name' => "required|regex:/^\S+\s+\S+$/",
+            'name' => "required|min:8|max:250",
             'city_id' => "required",
             'phone' => "numeric|phone:mobile,$countryCode",
             'phone_option' => "nullable|numeric|min_digits:7",
