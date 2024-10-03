@@ -76,40 +76,11 @@ class ShoppingCartController extends WebMainController {
         }
     }
 
+
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PaymobResponse(Request $request) {
-        $orderInfo = explode("#", $request->merchant_order_id);
-        return redirect()->route('Shop_PaymobConfirm', [$orderInfo[1], $request->id]);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function PaymobConfirm($uuid, $id) {
-
-        dd($uuid);
-        try {
-            $res = PayMobResponses::query()
-                ->where('order_uuid', $uuid)
-                ->where('paymob_id', $id)
-                ->firstOrFail();
-
-            if ($res->success) {
-                Cart::destroy();
-                return redirect()->route('Shop_CartOrderCompleted');
-            } else {
-                return redirect()->route('Shop_CartOrderCompleted');
-            }
-        } catch (\Exception $e) {
-            self::abortError404('root');
-        }
-    }
-
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function PaymobResponse_Sours(Request $request) {
 
         dd($request->all());
         $orderInfo = explode("#", $request->merchant_order_id);
@@ -146,7 +117,7 @@ class ShoppingCartController extends WebMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function PaymobConfirm_sours($uuid, $id) {
+    public function PaymobConfirm($uuid, $id) {
         try {
             $res = PayMobResponses::query()
                 ->where('order_uuid', $uuid)
