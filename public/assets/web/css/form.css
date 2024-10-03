@@ -206,6 +206,7 @@ input.iti__tel-input, .iti--allow-dropdown input.iti__tel-input[type="text"], .i
     width: calc(50% - 10px);
     float: right;
     margin: 0 5px;
+    font-weight: bold;
 }
 
 .FooterIcon .but_call_span{
