@@ -99,7 +99,7 @@
 @include('web.layouts.quick.mobile_menu')
 {{--@include('web.layouts.quick.promo')--}}
 
-{{--<a id="nt_backtop" class="pf br__50 z__100 des_bt2" href="#"><span class="tc br__50 db cw"><i class="pr pegk pe-7s-angle-up"></i></span></a>--}}
+<a id="nt_backtop" class="pf br__50 z__100 des_bt2" href="#"><span class="tc br__50 db cw"><i class="pr pegk pe-7s-angle-up"></i></span></a>
 
 @if( Route::currentRouteName() == 'ProductView')
     <x-temp.footer-call :config="$WebConfig" :product="$product"/>
