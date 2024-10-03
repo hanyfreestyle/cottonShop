@@ -39,7 +39,7 @@ class ShoppingCartController extends WebMainController {
 
         if (intval($request->id) > 0 and count($orderInfo) == 2) {
             try {
-                $getData = DB::transaction(function () use ($request, $orderInfo) {
+                DB::transaction(function () use ($request, $orderInfo) {
                     $response = json_encode($request->all());
                     if ($request->success == 'true') {
                         $success = 1;
@@ -79,16 +79,15 @@ class ShoppingCartController extends WebMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PaymobResponse(Request $request) {
-//        dd($request->all());
         $orderInfo = explode("#", $request->merchant_order_id);
-
-        dd($orderInfo[1]);
         return redirect()->route('Shop_PaymobConfirm', [$orderInfo[1], $request->id]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PaymobConfirm($uuid, $id) {
+
+        dd($uuid);
         try {
             $res = PayMobResponses::query()
                 ->where('order_uuid', $uuid)
@@ -499,7 +498,7 @@ class ShoppingCartController extends WebMainController {
                 $data = [
                     "amount" => $order_total * $cents,
                     "currency" => 'EGP',
-                    "payment_methods" => array(3768464,4846820), // replace this id 1234567 with your integration ID(s)
+                    "payment_methods" => array(3768464, 4846820), // replace this id 1234567 with your integration ID(s)
                     "billing_data" => $billing,
                     "extras" => ["merchant_intention_id" => $orderId],
                     "special_reference" => $orderId
