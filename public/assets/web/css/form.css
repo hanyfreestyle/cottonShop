@@ -241,3 +241,7 @@ input.iti__tel-input, .iti--allow-dropdown input.iti__tel-input[type="text"], .i
     padding-right: 3px;
     fill: #fff;
 }
+
+.kalles_toolbar {
+    box-shadow: none!important;
+}
