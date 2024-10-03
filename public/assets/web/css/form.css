@@ -247,5 +247,13 @@ input.iti__tel-input, .iti--allow-dropdown input.iti__tel-input[type="text"], .i
 }
 
 .kalles_toolbar_true #nt_backtop, .kalles_toolbar_true .popup_slpr_wrap {
-    bottom: 130px;
+    bottom: 120px;
+}
+
+#nt_backtop.des_bt2 span {
+    border: 2px solid rgba(0,0,0,.3);
+
+}
+#nt_backtop.des_bt2 span i {
+    color:  rgba(0,0,0,.4);
 }

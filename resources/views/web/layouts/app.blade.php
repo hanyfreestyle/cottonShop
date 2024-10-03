@@ -55,7 +55,7 @@
     <!-- End Google Tag Manager -->
 </head>
 
-<body class="{{htmlBodyStyle($pageView)}}">
+<body class="kalles_toolbar_true {{htmlBodyStyle($pageView)}}">
 
 <!-- Google Tag Manager (noscript) -->
 <noscript>
