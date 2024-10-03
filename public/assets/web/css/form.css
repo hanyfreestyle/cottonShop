@@ -242,9 +242,9 @@ input.iti__tel-input, .iti--allow-dropdown input.iti__tel-input[type="text"], .i
     fill: #fff;
 }
 
-.kalles_toolbar {
-    box-shadow: none!important;
-}
+/*.kalles_toolbar {*/
+/*    box-shadow: none!important;*/
+/*}*/
 
 .kalles_toolbar_true #nt_backtop, .kalles_toolbar_true .popup_slpr_wrap {
     bottom: 120px;
