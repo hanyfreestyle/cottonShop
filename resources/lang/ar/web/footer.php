@@ -8,4 +8,6 @@ return
 	'h3_categories' => 'الاقسام',
 	'h3_menu' => 'القائمة',
 	'h3_newsletter' => 'القائمة البريدية',
+	'btn_call' => 'اتصل بنا',
+	'btn_whatsapp' => 'Whatsapp',
 ];
