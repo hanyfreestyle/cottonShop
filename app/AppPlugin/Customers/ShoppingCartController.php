@@ -81,10 +81,7 @@ class ShoppingCartController extends WebMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PaymobResponse(Request $request) {
-
-        dd($request->all());
         $orderInfo = explode("#", $request->merchant_order_id);
-
         if (intval($request->id) > 0 and count($orderInfo) == 2) {
             try {
                 $getData = DB::transaction(function () use ($request, $orderInfo) {
@@ -111,7 +108,6 @@ class ShoppingCartController extends WebMainController {
             }
 
             return redirect()->route('Shop_PaymobConfirm', [$orderInfo[1], $request->id]);
-
         }
     }
 
