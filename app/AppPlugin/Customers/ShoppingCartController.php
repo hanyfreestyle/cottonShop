@@ -81,6 +81,8 @@ class ShoppingCartController extends WebMainController {
     public function PaymobResponse(Request $request) {
 //        dd($request->all());
         $orderInfo = explode("#", $request->merchant_order_id);
+
+        dd($orderInfo[1]);
         return redirect()->route('Shop_PaymobConfirm', [$orderInfo[1], $request->id]);
     }
 
