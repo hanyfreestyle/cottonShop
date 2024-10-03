@@ -251,9 +251,9 @@ input.iti__tel-input, .iti--allow-dropdown input.iti__tel-input[type="text"], .i
 }
 
 #nt_backtop.des_bt2 span {
-    border: 2px solid rgba(0,0,0,.3);
+    border: 2px solid rgba(0,0,0,.6);
 
 }
 #nt_backtop.des_bt2 span i {
-    color:  rgba(0,0,0,.4);
+    color:  rgba(0,0,0,.7);
 }
