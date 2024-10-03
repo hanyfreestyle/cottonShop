@@ -55,6 +55,7 @@ Route::group(['middleware' => ['UnderConstruction', 'MinifyHtml']], function () 
         Route::get('/address-update', [ShoppingCartController::class, 'ShippingAddressUpdate'])->name('Shop_AddressUpdate');
         Route::post('/cart-save', [ShoppingCartController::class, 'NoneUserOrderSave'])->name('Shop_NoneUserOrderSave');
         Route::get('/order-completed', [ShoppingCartController::class, 'CartOrderCompleted'])->name('Shop_CartOrderCompleted');
+        Route::get('/paymob/callback/', [ShoppingCartController::class, 'PaymobCallback'])->name('Shop_PaymobCallback');
         Route::get('/paymob/response/', [ShoppingCartController::class, 'PaymobResponse'])->name('Shop_PaymobResponse');
         Route::get('/paymob/confirm/{uuid}/{id}', [ShoppingCartController::class, 'PaymobConfirm'])->name('Shop_PaymobConfirm');
 

@@ -20,7 +20,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Paymob\Library\Paymob;
 
@@ -35,7 +34,7 @@ class ShoppingCartController extends WebMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function PaymobResponse(Request $request) {
+    public function PaymobCallback(Request $request) {
         $orderInfo = explode("#", $request->merchant_order_id);
 
         if (intval($request->id) > 0 and count($orderInfo) == 2) {
@@ -57,6 +56,56 @@ class ShoppingCartController extends WebMainController {
                     $saveResponse->order_uuid = $orderInfo[1];
                     $saveResponse->responses = $response;
                     $saveResponse->save();
+
+                    $orderUpdate = Order::query()
+                        ->where('id', $saveResponse->order_id)
+                        ->where('uuid', $saveResponse->order_uuid)
+                        ->where('payment_method', 1)
+                        ->firstOrFail();
+
+                    $orderUpdate->paymob_id = $saveResponse->paymob_id;
+                    $orderUpdate->paymob_order_id = $saveResponse->paymob_order_id;
+                    $orderUpdate->success = $saveResponse->success;
+                    $orderUpdate->save();
+
+                });
+
+            } catch (\Exception $exception) {
+                return redirect()->route('Shop_CartView');
+            }
+
+            return redirect()->route('Shop_PaymobConfirm', [$orderInfo[1], $request->id]);
+
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function PaymobResponse(Request $request) {
+
+        dd($request->all());
+        $orderInfo = explode("#", $request->merchant_order_id);
+
+        if (intval($request->id) > 0 and count($orderInfo) == 2) {
+            try {
+                $getData = DB::transaction(function () use ($request, $orderInfo) {
+                    $response = json_encode($request->all());
+                    if ($request->success == 'true') {
+                        $success = 1;
+                    } else {
+                        $success = 0;
+                    }
+                    $saveResponse = new PayMobResponses();
+                    $saveResponse->paymob_id = $request->id;
+                    $saveResponse->paymob_order_id = $request->order;
+                    $saveResponse->success = $success;
+                    $saveResponse->merchant_order_id = $request->merchant_order_id;
+                    $saveResponse->amount_cents = $request->amount_cents;
+                    $saveResponse->order_id = $orderInfo[0];
+                    $saveResponse->order_uuid = $orderInfo[1];
+                    $saveResponse->responses = $response;
+                    $saveResponse->save();
+
                 });
             } catch (\Exception $exception) {
                 return redirect()->route('Shop_CartView');
