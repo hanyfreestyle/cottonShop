@@ -463,7 +463,7 @@ class ShoppingCartController extends WebMainController {
                 $data = [
                     "amount" => $order_total * $cents,
                     "currency" => 'EGP',
-                    "payment_methods" => array(4854957, 4855277), // replace this id 1234567 with your integration ID(s)
+                    "payment_methods" => array(4855277), // replace this id 1234567 with your integration ID(s)
                     "billing_data" => $billing,
                     "extras" => ["merchant_intention_id" => $orderId],
                     "special_reference" => $orderId
